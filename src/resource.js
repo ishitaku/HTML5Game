@@ -12,17 +12,10 @@
     item_plus01_png : "res/item_plus01.png",
     item_minus00_png : "res/item_minus00.png",
     item_minus01_png : "res/item_minus01.png",
+    gameover_logo_png : "res/gameover_logo.png",
+    retry_logo_png : "res/retry_logo.png",
     button_png : "res/button.png",
     buttonback_png: "res/button_back.png",
-    gameover_png : "res/gameover.png",
-    go_png : "res/go.png",
-    start_png : "res/start.png",
-    title_png : "res/Title.png",
-    ready_png : "res/ready.png",
-    button0_png : "res/title_button.png",
-    button1_png : "res/title_button_pressed.png",
-    button2_png : "res/replay_button.png",
-    button3_png : "res/replay_button_pressed.png",
 };
 
 var g_resources = [];

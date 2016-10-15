@@ -277,7 +277,7 @@ function damage() {
       if(life < 1){
         //audioEngine.stopMusic();
         gameover.score = score;
-        cc.director.runScene(new gameover());
+        cc.director.runScene(new GameOverSkyScene());
       }
       player.invulnerability = 100;
 }

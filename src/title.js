@@ -27,20 +27,17 @@ var gamestart = cc.Layer.extend({
                     onTouchMoved: this.onTouchMoved,
                     onTouchEnded: this.onTouchEnded
                 }, this);
-                
 	},
 	onTouchBegan: function(touch, event) {
-        return true;
-      },
-      onTouchMoved: function(touch, event) {},
-      onTouchEnded: function(touch, event) {
-        // 次のシーンに切り替える
-        cc.audioEngine.stopMusic();
-        cc.director.runScene(new stageSkyScene());
-      },
+          return true;
+        },
+        onTouchMoved: function(touch, event) {},
+        onTouchEnded: function(touch, event) {
+          // 次のシーンに切り替える
+          cc.audioEngine.stopMusic();
+          cc.director.runScene(new stageSkyScene());
+        },
       
-      
-	
 });
 
 var GameStartScene = cc.Scene.extend({
