@@ -96,6 +96,9 @@ var game = cc.Layer.extend({
       var item = new Item();
       this.addChild(item);
     },
+    removeObject(object) {
+      this.removeChild(object);
+    },
     onTouchBegan: function(touch, event) {
 	player.engineOn = true;
         return true;
@@ -198,7 +201,7 @@ var Item = cc.Sprite.extend({
     var itemBoundingBox = this.getBoundingBox();
 		//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(playerBoundingBox, itemBoundingBox) ) {
-      gameLayer.removeCoral(this);//アイテムを削除する
+      gameLayer.removeObject(this);//アイテムを削除する
       /*
       //ボリュームを上げる
       audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
@@ -212,7 +215,7 @@ var Item = cc.Sprite.extend({
       }
 		//画面の外にでた小惑星を消去する処理
     if (this.getPosition().x < -50) {
-      gameLayer.removeCoral(this)
+      gameLayer.removeObject(this)
     }
   }
 });
