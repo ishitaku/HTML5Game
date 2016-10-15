@@ -8,10 +8,14 @@ var gamestart = cc.Layer.extend({
 		backgroundLayer.setPosition(size.width/2,size.height /2 );
         	this.addChild(backgroundLayer);
         	
-        	
         	var title_logo = cc.Sprite.create(res.title_logo_png);
         	title_logo.setScale(0.5);
-		title_logo.setPosition(size.width/2,size.height /2 );
+		title_logo.setPosition(size.width/2,size.height /3 );
+        	this.addChild(title_logo);
+        	
+        	var title_logo = cc.Sprite.create(res.start_logo_png);
+        	title_logo.setScale(0.8);
+		title_logo.setPosition(size.width/2,size.height * 0.7);
         	this.addChild(title_logo);
         	
         	// タップイベントリスナーを登録する
