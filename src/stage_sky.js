@@ -252,6 +252,8 @@ var ItemMinus = cc.Sprite.extend({
     if (cc.rectIntersectsRect(playerBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する
       gameLayer.removeObject(this);
+      //ダメージ
+      damage();
       /*
       //ボリュームを上げる
       audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
