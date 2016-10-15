@@ -84,7 +84,7 @@ var game = cc.Layer.extend({
         //this.addChild(land);
 
         player = new Player();
-        player.setScale(0.2);
+        player.setScale(0.1);
         this.addChild(player);
 
         // 残機表示
