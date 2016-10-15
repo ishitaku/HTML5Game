@@ -162,8 +162,8 @@ var Player = cc.Sprite.extend({
       if(animflg >= 15) {
       animflg = 0;
       }
-      animflg = Math.floor(animflg);
-      this.initWithFile(playerArray[animflg/5]);
+      
+      this.initWithFile(playerArray[Math.floor(animflg/5)]);
       this.ySpeed += gameThrust;
       
     }
