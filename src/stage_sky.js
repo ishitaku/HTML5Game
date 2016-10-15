@@ -14,6 +14,8 @@ var gameGravity = -0.05;
 var gameThrust = 0.15;
 var life = 3;
 var score = 0;
+var lifeScore = 0;
+var LIFE_UP_SCORE = 100;
 var itemPlusArray;
 var itemMinusArray;
 itemPlusArray = new Array(res.item_plus00_png, res.item_plus01_png);
@@ -148,9 +150,9 @@ var Player = cc.Sprite.extend({
     animflg = 0;
     this._super();
     this.initWithFile(playerArray[0]);
-    this.ySpeed = 0; //エビちゃんの垂直速度
+    this.ySpeed = 0; //プレイヤーの垂直速度
 
-    this.engineOn = false; //カスタム属性追加　エビちゃんのジャンプON OFF
+    this.engineOn = false; //カスタム属性追加　プレイヤーのジャンプON OFF
     this.invulnerability = 0; //無敵モード時間　初期値0
   },
   onEnter: function() {
@@ -172,7 +174,6 @@ var Player = cc.Sprite.extend({
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
     }
-
 
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
     this.ySpeed += gameGravity;
@@ -215,9 +216,16 @@ var ItemPlus = cc.Sprite.extend({
       */
       
       //スコア追加処理
-      score += 5;
+      score += 10;
       scoreText.setString("SCORE : " + score);
+      lifeScore += 10;
+      if(lifeScore >= LIFE_UP_SCORE) {
+        lifeScore -= LIFE_UP_SCORE;
+        if(life < 10) {
+          life++;
+        }
       }
+    }
 		//画面の外にでた小惑星を消去する処理
     if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
