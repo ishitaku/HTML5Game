@@ -71,16 +71,16 @@ var game = cc.Layer.extend({
         // 残機表示
         lifeText = cc.LabelTTF.create("LIFE : " +life ,"Arial","30",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(lifeText);
-        lifeText.setPosition(70,800);
+        lifeText.setPosition(70,900);
         lifeText.setColor(cc.color(0, 0, 0, 255));
-        this.reorderChild(lifeText, 10);
+        this.reorderChild(lifeText, 15);
 
         //スコア表示
         scoreText = cc.LabelTTF.create("SCORE : " +score ,"Arial","30",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(scoreText);
-        scoreText.setPosition(250,800);
+        scoreText.setPosition(450,900);
         scoreText.setColor(cc.color(0, 0, 0, 255));
-        this.reorderChild(scoreText, 10);
+        this.reorderChild(scoreText, 15);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
         this.scheduleUpdate();
