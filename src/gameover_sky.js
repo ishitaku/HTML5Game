@@ -6,7 +6,7 @@ var gameOverSky = cc.Layer.extend({
 
         // 背景レイヤーをその場で作る
         var backgroundLayer = cc.Sprite.create(res.background_sky_png);
-        backgroundLayer.setPosition(size.width,size.height /2 );
+        backgroundLayer.setPosition(size.width / 2, size.height /2 );
         this.addChild(backgroundLayer);
 
         var gameover_logo = cc.Sprite.create(res.gameover_logo_png);
