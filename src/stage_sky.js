@@ -102,7 +102,9 @@ var game = cc.Layer.extend({
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
-        background.scroll();
+        background0.scroll();
+        background1.scroll();
+        background2.scroll();
         player.updateY();
 
     },
