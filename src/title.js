@@ -18,7 +18,7 @@ var gamestart = cc.Layer.extend({
 		title_logo.setPosition(size.width/2,size.height * 0.3);
         	this.addChild(title_logo);
         	
-        	if (cc.sys.capabilities.hasOwnProperty('touches')) {
+        	
         	// タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -26,8 +26,7 @@ var gamestart = cc.Layer.extend({
                     onTouchBegan: this.onTouchBegan,
                     onTouchMoved: this.onTouchMoved,
                     onTouchEnded: this.onTouchEnded
-                    }, this);
-                }
+                }, this);
 	},
 	onTouchBegan: function(touch, event) {
         return true;
