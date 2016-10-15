@@ -83,8 +83,9 @@ var game = cc.Layer.extend({
         land = new ScrollingLA();
         //this.addChild(land);
 
-        shrimp = new Shrimp();
-        this.addChild(shrimp);
+        player = new Player();
+        player.setScale(0.25);
+        this.addChild(player);
 
         // 残機表示
         lifeText = cc.LabelTTF.create("LIFE : " +life ,"Arial","30",cc.TEXT_ALIGNMENT_CENTER);
@@ -118,7 +119,7 @@ var game = cc.Layer.extend({
         //rock_under.scroll();
         //ceiling.scroll();
         //land.scroll();
-        shrimp.updateY();
+        player.updateY();
 
     },
 
@@ -263,9 +264,9 @@ var ScrollingLA = cc.Sprite.extend({
 });
 
 //重力（仮）で落下する　プレイヤー　
-var Shrimp = cc.Sprite.extend({
+var Player = cc.Sprite.extend({
   ctor: function() {
-    ebiflg = 0;
+    animflg = 0;
     this._super();
     this.initWithFile(playerArray[0]);
     this.ySpeed = 0; //エビちゃんの垂直速度
@@ -278,8 +279,10 @@ var Shrimp = cc.Sprite.extend({
   },
   updateY: function() {
     if(this.engineOn){
-      ebiflg++;
-      if(ebiflg >= 3) ebiflg = 0;
+      animflg++;
+      if(animflg >= 3) {
+      animflg = 0;
+      }
       this.initWithFile(playerArray[ebiflg]);
       this.ySpeed += gameThrust;
       
