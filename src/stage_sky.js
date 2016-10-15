@@ -5,7 +5,9 @@
 var size;
 var mylabel;
 var gameLayer;
-var background;
+var background0;
+var background1;
+var background2;
 var scrollSpeed = 1;
 var scrollSpeed2 = 1.5;
 var scrollSpeed3 = 2;
@@ -61,8 +63,15 @@ var game = cc.Layer.extend({
 	
 
         //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed
-        background = new ScrollingBG();
-        this.addChild(background);
+        background0 = new ScrollingBG();
+        this.addChild(background0);
+        background1 = new ScrollingBG();
+        background1.setposition(size.width+size.width/2, size.height/2);
+        this.addChild(background1);
+        background2.setposition(size.width*2+size.width/2, size.height/2);
+        background2 = new ScrollingBG();
+        
+        this.addChild(background2);
         
         player = new Player();
         player.setScale(0.1);
@@ -131,7 +140,7 @@ var ScrollingBG = cc.Sprite.extend({
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
       //背景画像の描画開始位置 横960の画像の中心が、画面の端に設置される
-      this.setPosition(size.width,size.height /2 );
+      this.setPosition(size.width/2,size.height /2 );
       //  this.setPosition(480,160);
     },
     scroll:function(){
@@ -139,9 +148,10 @@ var ScrollingBG = cc.Sprite.extend({
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
         //画面の端に到達したら反対側の座標にする
         if(this.getPosition().x<0){
-            this.setPosition(this.getPosition().x+320,this.getPosition().y);
+            this.setPosition(size.width*2+size.width/2, size.height/2);
         }
-    }
+    },
+    
 });
 
 //重力（仮）で落下する　プレイヤー　
@@ -227,7 +237,7 @@ var ItemPlus = cc.Sprite.extend({
         }
       }
     }
-		//画面の外にでた小惑星を消去する処理
+		//画面の外にでたアイテムを消去する処理
     if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
     }
