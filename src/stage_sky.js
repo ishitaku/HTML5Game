@@ -8,7 +8,7 @@ var gameLayer;
 var background0;
 var background1;
 var background2;
-var scrollSpeed = 1;
+var scrollSpeed = 2;
 var scrollSpeed2 = 1.5;
 var scrollSpeed3 = 2;
 var player;
@@ -141,7 +141,6 @@ var ScrollingBG = cc.Sprite.extend({
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
       
-      //  this.setPosition(480,160);
     },
     scroll:function(){
       //座標を更新する
