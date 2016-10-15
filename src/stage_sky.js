@@ -96,9 +96,9 @@ var game = cc.Layer.extend({
     },
 
     addItemPlus: function(event){
-      var itemPlus = new itemPlus();
+      var itemPlus = new ItemPlus();
       plusItem.setScale(0.25);
-      this.addChild(item);
+      this.addChild(itemPlus);
     },
     removeObject(object) {
       this.removeChild(object);
