@@ -101,7 +101,7 @@ var game = cc.Layer.extend({
       itemPlus.setScale(0.2);
       this.addChild(itemPlus);
     },
-    addMinusMinus: function(event){
+    addItemMinus: function(event){
       var itemMinus = new MinusPlus();
       itemMinus.setScale(0.2);
       this.addChild(itemMinus);
@@ -232,7 +232,6 @@ var ItemPlus = cc.Sprite.extend({
 
 //マイナスアイテムクラス
 var MinusPlus = cc.Sprite.extend({
-
   ctor: function() {
     this._super();
     var num = Math.floor(Math.random() * itemMinusArray.length);
@@ -249,9 +248,10 @@ var MinusPlus = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var playerBoundingBox = player.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
-		//rectIntersectsRectは２つの矩形が交わっているかチェックする
+    //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(playerBoundingBox, itemBoundingBox) ) {
-      gameLayer.removeObject(this);//アイテムを削除する
+      //アイテムを削除する
+      gameLayer.removeObject(this);
       /*
       //ボリュームを上げる
       audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
@@ -266,11 +266,12 @@ var MinusPlus = cc.Sprite.extend({
         gameover.score = score;
         cc.director.runScene(new gameover());
       }
-		//画面の外にでたアイテムを消去する処理
-    if (this.getPosition().x < -50) {
+      //画面の外にでたアイテムを消去する処理
+      if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
-    }
-  }
+      }
+      
+      }
 });
 
 //エビちゃんを元の位置に戻して、エビちゃんの変数を初期化する
