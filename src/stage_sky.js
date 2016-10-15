@@ -291,13 +291,13 @@ function backgroundUpdate() {
         background2.scroll();
         //画面の端に到達したら反対側の座標にする
         if(background0.getPosition().x < -size.width/2){
-            this.setPosition(background2.getPosition().x+size.width/2, size.height/2);
+            background0.setPosition(background2.getPosition().x+size.width/2, size.height/2);
         }
         if(background1.getPosition().x < -size.width/2){
-            this.setPosition(background0.getPosition().x+size.width/2, size.height/2);
+            background1.setPosition(background0.getPosition().x+size.width/2, size.height/2);
         }
         if(background2.getPosition().x < -size.width/2){
-            this.setPosition(background1.getPosition().x+size.width/2, size.height/2);
+            background2.setPosition(background1.getPosition().x+size.width/2, size.height/2);
         }
 }
 
