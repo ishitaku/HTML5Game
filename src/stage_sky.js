@@ -71,14 +71,14 @@ var game = cc.Layer.extend({
         // 残機表示
         lifeText = cc.LabelTTF.create("LIFE : " +life ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(lifeText);
-        lifeText.setPosition(70,800);
+        lifeText.setPosition(100,850);
         lifeText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(lifeText, 10);
 
         //スコア表示
         scoreText = cc.LabelTTF.create("SCORE : " +score ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(scoreText);
-        scoreText.setPosition(450,800);
+        scoreText.setPosition(450,850);
         scoreText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(scoreText, 10);
 
