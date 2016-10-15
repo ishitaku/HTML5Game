@@ -85,7 +85,7 @@ var game = cc.Layer.extend({
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItemPlus, 1);
+        this.schedule(this.addItemPlus, 1.5);
 
     },
     update:function(dt){
