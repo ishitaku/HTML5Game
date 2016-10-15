@@ -159,10 +159,11 @@ var Player = cc.Sprite.extend({
   updateY: function() {
     if(this.engineOn){
       animflg++;
-      if(animflg >= 3) {
+      if(animflg >= 15) {
       animflg = 0;
       }
-      this.initWithFile(playerArray[animflg]);
+      animflg = Math.floor(animflg);
+      this.initWithFile(playerArray[animflg/5]);
       this.ySpeed += gameThrust;
       
     }
@@ -176,15 +177,9 @@ var Player = cc.Sprite.extend({
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
     this.ySpeed += gameGravity;
 
-    //エビちゃんが画面外にでたら、リスタートさせる
+    //プレイヤーが画面外にでたら、リスタートさせる
      if (this.getPosition().y < 0 || this.getPosition().y > 1500) {
-       //life--;
-       lifeText.setString("LIFE : " + life);
-       if(life < 1){
-         //audioEngine.stopMusic();
-         gameover.score = score;
-         cc.director.runScene(new gameover());
-       }
+       
        restartGame();
      }
   }
@@ -282,7 +277,7 @@ function damage() {
       player.invulnerability = 100;
 }
 
-//エビちゃんを元の位置に戻して、エビちゃんの変数を初期化する
+//プレイヤーを元の位置に戻して、エビちゃんの変数を初期化する
 function restartGame() {
   damage();
   player.ySpeed = 0;
