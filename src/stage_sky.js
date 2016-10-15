@@ -119,12 +119,13 @@ var game = cc.Layer.extend({
     //スポンサー様看板
     addSponserBoard: function(event) {
       var ground = new Ground();
+      ground.setScale(0.5);
       this.addChild(ground);
       var sponserboard = new SponserBoard();
-      sponserboard.setScale(0.25);
+      sponserboard.setScale(0.2);
       this.addChild(sponserboard);
       var sponserlogo = new SponserLogo();
-      sponserlogo.setScale(0.25);
+      sponserlogo.setScale(0.2);
       this.addChild(sponserlogo);
     },
     //オブジェクトを削除
@@ -358,17 +359,17 @@ var SponserLogo = cc.Sprite.extend({
         this._super();
         this.initWithFile(res.sponser_logo_png);
         //背景画像の描画開始位置
-      this.setPosition(size.width/2,size.height * 0.3);
+      this.setPosition(size.width/2,size.height * 0.25);
     },
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
+      var moveAction = cc.MoveTo.create(3, new cc.Point(-200, this.getPostion().y);
+      this.runAction(moveAction);
       this.scheduleUpdate();
     },
     update:function(){
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
         //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < -200) {
+      if (this.getPosition().x < -100) {
       gameLayer.removeObject(this)
       }
     },
