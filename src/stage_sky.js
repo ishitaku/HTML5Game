@@ -11,11 +11,14 @@ var scrollSpeed2 = 1.5;
 var scrollSpeed3 = 2;
 var player;
 var gameGravity = -0.05;
-var gameThrust = 0.2;
+var gameThrust = 0.15;
 var life = 3;
 var score = 0;
-var itemArray;
-itemArray = new Array(res.nagoya0_png, res.nagoya1_png, res.nagoya2_png, res.nagoya3_png, res.nagoya4_png, res.nagoya5_png, res.nagoya6_png);
+var itemPlusArray;
+var itemMinusArray;
+//itemPlusArray = new Array(res.nagoya0_png, res.nagoya1_png, res.nagoya2_png, res.nagoya3_png, res.nagoya4_png, res.nagoya5_png, res.nagoya6_png);
+itemPlusArray = new Array(res.item_plus00_png, res.item_plus01_png);
+itemMinusArray = new Array(res.item_minus00_png, res.item_minus01_png);
 var animflg;
 var playerArray;
 playerArray = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png);
@@ -82,7 +85,7 @@ var game = cc.Layer.extend({
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItem, 0.5);
+        this.schedule(this.addItemPlus, 0.5);
 
     },
     update:function(dt){
@@ -92,8 +95,9 @@ var game = cc.Layer.extend({
 
     },
 
-    addItem: function(event){
-      var item = new Item();
+    addItemPlus: function(event){
+      var plusItem = new PlusItem();
+      plusItem.setScale(0.25);
       this.addChild(item);
     },
     removeObject(object) {
@@ -181,7 +185,7 @@ var Player = cc.Sprite.extend({
 });
 
 //アイテムクラス
-var Item = cc.Sprite.extend({
+var ItemPlus = cc.Sprite.extend({
 
   ctor: function() {
     this._super();
