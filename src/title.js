@@ -4,7 +4,7 @@ var gamestart = cc.Layer.extend({
 		this._super();
 		var size = cc.director.getWinSize();
         	
-        	var backgroundLayer = cc.Sprite.create(res.background_png);
+        	var backgroundLayer = cc.Sprite.create(res.background_sky_png);
 		backgroundLayer.setPosition(size.width/2,size.height /2 );
         	this.addChild(backgroundLayer);
         	
