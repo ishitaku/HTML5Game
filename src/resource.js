@@ -1,6 +1,6 @@
 ﻿var res = {
     gigu_png : "res/gi-gu.png",
-    title_png : "res/title_logo.png",
+    title_logo_png : "res/title_logo.png",
     background_sky_png: "res/background_sky.png",
     background_sea_png: "res/background_sea.png",
     background_space_png: "res/background_space.png",

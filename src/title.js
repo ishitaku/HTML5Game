@@ -9,10 +9,10 @@ var gamestart = cc.Layer.extend({
         	this.addChild(backgroundLayer);
         	
         	
-        	var gigu = cc.Sprite.create(res.gigu_png);
+        	var title_logo = cc.Sprite.create(res.title_logo_png);
         	gigu.setScale(0.5);
 		gigu.setPosition(size.width/2,size.height /2 );
-        	this.addChild(gigu);
+        	this.addChild(title_logo);
         	
         	// タップイベントリスナーを登録する
                 cc.eventManager.addListener({
