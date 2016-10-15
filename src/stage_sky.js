@@ -101,9 +101,7 @@ var game = cc.Layer.extend({
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
-        background0.scroll();
-        background1.scroll();
-        background2.scroll();
+        backgroundUpdate();
         player.updateY();
     },
 
@@ -130,6 +128,7 @@ var game = cc.Layer.extend({
       },
     
 });
+
 //スクロール移動する背景クラス
 var ScrollingBG = cc.Sprite.extend({
     //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
@@ -147,10 +146,7 @@ var ScrollingBG = cc.Sprite.extend({
     scroll:function(){
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
-        //画面の端に到達したら反対側の座標にする
-        if(this.getPosition().x < -size.width/2){
-            this.setPosition(size.width*2+size.width/2, size.height/2);
-        }
+        
     },
     setPos:function(x, y){
       //座標を更新する
@@ -287,6 +283,23 @@ var ItemMinus = cc.Sprite.extend({
       }
    }
 });
+
+//背景管理
+function backgroundUpdate() {
+	background0.scroll();
+        background1.scroll();
+        background2.scroll();
+        //画面の端に到達したら反対側の座標にする
+        if(background0.getPosition().x < -size.width/2){
+            this.setPosition(background2.getPosition().x+size.width/2, size.height/2);
+        }
+        if(background1.getPosition().x < -size.width/2){
+            this.setPosition(background0.getPosition().x+size.width/2, size.height/2);
+        }
+        if(background2.getPosition().x < -size.width/2){
+            this.setPosition(background1.getPosition().x+size.width/2, size.height/2);
+        }
+}
 
 //ダメージ
 function damage() {
