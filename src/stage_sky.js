@@ -367,6 +367,7 @@ var SponserLogo = cc.Sprite.extend({
       this.scheduleUpdate();
     },
     update:function(dt){
+    console.Log("update");
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
         //画面の外にでたアイテムを消去する処理
