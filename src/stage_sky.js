@@ -20,7 +20,7 @@ var life = 3;
 var score = 0;
 var itemArray;
 itemArray = new Array(res.nagoya0_png, res.nagoya1_png, res.nagoya2_png, res.nagoya3_png, res.nagoya4_png, res.nagoya5_png, res.nagoya6_png);
-var playerflg;
+var animflg;
 var playerArray;
 playerArray = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png);
 
@@ -283,7 +283,7 @@ var Player = cc.Sprite.extend({
       if(animflg >= 3) {
       animflg = 0;
       }
-      this.initWithFile(playerArray[playerflg]);
+      this.initWithFile(playerArray[animflg]);
       this.ySpeed += gameThrust;
       
     }
