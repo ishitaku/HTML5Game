@@ -29,7 +29,7 @@ var gameOverSky = cc.Layer.extend({
         }, this);
         
         return true;
-    }
+    },
     onTouchBegan: function(touch, event) {
       return true;
     },
