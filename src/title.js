@@ -19,7 +19,6 @@ var gamestart = cc.Layer.extend({
         	this.addChild(title_logo);
         	
         	
-        	
         	// タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -39,6 +38,17 @@ var gamestart = cc.Layer.extend({
         cc.director.runScene(new stageSkyScene());
       },
       
+      
+	
+});
+
+var GameStartScene = cc.Scene.extend({
+    onEnter: function() {
+        this._super();
+
+        var layer1 = new gamestart();
+        this.addChild(layer1);
+    }
 });
 
 
