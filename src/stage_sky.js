@@ -52,18 +52,7 @@ var game = cc.Layer.extend({
         // mylabel = cc.LabelTTF.create("GO!", "Arial", "32");
         // mylabel.setPosition(size.width / 2, size.height / 2);
         // this.addChild(mylabel);
-/*
-        //エビちゃんを操作
-   cc.eventManager.addListener({
-           event: cc.EventListener.MOUSE,
-           onMouseDown: function(event){
-               shrimp.engineOn = true;
-           },
-           onMouseUp: function(event){
-               shrimp.engineOn = false;
-           }
-       },this)*/
-       
+               
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -80,19 +69,19 @@ var game = cc.Layer.extend({
 
         //スクロールする背景スプライトをインスタンス2　スクロール速度:scrollSpeed2
         rock_above = new ScrollingRA();
-        this.addChild(rock_above);
+        //this.addChild(rock_above);
 
         //スクロールする背景スプライトをインスタンス3　スクロール速度:scrollSpeed2
         rock_under = new ScrollingRU();
-        this.addChild(rock_under);
+        //this.addChild(rock_under);
 
         //スクロールする背景スプライトをインスタンス4　スクロール速度:scrollSpeed3
         ceiling = new ScrollingCE();
-        this.addChild(ceiling);
+        //this.addChild(ceiling);
 
         //スクロールする背景スプライトをインスタンス5　スクロール速度:scrollSpeed3
         land = new ScrollingLA();
-        this.addChild(land);
+        //this.addChild(land);
 
         shrimp = new Shrimp();
         this.addChild(shrimp);
@@ -110,22 +99,7 @@ var game = cc.Layer.extend({
         scoreText.setPosition(220,540);
         scoreText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(scoreText, 10);
-/*
-        //パーティクル設定
-        emitter = cc.ParticleMeteor.create();
-        this.addChild(emitter, 1);
-        var myTexture = cc.textureCache.addImage(res.particle_png);
-        emitter.setTexture(myTexture);
-        emitter.setStartSize(20);
-        emitter.setEndSize(30);*/
-/*
-        emitter2 = cc.ParticleMeteor.create();
-        this.addChild(emitter2, 1);
-        var myTexture2 = cc.textureCache.addImage(res.particle2_png);
-        emitter2.setTexture(myTexture2);
-        emitter2.setStartSize(20);
-        emitter2.setEndSize(30);
-*/
+
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
         this.scheduleUpdate();
 
@@ -133,17 +107,17 @@ var game = cc.Layer.extend({
         this.schedule(this.addItem, 0.5);
 
         //サンゴの生成で追加
-        this.schedule(this.addCoral_u, 2.0);
-        this.schedule(this.addCoral_a, 3.5);
+        //this.schedule(this.addCoral_u, 2.0);
+        //this.schedule(this.addCoral_a, 3.5);
 
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
         background.scroll();
-        rock_above.scroll();
-        rock_under.scroll();
-        ceiling.scroll();
-        land.scroll();
+        //rock_above.scroll();
+        //rock_under.scroll();
+        //ceiling.scroll();
+        //land.scroll();
         shrimp.updateY();
 
     },
@@ -178,7 +152,7 @@ var ScrollingBG = cc.Sprite.extend({
     //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
     ctor:function() {
         this._super();
-        this.initWithFile(res.background_png);
+        this.initWithFile(res.background_sky_png);
     },
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
