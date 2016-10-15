@@ -259,13 +259,7 @@ var ItemMinus = cc.Sprite.extend({
       audioEngine.playEffect(res.se_decide);
       */
       
-      life--;
-      lifeText.setString("LIFE : " + life);
-      if(life < 1){
-        //audioEngine.stopMusic();
-        gameover.score = score;
-        cc.director.runScene(new gameover());
-      }
+      
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
@@ -274,11 +268,24 @@ var ItemMinus = cc.Sprite.extend({
    }
 });
 
+//ダメージ
+function damage() {
+      life--;
+      lifeText.setString("LIFE : " + life);
+      if(life < 1){
+        //audioEngine.stopMusic();
+        gameover.score = score;
+        cc.director.runScene(new gameover());
+      }
+      player.invulnerability = 100;
+}
+
 //エビちゃんを元の位置に戻して、エビちゃんの変数を初期化する
 function restartGame() {
+  damage();
   player.ySpeed = 0;
   player.setPosition(player.getPosition().x, size.height * 0.5);
-  player.invulnerability = 100;
+  
   /*
   //bgmリスタート
   if (!audioEngine.isMusicPlaying()) {
