@@ -64,7 +64,7 @@ var game = cc.Layer.extend({
         this.addChild(background);
         
         player = new Player();
-        player.setScale(0.15);
+        player.setScale(0.1);
         this.addChild(player);
 
         // 残機表示
@@ -97,7 +97,7 @@ var game = cc.Layer.extend({
 
     addItemPlus: function(event){
       var itemPlus = new ItemPlus();
-      itemPlus.setScale(0.25);
+      itemPlus.setScale(0.2);
       this.addChild(itemPlus);
     },
     removeObject(object) {
