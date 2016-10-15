@@ -64,13 +64,13 @@ var game = cc.Layer.extend({
 
         //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed
         background0 = new ScrollingBG();
-        //this.addChild(background0);
+        this.addChild(background0);
         background1 = new ScrollingBG();
+        this.addChild(background1);
         background1.setPos(size.width+size.width/2, size.height/2);
-        //this.addChild(background1);
         background2 = new ScrollingBG();
-        background2.setPos(size.width*2+size.width/2, size.height/2);
         this.addChild(background2);
+        background2.setPos(size.width*2+size.width/2, size.height/2);
         
         player = new Player();
         player.setScale(0.1);
