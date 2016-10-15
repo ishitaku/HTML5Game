@@ -156,7 +156,7 @@ var Player = cc.Sprite.extend({
       if(animflg > 15) {
       animflg = 0;
       }
-      this.initWithFile(playerArray[animflg/5]);
+      this.initWithFile(playerArray[(int)animflg/5]);
       this.ySpeed += gameThrust;
       
     }
