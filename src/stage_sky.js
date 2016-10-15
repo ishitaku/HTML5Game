@@ -194,8 +194,8 @@ var ItemPlus = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, Math.random() * 800);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 800));
+    this.setPosition(1200, Math.random() * 900);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
