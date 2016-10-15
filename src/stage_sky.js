@@ -297,7 +297,7 @@ var Shrimp = cc.Sprite.extend({
     this.ySpeed += gameGravity;
 
     //エビちゃんが画面外にでたら、リスタートさせる
-     if (this.getPosition().y < 0 || this.getPosition().y > 568) {
+     if (this.getPosition().y < 0 || this.getPosition().y > 1600) {
        //life--;
        lifeText.setString("LIFE : " + life);
        if(life < 1){
