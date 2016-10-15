@@ -18,7 +18,7 @@ var gamestart = cc.Layer.extend({
 		title_logo.setPosition(size.width/2,size.height * 0.3);
         	this.addChild(title_logo);
         	
-        	
+        	/*
         	// タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -26,7 +26,7 @@ var gamestart = cc.Layer.extend({
                     onTouchBegan: this.onTouchBegan,
                     onTouchMoved: this.onTouchMoved,
                     onTouchEnded: this.onTouchEnded
-                }, this);
+                }, this);*/
                 
                 // タッチイベントに対応している
 if(window.TouchEvent){
@@ -51,7 +51,7 @@ if(window.TouchEvent){
 		//document.addEventListener("touchmove",TouchEventFunc);
 
 		// タッチを終了すると実行されるイベント
-		document.addEventListener("touchend",ontrouchEnded);
+		document.addEventListener("touchend",onTouchEnded);
 	}
 }
                 
