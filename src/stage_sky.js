@@ -6,10 +6,6 @@ var size;
 var mylabel;
 var gameLayer;
 var background;
-var rock_above;
-var rock_under;
-var ceiling;
-var land;
 var scrollSpeed = 1;
 var scrollSpeed2 = 1.5;
 var scrollSpeed3 = 2;
@@ -23,9 +19,6 @@ itemArray = new Array(res.nagoya0_png, res.nagoya1_png, res.nagoya2_png, res.nag
 var animflg;
 var playerArray;
 playerArray = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png);
-
-var emitter;
-var emitter2;
 
 var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
@@ -66,23 +59,7 @@ var game = cc.Layer.extend({
         //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed
         background = new ScrollingBG();
         this.addChild(background);
-
-        //スクロールする背景スプライトをインスタンス2　スクロール速度:scrollSpeed2
-        rock_above = new ScrollingRA();
-        //this.addChild(rock_above);
-
-        //スクロールする背景スプライトをインスタンス3　スクロール速度:scrollSpeed2
-        rock_under = new ScrollingRU();
-        //this.addChild(rock_under);
-
-        //スクロールする背景スプライトをインスタンス4　スクロール速度:scrollSpeed3
-        ceiling = new ScrollingCE();
-        //this.addChild(ceiling);
-
-        //スクロールする背景スプライトをインスタンス5　スクロール速度:scrollSpeed3
-        land = new ScrollingLA();
-        //this.addChild(land);
-
+        
         player = new Player();
         player.setScale(0.15);
         this.addChild(player);
@@ -107,18 +84,10 @@ var game = cc.Layer.extend({
         //アイテム生成
         this.schedule(this.addItem, 0.5);
 
-        //サンゴの生成で追加
-        //this.schedule(this.addCoral_u, 2.0);
-        //this.schedule(this.addCoral_a, 3.5);
-
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
         background.scroll();
-        //rock_above.scroll();
-        //rock_under.scroll();
-        //ceiling.scroll();
-        //land.scroll();
         player.updateY();
 
     },
@@ -126,17 +95,6 @@ var game = cc.Layer.extend({
     addItem: function(event){
       var item = new Item();
       this.addChild(item);
-    },
-    addCoral_u: function(event) {
-      var coral = new Coral_under();
-      this.addChild(coral);
-    },
-    addCoral_a: function(event) {
-      var coral = new Coral_above();
-      this.addChild(coral);
-    },
-    removeCoral: function(coral) {
-      this.removeChild(coral);
     },
     onTouchBegan: function(touch, event) {
 	player.engineOn = true;
@@ -164,98 +122,6 @@ var ScrollingBG = cc.Sprite.extend({
     scroll:function(){
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
-        //画面の端に到達したら反対側の座標にする
-        if(this.getPosition().x<0){
-            this.setPosition(this.getPosition().x+320,this.getPosition().y);
-        }
-    }
-});
-
-//スクロール移動する岩クラス1
-var ScrollingRA = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
-    ctor:function() {
-        this._super();
-        this.initWithFile(res.rock_above_png);
-    },
-    //onEnterメソッドはスプライト描画の際に必ず呼ばれる
-    onEnter:function() {
-      //背景画像の描画開始位置 横960の画像の中心が、画面の端に設置される
-      this.setPosition(size.width,size.height-82 );
-      //  this.setPosition(480,160);
-    },
-    scroll:function(){
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed2,this.getPosition().y);
-        //画面の端に到達したら反対側の座標にする
-        if(this.getPosition().x<0){
-            this.setPosition(this.getPosition().x+320,this.getPosition().y);
-        }
-    }
-});
-
-//スクロール移動する岩クラス2
-var ScrollingRU = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
-    ctor:function() {
-        this._super();
-        this.initWithFile(res.rock_under_png);
-    },
-    //onEnterメソッドはスプライト描画の際に必ず呼ばれる
-    onEnter:function() {
-      //背景画像の描画開始位置 横960の画像の中心が、画面の端に設置される
-      this.setPosition(size.width,117 );
-      //  this.setPosition(480,160);
-    },
-    scroll:function(){
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed2,this.getPosition().y);
-        //画面の端に到達したら反対側の座標にする
-        if(this.getPosition().x<0){
-            this.setPosition(this.getPosition().x+320,this.getPosition().y);
-        }
-    }
-});
-
-//スクロール移動する地面クラス1
-var ScrollingCE = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
-    ctor:function() {
-        this._super();
-        this.initWithFile(res.ceiling_png);
-    },
-    //onEnterメソッドはスプライト描画の際に必ず呼ばれる
-    onEnter:function() {
-      //背景画像の描画開始位置 横960の画像の中心が、画面の端に設置される
-      this.setPosition(size.width,size.height-57 );
-      //  this.setPosition(480,160);
-    },
-    scroll:function(){
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed3,this.getPosition().y);
-        //画面の端に到達したら反対側の座標にする
-        if(this.getPosition().x<0){
-            this.setPosition(this.getPosition().x+320,this.getPosition().y);
-        }
-    }
-});
-
-//スクロール移動する地面クラス2
-var ScrollingLA = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
-    ctor:function() {
-        this._super();
-        this.initWithFile(res.land_png);
-    },
-    //onEnterメソッドはスプライト描画の際に必ず呼ばれる
-    onEnter:function() {
-      //背景画像の描画開始位置 横960の画像の中心が、画面の端に設置される
-      this.setPosition(size.width,57 );
-      //  this.setPosition(480,160);
-    },
-    scroll:function(){
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed3,this.getPosition().y);
         //画面の端に到達したら反対側の座標にする
         if(this.getPosition().x<0){
             this.setPosition(this.getPosition().x+320,this.getPosition().y);
@@ -308,90 +174,6 @@ var Player = cc.Sprite.extend({
        }
        restartGame();
      }
-  }
-});
-
-// 下サンゴクラス
-var Coral_under = cc.Sprite.extend({
-  ctor: function() {
-    this._super();
-    this.initWithFile(res.coral_under_png);
-  },
-  onEnter: function() {
-    this._super();
-    this.setPosition(600, Math.random(5) * 100);
-    var moveAction = cc.MoveTo.create(6, new cc.Point(-100, -150));
-    this.runAction(moveAction);
-    this.scheduleUpdate();
-  },
-  update: function(dt) {
-    //サンゴとの衝突を判定する処理
-    var playerBoundingBox = player.getBoundingBox();
-    var coralBoundingBox = this.getBoundingBox();
-    //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(playerBoundingBox, coralBoundingBox) && player.invulnerability == 0) {
-      gameLayer.removeCoral(this); //を削除する
-      /*
-      //ボリュームを上げる
-      audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
-      //効果音を再生する
-      audioEngine.playEffect(res.se_death);
-      */
-      life--;
-      lifeText.setString("LIFE : " + life);
-      if(life < 1){
-        //audioEngine.stopMusic();
-        gameover.score = score;
-        cc.director.runScene(new gameover());
-      }
-      restartGame();
-    }
-    //画面の外にでたサンゴを消去する処理
-    if (this.getPosition().x < -50) {
-      gameLayer.removeCoral(this)
-    }
-  }
-});
-
-// 上サンゴクラス
-var Coral_above = cc.Sprite.extend({
-  ctor: function() {
-    this._super();
-    this.initWithFile(res.coral_above_png);
-  },
-  onEnter: function() {
-    this._super();
-    this.setPosition(600, (Math.random(5) * 500)+400);
-    var moveAction = cc.MoveTo.create(6, new cc.Point(-100, 600));
-    this.runAction(moveAction);
-    this.scheduleUpdate();
-  },
-  update: function(dt) {
-    //サンゴとの衝突を判定する処理
-    var playerBoundingBox = player.getBoundingBox();
-    var coralBoundingBox = this.getBoundingBox();
-    //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(playerBoundingBox, coralBoundingBox) && player.invulnerability == 0) {
-      gameLayer.removeCoral(this); //を削除する
-      /*
-      //ボリュームを上げる
-      audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
-      //効果音を再生する
-      audioEngine.playEffect(res.se_death);
-      */
-      life--;
-      lifeText.setString("LIFE : " + life);
-      if(life < 1){
-        //audioEngine.stopMusic();
-        gameover.score = score;
-        cc.director.runScene(new gameover());
-      }
-      restartGame();
-    }
-    //画面の外にでたサンゴを消去する処理
-    if (this.getPosition().x < -50) {
-      gameLayer.removeCoral(this)
-    }
   }
 });
 
