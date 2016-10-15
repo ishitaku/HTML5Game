@@ -58,7 +58,10 @@ var gamestart = cc.Layer.extend({
     onTouchesCancelled:function (touches, event) {
         self.touched = null;
     }
-	
+    });
+    
+    cc.eventManager.addListener(touch,this);
+    
 });
 
 var GameStartScene = cc.Scene.extend({
