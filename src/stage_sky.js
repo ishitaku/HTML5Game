@@ -85,7 +85,7 @@ var game = cc.Layer.extend({
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItemPlus, 0.5);
+        this.schedule(this.addItemPlus, 1);
 
     },
     update:function(dt){
@@ -195,7 +195,7 @@ var ItemPlus = cc.Sprite.extend({
   onEnter: function() {
     this._super();
     this.setPosition(1200, Math.random() * 800);
-    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 800));
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 800));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
