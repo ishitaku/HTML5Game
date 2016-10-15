@@ -270,8 +270,8 @@ var MinusPlus = cc.Sprite.extend({
       if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
       }
-      
       }
+   }
 });
 
 //エビちゃんを元の位置に戻して、エビちゃんの変数を初期化する
