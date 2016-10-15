@@ -27,6 +27,34 @@ var gamestart = cc.Layer.extend({
                     onTouchMoved: this.onTouchMoved,
                     onTouchEnded: this.onTouchEnded
                 }, this);
+                
+                // タッチイベントに対応している
+if(window.TouchEvent){
+
+	// イベントリスナーに対応している
+	if(document.addEventListener){
+
+		// ------------------------------------------------------------
+		// タッチすると実行される関数
+		// ------------------------------------------------------------
+		function TouchEventFunc(e){
+			
+		}
+
+		// ------------------------------------------------------------
+		// リッスンを開始する
+		// ------------------------------------------------------------
+		// タッチを開始すると実行されるイベント
+		//document.addEventListener("touchstart",TouchEventFunc);
+
+		// タッチしたまま平行移動すると実行されるイベント
+		//document.addEventListener("touchmove",TouchEventFunc);
+
+		// タッチを終了すると実行されるイベント
+		document.addEventListener("touchend",ontrouchEnded);
+	}
+}
+                
 	},
 	onTouchBegan: function(touch, event) {
         return true;
