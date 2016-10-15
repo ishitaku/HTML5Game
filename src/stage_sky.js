@@ -367,7 +367,7 @@ var SponserLogo = cc.Sprite.extend({
       this.runAction(moveAction);
       this.scheduleUpdate();
     },
-    update:function(){
+    update:function(dt){
         //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < -100) {
       gameLayer.removeObject(this)
