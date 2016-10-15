@@ -15,7 +15,7 @@ var scrollSpeed2 = 1.5;
 var scrollSpeed3 = 2;
 var player;
 var gameGravity = -0.05;
-var gameThrust = 0.1;
+var gameThrust = 0.2;
 var life = 3;
 var score = 0;
 var itemArray;
@@ -84,7 +84,7 @@ var game = cc.Layer.extend({
         //this.addChild(land);
 
         player = new Player();
-        player.setScale(0.1);
+        player.setScale(0.15);
         this.addChild(player);
 
         // 残機表示
