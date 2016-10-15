@@ -231,7 +231,7 @@ var ItemPlus = cc.Sprite.extend({
 });
 
 //マイナスアイテムクラス
-var MinusPlus = cc.Sprite.extend({
+var ItemMinus = cc.Sprite.extend({
   ctor: function() {
     this._super();
     var num = Math.floor(Math.random() * itemMinusArray.length);
