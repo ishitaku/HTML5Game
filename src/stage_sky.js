@@ -283,7 +283,7 @@ var Player = cc.Sprite.extend({
       if(animflg >= 3) {
       animflg = 0;
       }
-      this.initWithFile(playerArray[ebiflg]);
+      this.initWithFile(playerArray[playerflg]);
       this.ySpeed += gameThrust;
       
     }
