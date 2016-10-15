@@ -363,7 +363,7 @@ var SponserLogo = cc.Sprite.extend({
     },
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
-      var moveAction = cc.MoveTo.create(3, new cc.Point(-200, this.getPostion().y));
+      var moveAction = cc.MoveTo.create(3, new cc.Point(-200, this.getPosition().y));
       this.runAction(moveAction);
       this.scheduleUpdate();
     },
