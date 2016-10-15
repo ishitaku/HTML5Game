@@ -38,29 +38,7 @@ var gamestart = cc.Layer.extend({
         cc.director.runScene(new stageSkyScene());
       },*/
       
-      //タッチイベント
-var self = this;
-var touch = cc.EventListener.create({
-    event: cc.EventListener.TOUCH_ALL_AT_ONCE,
-    swallowTouches: true,                
-    //タッチ開始
-    onTouchesBegan:function (touches, event) {
-        self.touched = touches[0].getLocation();
-    },
-    //タッチ移動
-    onTouchesMoved:function (touches, event) {
-        self.touched = touches[0].getLocation();
-    },
-    //タッチ終了
-    onTouchesEnded:function (touches, event) {
-        self.touched = null;
-    },
-    //タッチキャンセル    
-    onTouchesCancelled:function (touches, event) {
-        self.touched = null;
-    }
-});
-cc.eventManager.addListener(touch,this);
+      
       
 });
 
