@@ -358,11 +358,11 @@ var SponserLogo = cc.Sprite.extend({
     ctor:function() {
         this._super();
         this.initWithFile(res.sponser_logo_png);
-        //背景画像の描画開始位置
-      this.setPosition(size.width/2,size.height * 0.25);
+        //画像の描画開始位置
     },
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
+      this.setPosition(size.width/2,size.height * 0.25);
       var moveAction = cc.MoveTo.create(3, new cc.Point(-200, this.getPosition().y));
       this.runAction(moveAction);
       this.scheduleUpdate();
