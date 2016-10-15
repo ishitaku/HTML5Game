@@ -119,7 +119,7 @@ var game = cc.Layer.extend({
     //スポンサー様看板
     addSponserBoard: function(event) {
       var ground = new Ground();
-      ground.setScale(0.1);
+      ground.setScale(0.5);
       this.addChild(ground);
       var sponserboard = new SponserBoard();
       sponserboard.setScale(0.2);
@@ -358,11 +358,12 @@ var SponserLogo = cc.Sprite.extend({
     ctor:function() {
         this._super();
         this.initWithFile(res.sponser_logo_png);
-        //背景画像の描画開始位置
-      this.setPosition(size.width/2,size.height * 0.25);
     },
+    
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
+    //描画開始位置
+      this.setPosition(size.width/2,size.height * 0.25);
       this.scheduleUpdate();
     },
     update:function(dt){
