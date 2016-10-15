@@ -22,7 +22,7 @@ var gamestart = cc.Layer.extend({
         	// タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                    swallowTouches: true,
+                    swallowTouches: false,
                     onTouchBegan: this.onTouchBegan,
                     onTouchMoved: this.onTouchMoved,
                     onTouchEnded: this.onTouchEnded
