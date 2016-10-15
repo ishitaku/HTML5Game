@@ -66,11 +66,11 @@ var game = cc.Layer.extend({
         background0 = new ScrollingBG();
         this.addChild(background0);
         background1 = new ScrollingBG();
-        this.addChild(background1);
         background1.setPos(size.width+size.width/2, size.height/2);
+        this.addChild(background1);
         background2 = new ScrollingBG();
-        this.addChild(background2);
         background2.setPos(size.width*2+size.width/2, size.height/2);
+        this.addChild(background2);
         
         player = new Player();
         player.setScale(0.1);
@@ -105,7 +105,6 @@ var game = cc.Layer.extend({
         background1.scroll();
         background2.scroll();
         player.updateY();
-
     },
 
     addItemPlus: function(event){
@@ -137,11 +136,12 @@ var ScrollingBG = cc.Sprite.extend({
     ctor:function() {
         this._super();
         this.initWithFile(res.background_sky_png);
+        //背景画像の描画開始位置 横960の画像の中心が、画面の端に設置される
+      this.setPosition(size.width/2,size.height /2 );
     },
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
-      //背景画像の描画開始位置 横960の画像の中心が、画面の端に設置される
-      this.setPosition(size.width/2,size.height /2 );
+      
       //  this.setPosition(480,160);
     },
     scroll:function(){
