@@ -102,7 +102,7 @@ var game = cc.Layer.extend({
       this.addChild(itemPlus);
     },
     addItemMinus: function(event){
-      var itemMinus = new MinusPlus();
+      var itemMinus = new ItemMinus();
       itemMinus.setScale(0.2);
       this.addChild(itemMinus);
     },
