@@ -22,7 +22,7 @@ var itemArray;
 itemArray = new Array(res.nagoya0_png, res.nagoya1_png, res.nagoya2_png, res.nagoya3_png, res.nagoya4_png, res.nagoya5_png, res.nagoya6_png);
 var ebiflg;
 var ebiArray;
-ebiArray = new Array(res.shrimp0_png, res.shrimp1_png, res.shrimp2_png, res.shrimp3_png);
+playerArray = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png);
 
 var emitter;
 var emitter2;
@@ -262,12 +262,12 @@ var ScrollingLA = cc.Sprite.extend({
     }
 });
 
-//重力（仮）で落下する　エビちゃん　
+//重力（仮）で落下する　プレイヤー　
 var Shrimp = cc.Sprite.extend({
   ctor: function() {
     ebiflg = 0;
     this._super();
-    this.initWithFile(ebiArray[0]);
+    this.initWithFile(playerArray[0]);
     this.ySpeed = 0; //エビちゃんの垂直速度
 
     this.engineOn = false; //カスタム属性追加　エビちゃんのジャンプON OFF
@@ -279,13 +279,11 @@ var Shrimp = cc.Sprite.extend({
   updateY: function() {
     if(this.engineOn){
       ebiflg++;
-      if(ebiflg == 4) ebiflg = 0;
-      this.initWithFile(ebiArray[ebiflg]);
+      if(ebiflg >= 3) ebiflg = 0;
+      this.initWithFile(playerArray[ebiflg]);
       this.ySpeed += gameThrust;
-      //emitter.setPosition(this.getPosition().x - 25, this.getPosition().y);
-    }else {
-      //emitter.setPosition(this.getPosition().x - 250, this.getPosition().y);
-   }
+      
+    }
     //無敵モード中の視覚効果
     if (this.invulnerability > 0) {
       this.invulnerability--;
@@ -297,7 +295,7 @@ var Shrimp = cc.Sprite.extend({
     this.ySpeed += gameGravity;
 
     //エビちゃんが画面外にでたら、リスタートさせる
-     if (this.getPosition().y < 0 || this.getPosition().y > 1600) {
+     if (this.getPosition().y < 0 || this.getPosition().y > 1500) {
        //life--;
        lifeText.setString("LIFE : " + life);
        if(life < 1){
