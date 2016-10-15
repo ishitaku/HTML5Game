@@ -121,8 +121,10 @@ var game = cc.Layer.extend({
       var ground = new Ground();
       this.addChild(ground);
       var sponserboard = new SponserBoard();
+      sponserboard.setScale(0.25);
       this.addChild(sponserboard);
       var sponserlogo = new SponserLogo();
+      sponserlogo.setScale(0.25);
       this.addChild(sponserlogo);
     },
     //オブジェクトを削除
@@ -362,7 +364,7 @@ var SponserLogo = cc.Sprite.extend({
     onEnter:function() {
       this.scheduleUpdate();
     },
-    updat:function(){
+    update:function(){
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
         //画面の外にでたアイテムを消去する処理
