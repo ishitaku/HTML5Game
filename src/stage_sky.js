@@ -223,6 +223,7 @@ var ItemPlus = cc.Sprite.extend({
         lifeScore -= LIFE_UP_SCORE;
         if(life < 10) {
           life++;
+          lifeText.setString("LIFE : " + life);
         }
       }
     }
