@@ -13,7 +13,7 @@ var land;
 var scrollSpeed = 1;
 var scrollSpeed2 = 1.5;
 var scrollSpeed3 = 2;
-var shrimp;
+var player;
 var gameGravity = -0.05;
 var gameThrust = 0.1;
 var life = 3;
@@ -84,7 +84,7 @@ var game = cc.Layer.extend({
         //this.addChild(land);
 
         player = new Player();
-        player.setScale(0.25);
+        player.setScale(0.2);
         this.addChild(player);
 
         // 残機表示
@@ -139,12 +139,12 @@ var game = cc.Layer.extend({
       this.removeChild(coral);
     },
     onTouchBegan: function(touch, event) {
-	shrimp.engineOn = true;
+	player.engineOn = true;
         return true;
       },
       onTouchMoved: function(touch, event) {},
       onTouchEnded: function(touch, event) {
-        shrimp.engineOn = false;
+        player.engineOn = false;
       },
     
 });
@@ -326,10 +326,10 @@ var Coral_under = cc.Sprite.extend({
   },
   update: function(dt) {
     //サンゴとの衝突を判定する処理
-    var shrimpBoundingBox = shrimp.getBoundingBox();
+    var playerBoundingBox = player.getBoundingBox();
     var coralBoundingBox = this.getBoundingBox();
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(shrimpBoundingBox, coralBoundingBox) && shrimp.invulnerability == 0) {
+    if (cc.rectIntersectsRect(playerBoundingBox, coralBoundingBox) && player.invulnerability == 0) {
       gameLayer.removeCoral(this); //を削除する
       /*
       //ボリュームを上げる
@@ -368,10 +368,10 @@ var Coral_above = cc.Sprite.extend({
   },
   update: function(dt) {
     //サンゴとの衝突を判定する処理
-    var shrimpBoundingBox = shrimp.getBoundingBox();
+    var playerBoundingBox = player.getBoundingBox();
     var coralBoundingBox = this.getBoundingBox();
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(shrimpBoundingBox, coralBoundingBox) && shrimp.invulnerability == 0) {
+    if (cc.rectIntersectsRect(playerBoundingBox, coralBoundingBox) && player.invulnerability == 0) {
       gameLayer.removeCoral(this); //を削除する
       /*
       //ボリュームを上げる
@@ -412,10 +412,10 @@ var Item = cc.Sprite.extend({
   },
   update: function(dt) {
     //アイテムとの衝突を判定する処理
-    var shrimpBoundingBox = shrimp.getBoundingBox();
+    var playerBoundingBox = player.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
 		//rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(shrimpBoundingBox, itemBoundingBox) ) {
+    if (cc.rectIntersectsRect(playerBoundingBox, itemBoundingBox) ) {
       gameLayer.removeCoral(this);//アイテムを削除する
       /*
       //ボリュームを上げる
@@ -437,9 +437,9 @@ var Item = cc.Sprite.extend({
 
 //エビちゃんを元の位置に戻して、エビちゃんの変数を初期化する
 function restartGame() {
-  shrimp.ySpeed = 0;
-  shrimp.setPosition(shrimp.getPosition().x, size.height * 0.5);
-  shrimp.invulnerability = 100;
+  player.ySpeed = 0;
+  player.setPosition(player.getPosition().x, size.height * 0.5);
+  player.invulnerability = 100;
   /*
   //bgmリスタート
   if (!audioEngine.isMusicPlaying()) {
