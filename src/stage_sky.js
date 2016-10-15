@@ -16,7 +16,6 @@ var life = 3;
 var score = 0;
 var itemPlusArray;
 var itemMinusArray;
-//itemPlusArray = new Array(res.nagoya0_png, res.nagoya1_png, res.nagoya2_png, res.nagoya3_png, res.nagoya4_png, res.nagoya5_png, res.nagoya6_png);
 itemPlusArray = new Array(res.item_plus00_png, res.item_plus01_png);
 itemMinusArray = new Array(res.item_minus00_png, res.item_minus01_png);
 var animflg;
@@ -86,7 +85,9 @@ var game = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlus, 1.5);
-
+        this.schedule(this.addItemMinus, 3);
+        
+        
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
@@ -99,6 +100,11 @@ var game = cc.Layer.extend({
       var itemPlus = new ItemPlus();
       itemPlus.setScale(0.2);
       this.addChild(itemPlus);
+    },
+    addMinusMinus: function(event){
+      var itemMinus = new MinusPlus();
+      itemMinus.setScale(0.2);
+      this.addChild(itemMinus);
     },
     removeObject(object) {
       this.removeChild(object);
@@ -184,7 +190,7 @@ var Player = cc.Sprite.extend({
   }
 });
 
-//アイテムクラス
+//プラスアイテムクラス
 var ItemPlus = cc.Sprite.extend({
 
   ctor: function() {
@@ -218,6 +224,49 @@ var ItemPlus = cc.Sprite.extend({
       scoreText.setString("SCORE : " + score);
       }
 		//画面の外にでた小惑星を消去する処理
+    if (this.getPosition().x < -50) {
+      gameLayer.removeObject(this)
+    }
+  }
+});
+
+//マイナスアイテムクラス
+var MinusPlus = cc.Sprite.extend({
+
+  ctor: function() {
+    this._super();
+    var num = Math.floor(Math.random() * itemMinusArray.length);
+    this.initWithFile(itemMinusArray[num]);
+  },
+  onEnter: function() {
+    this._super();
+    this.setPosition(1200, Math.random() * 900);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    this.runAction(moveAction);
+    this.scheduleUpdate();
+  },
+  update: function(dt) {
+    //アイテムとの衝突を判定する処理
+    var playerBoundingBox = player.getBoundingBox();
+    var itemBoundingBox = this.getBoundingBox();
+		//rectIntersectsRectは２つの矩形が交わっているかチェックする
+    if (cc.rectIntersectsRect(playerBoundingBox, itemBoundingBox) ) {
+      gameLayer.removeObject(this);//アイテムを削除する
+      /*
+      //ボリュームを上げる
+      audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
+      //効果音を再生する
+      audioEngine.playEffect(res.se_decide);
+      */
+      
+      life--;
+      lifeText.setString("LIFE : " + life);
+      if(life < 1){
+        //audioEngine.stopMusic();
+        gameover.score = score;
+        cc.director.runScene(new gameover());
+      }
+		//画面の外にでたアイテムを消去する処理
     if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
     }
