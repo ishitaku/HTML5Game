@@ -66,10 +66,10 @@ var game = cc.Layer.extend({
         background0 = new ScrollingBG();
         this.addChild(background0);
         background1 = new ScrollingBG();
-        background1.setPosition(size.width+size.width/2, size.height/2);
+        background1.setPos(size.width+size.width/2, size.height/2);
         this.addChild(background1);
         background2 = new ScrollingBG();
-        background2.setPosition(size.width*2+size.width/2, size.height/2);
+        background2.setPos(size.width*2+size.width/2, size.height/2);
         this.addChild(background2);
         
         player = new Player();
@@ -152,7 +152,10 @@ var ScrollingBG = cc.Sprite.extend({
             this.setPosition(size.width*2+size.width/2, size.height/2);
         }
     },
-    
+    setPos:function(x, y){
+      //座標を更新する
+        this.setPosition(x, y);
+    },
 });
 
 //重力（仮）で落下する　プレイヤー　
