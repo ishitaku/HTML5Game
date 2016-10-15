@@ -18,7 +18,8 @@ var gamestart = cc.Layer.extend({
 		title_logo.setPosition(size.width/2,size.height * 0.3);
         	this.addChild(title_logo);
         	
-        	/*
+        	
+        	
         	// タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -36,9 +37,7 @@ var gamestart = cc.Layer.extend({
         // 次のシーンに切り替える
         cc.audioEngine.stopMusic();
         cc.director.runScene(new stageSkyScene());
-      },*/
-      
-      
+      },
       
 });
 
