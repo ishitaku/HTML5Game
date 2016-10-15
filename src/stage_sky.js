@@ -189,8 +189,8 @@ var ItemPlus = cc.Sprite.extend({
 
   ctor: function() {
     this._super();
-    var num = Math.floor(Math.random() * itemArray.length);
-    this.initWithFile(itemArray[num]);
+    var num = Math.floor(Math.random() * itemPlusArray.length);
+    this.initWithFile(itemPlusArray[num]);
   },
   onEnter: function() {
     this._super();
