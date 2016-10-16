@@ -421,10 +421,12 @@ var GoalFlag = cc.Sprite.extend({
   },
   update: function(dt) {
       //座標を更新する
-      this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
+      if(!goalStop) {
+        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
+      }
       //画面の外にでたアイテムを消去する処理
       if (player.getPosition().x < 50) {
-        this.unscheduleUpdate();
+        //this.unscheduleUpdate();
         goalStop = true;
       }
    }
