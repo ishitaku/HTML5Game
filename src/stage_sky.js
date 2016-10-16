@@ -123,6 +123,7 @@ var gameSky = cc.Layer.extend({
       this.addChild(sponserboard);
       var sponserlogo = new SponserLogo();
       sponserlogo.setScale(0.2);
+      sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
       this.addChild(sponserlogo);
     },
     //オブジェクトを削除
@@ -317,10 +318,10 @@ var Ground = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_sky_png);
+    this.setPosition(1200, 50);
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 100);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     this.runAction(moveAction);
     this.scheduleUpdate();
@@ -339,10 +340,10 @@ var SponserBoard = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_board_png);
+    this.setPosition(1200, 150);
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 150);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     this.runAction(moveAction);
     this.scheduleUpdate();
@@ -361,10 +362,10 @@ var SponserLogo = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
+    this.setPosition(1200, 200);
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 200);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     this.runAction(moveAction);
     this.scheduleUpdate();
@@ -376,6 +377,7 @@ var SponserLogo = cc.Sprite.extend({
       gameLayer.removeObject(this)
       }
    }
+   
 });
 
 
