@@ -5,6 +5,7 @@
 var size;
 var mylabel;
 var gameLayer;
+var audioEngine;
 var background0;
 var background1;
 var background2;
@@ -38,12 +39,12 @@ var stageSkyScene = cc.Scene.extend({
         gameLayer = new gameSky();
         gameLayer.init();
         this.addChild(gameLayer);
-/*
+        
         //音楽再生エンジン
     audioEngine = cc.audioEngine;
     //bgm再生
     if (!audioEngine.isMusicPlaying()) {
-      audioEngine.playMusic(res.bgm_main, true);
+      audioEngine.playMusic(res.stagesky_bgm_mp3, true);
     }*/
     }
 });
@@ -255,12 +256,10 @@ var ItemPlus = cc.Sprite.extend({
 		//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(playerBoundingBox, itemBoundingBox) ) {
       gameLayer.removeObject(this);//アイテムを削除する
-      /*
       //ボリュームを上げる
       audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
-      audioEngine.playEffect(res.se_decide);
-      */
+      audioEngine.playEffect(res.plus_se_mp3);
       
       //スコア追加処理
       score += 10;
@@ -305,12 +304,6 @@ var ItemMinus = cc.Sprite.extend({
       gameLayer.removeObject(this);
       //ダメージ
       damage();
-      /*
-      //ボリュームを上げる
-      audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
-      //効果音を再生する
-      audioEngine.playEffect(res.se_decide);
-      */
       
     }
     if (this.getPosition().x < 50) {
@@ -431,6 +424,7 @@ var GoalFlag = cc.Sprite.extend({
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(playerBoundingBox, flagBoundingBox) ) {
+        cc.audioEngine.stopMusic();
         cc.director.runScene(new StageClearSkyScene());
       }
    }
@@ -459,14 +453,20 @@ function damage() {
       life--;
       lifeText.setString("LIFE : " + life);
       if(life < 1){
-        //audioEngine.stopMusic();
+        audioEngine.stopMusic();
         gameover.score = score;
         cc.director.runScene(new GameOverSkyScene());
       }
+      
+      //ボリュームを上げる
+      audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
+      //効果音を再生する
+      audioEngine.playEffect(res.damage_se_mp3);
+      
       player.invulnerability = 100;
 }
 
-//プレイヤーを元の位置に戻して、エビちゃんの変数を初期化する
+//プレイヤー元の位置に戻す
 function restartGame() {
   damage();
   player.ySpeed = 0;

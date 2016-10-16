@@ -1,4 +1,6 @@
 ﻿
+var audioEngine;
+
 var gamestart = cc.Layer.extend({
 	ctor: function() {
 		this._super();
@@ -29,7 +31,7 @@ var gamestart = cc.Layer.extend({
                 }, this);
                 
                 //音楽再生エンジン
-    		var audioEngine = cc.audioEngine;
+    		audioEngine = cc.audioEngine;
     		//bgm再生
     		if (!audioEngine.isMusicPlaying()) {
       		  audioEngine.playMusic(res.title_bgm_mp3, true);
@@ -44,7 +46,7 @@ var gamestart = cc.Layer.extend({
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
           cc.director.runScene(new stageSkyScene());
-          //alert("touch");
+          
         },
       
 });
