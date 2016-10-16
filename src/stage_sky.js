@@ -249,7 +249,7 @@ var ItemPlus = cc.Sprite.extend({
       }
     }
 		//画面の外にでたアイテムを消去する処理
-    if (this.getPosition().x < -50) {
+    if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
     }
   }
@@ -288,7 +288,7 @@ var ItemMinus = cc.Sprite.extend({
       
       
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < -50) {
+      if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
       }
       }
@@ -330,7 +330,7 @@ var Ground = cc.Sprite.extend({
   update: function(dt) {
       
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < -50) {
+      if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
       }
    }
