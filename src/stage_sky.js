@@ -286,13 +286,11 @@ var ItemMinus = cc.Sprite.extend({
       audioEngine.playEffect(res.se_decide);
       */
       
-      
-      //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+    }
+    if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
-      }
-      }
-   }
+    }
+  }
 });
 
 
