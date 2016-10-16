@@ -123,7 +123,7 @@ var gameSky = cc.Layer.extend({
       this.addChild(sponserboard);
       var sponserlogo = new SponserLogo();
       sponserlogo.setScale(0.2);
-      sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
+      //sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
       this.addChild(sponserlogo);
     },
     //オブジェクトを削除
@@ -322,12 +322,13 @@ var Ground = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
-    this.runAction(moveAction);
+    //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
+    //this.runAction(moveAction);
     this.scheduleUpdate();
   },
   update: function(dt) {
-      
+      //座標を更新する
+        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
@@ -344,12 +345,13 @@ var SponserBoard = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
-    this.runAction(moveAction);
+    //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
+    //this.runAction(moveAction);
     this.scheduleUpdate();
   },
   update: function(dt) {
-      
+      //座標を更新する
+        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
@@ -366,12 +368,13 @@ var SponserLogo = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
-    this.runAction(moveAction);
+    //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
+    //this.runAction(moveAction);
     this.scheduleUpdate();
   },
   update: function(dt) {
-      
+      //座標を更新する
+        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
