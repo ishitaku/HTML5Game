@@ -333,7 +333,6 @@ var Ground = cc.Sprite.extend({
       if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
       }
-      }
    }
 });
 
