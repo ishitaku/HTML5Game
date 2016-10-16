@@ -13,10 +13,10 @@ var gamestart = cc.Layer.extend({
 		title_logo.setPosition(size.width/2,size.height * 0.7);
         	this.addChild(title_logo);
         	
-        	var title_logo = cc.Sprite.create(res.start_logo_png);
-        	title_logo.setScale(0.7);
-		title_logo.setPosition(size.width/2,size.height * 0.3);
-        	this.addChild(title_logo);
+        	var start_logo = cc.Sprite.create(res.start_logo_png);
+        	start_logo.setScale(0.7);
+		start_logo.setPosition(size.width/2,size.height * 0.3);
+        	this.addChild(start_logo);
         	
         	
         	// タップイベントリスナーを登録する
@@ -36,6 +36,10 @@ var gamestart = cc.Layer.extend({
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
           cc.director.runScene(new stageSkyScene());
+          var start_logo2 = cc.Sprite.create(res.start_logo_png);
+        	start_logo2.setScale(0.7);
+		start_logo2.setPosition(size.width/2,size.height * 0.2);
+        	this.addChild(start_logo2);
         },
       
 });
