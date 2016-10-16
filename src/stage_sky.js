@@ -126,7 +126,7 @@ var gameSky = cc.Layer.extend({
       this.addChild(sponserlogo);
     },
     //オブジェクトを削除
-    removeObject(object) {
+    removeObject: function(object) {
       this.removeChild(object);
     },
     //タッチ
