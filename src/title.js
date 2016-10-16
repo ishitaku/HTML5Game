@@ -27,6 +27,13 @@ var gamestart = cc.Layer.extend({
                     onTouchMoved: this.onTouchMoved,
                     onTouchEnded: this.onTouchEnded
                 }, this);
+                
+                //音楽再生エンジン
+    		audioEngine = cc.audioEngine;
+    		//bgm再生
+    		if (!audioEngine.isMusicPlaying()) {
+      		  audioEngine.playMusic(res.title_bmg_mp3, true);
+    		}
 	},
 	onTouchBegan: function(touch, event) {
           return true;
