@@ -40,10 +40,10 @@ var stageSkyScene = cc.Scene.extend({
         this.addChild(gameLayer);
         
         //音楽再生エンジン
-        var audioEngine = cc.audioEngine;
+        var cc.audioEngine = cc.cc.audioEngine;
         //bgm再生
-        if (!audioEngine.isMusicPlaying()) {
-          audioEngine.playMusic(res.stagesky_bgm_mp3, true);
+        if (!cc.audioEngine.isMusicPlaying()) {
+          cc.audioEngine.playMusic(res.stagesky_bgm_mp3, true);
         }
     }
 });
@@ -256,9 +256,9 @@ var ItemPlus = cc.Sprite.extend({
     if (cc.rectIntersectsRect(playerBoundingBox, itemBoundingBox) ) {
       gameLayer.removeObject(this);//アイテムを削除する
       //ボリュームを上げる
-      audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
+      cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
-      audioEngine.playEffect(res.plus_se_mp3);
+      cc.audioEngine.playEffect(res.plus_se_mp3);
       
       //スコア追加処理
       score += 10;
@@ -423,7 +423,7 @@ var GoalFlag = cc.Sprite.extend({
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(playerBoundingBox, flagBoundingBox) ) {
-        cc.audioEngine.stopMusic();
+        cc.cc.audioEngine.stopMusic();
         cc.director.runScene(new StageClearSkyScene());
       }
    }
@@ -452,15 +452,15 @@ function damage() {
       life--;
       lifeText.setString("LIFE : " + life);
       if(life < 1){
-        audioEngine.stopMusic();
+        cc.audioEngine.stopMusic();
         gameover.score = score;
         cc.director.runScene(new GameOverSkyScene());
       }
       
       //ボリュームを上げる
-      audioEngine.setEffectsVolume(audioEngine.getEffectsVolume() + 0.3);
+      cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
-      audioEngine.playEffect(res.damage_se_mp3);
+      cc.audioEngine.playEffect(res.damage_se_mp3);
       
       player.invulnerability = 100;
 }
@@ -473,7 +473,7 @@ function restartGame() {
   
   /*
   //bgmリスタート
-  if (!audioEngine.isMusicPlaying()) {
-    audioEngine.resumeMusic();
+  if (!cc.audioEngine.isMusicPlaying()) {
+    cc.audioEngine.resumeMusic();
   }*/
 }
