@@ -33,10 +33,7 @@ var gamestart = cc.Layer.extend({
         },
         onTouchMoved: function(touch, event) {},
         onTouchEnded: function(touch, event) {
-        var start_logo2 = cc.Sprite.create(res.start_logo_png);
-        	start_logo2.setScale(0.7);
-		start_logo2.setPosition(300,200);
-        	this.addChild(start_logo2);
+        
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
           //cc.director.runScene(new stageSkyScene());
@@ -44,6 +41,13 @@ var gamestart = cc.Layer.extend({
         },
       
 });
+
+function test() {
+var start_logo2 = cc.Sprite.create(res.start_logo_png);
+        	start_logo2.setScale(0.7);
+		start_logo2.setPosition(200, 200);
+        	gamestart.addChild(start_logo2);
+}
 
 var GameStartScene = cc.Scene.extend({
     onEnter: function() {
