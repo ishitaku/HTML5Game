@@ -29,12 +29,7 @@ var gamestart = cc.Layer.extend({
                     onTouchEnded: this.onTouchEnded
                 }, this);
                 
-                //音楽再生エンジン
-    		var audioEngine = cc.audioEngine;
-    		//bgm再生
-    		if (!audioEngine.isMusicPlaying()) {
-      		  audioEngine.playMusic(res.title_bgm_mp3, true);
-    		}
+                
 	},
 	onTouchBegan: function(touch, event) {
           return true;
@@ -54,9 +49,14 @@ var gamestart = cc.Layer.extend({
 var GameStartScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-
         var layer1 = new gamestart();
         this.addChild(layer1);
+        //音楽再生エンジン
+    		var audioEngine = cc.audioEngine;
+    		//bgm再生
+    		if (!audioEngine.isMusicPlaying()) {
+      		  audioEngine.playMusic(res.title_bgm_mp3, true);
+    		}
     }
 });
 
