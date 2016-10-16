@@ -36,8 +36,8 @@ var gamestart = cc.Layer.extend({
         
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
-          //cc.director.runScene(new stageSkyScene());
-          alert("touch");
+          cc.director.runScene(new stageSkyScene());
+          //alert("touch");
         },
       
 });

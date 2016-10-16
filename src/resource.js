@@ -1,5 +1,4 @@
 ﻿var res = {
-    gigu_png : "res/gi-gu.png",
     title_logo_png : "res/title_logo.png",
     start_logo_png : "res/start_logo.png",
     background_sky_png: "res/background_sky.png",
