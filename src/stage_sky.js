@@ -431,7 +431,7 @@ var GoalFlag = cc.Sprite.extend({
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(playerBoundingBox, flagBoundingBox) ) {
-        cc.director.runScene(new GameClearSkyScene());
+        cc.director.runScene(new StageClearSkyScene());
       }
    }
    

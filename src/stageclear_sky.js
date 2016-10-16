@@ -37,7 +37,7 @@ var stageClearSky = cc.Layer.extend({
     onTouchEnded: function(touch, event) {
     // 次のシーンに切り替える
       cc.audioEngine.stopMusic();
-      cc.director.runScene(new stageSkyScene());
+      //cc.director.runScene(new stageSkyScene());
     },
 });
 
