@@ -343,7 +343,7 @@ var SponserBoard = cc.Sprite.extend({
   onEnter: function() {
     this._super();
     this.setPosition(1200, 300);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 200));
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 300));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -355,6 +355,29 @@ var SponserBoard = cc.Sprite.extend({
       }
    }
 });
+
+//看板ロゴクラス
+var SponserBoard = cc.Sprite.extend({
+  ctor: function() {
+    this._super();
+    this.initWithFile(res.sponser_logo_png);
+  },
+  onEnter: function() {
+    this._super();
+    this.setPosition(1200, 400);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 400));
+    this.runAction(moveAction);
+    this.scheduleUpdate();
+  },
+  update: function(dt) {
+      
+      //画面の外にでたアイテムを消去する処理
+      if (this.getPosition().x < 50) {
+      gameLayer.removeObject(this)
+      }
+   }
+});
+
 
 //背景管理
 function backgroundUpdate() {
