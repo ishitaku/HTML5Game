@@ -9,8 +9,6 @@ var background0;
 var background1;
 var background2;
 var scrollSpeed = 2;
-var scrollSpeed2 = 1.5;
-var scrollSpeed3 = 2;
 var player;
 var gameGravity = -0.05;
 var gameThrust = 0.15;
@@ -18,6 +16,7 @@ var life = 3;
 var score = 0;
 var lifeScore = 0;
 var LIFE_UP_SCORE = 100;
+var goalStop = false;
 var itemPlusArray;
 var itemMinusArray;
 itemPlusArray = new Array(res.item_plus00_png, res.item_plus01_png);
@@ -25,6 +24,11 @@ itemMinusArray = new Array(res.item_minus00_png, res.item_minus01_png);
 var animflg;
 var playerArray;
 playerArray = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png);
+var State = {
+ GAME : 0,
+ GOAL: 1
+};
+var nowstate = State.GAME;
 
 var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
@@ -94,11 +98,25 @@ var gameSky = cc.Layer.extend({
         this.schedule(this.addItemPlus, 1.5);
         this.schedule(this.addItemMinus, 3);
         this.schedule(this.addSponserBoard, 10);
-        
+        this.scheduleOnce(this.addGoal, 15);
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
+        switch(nowstate) {
+        case State.GAME:
         backgroundUpdate();
+        if(goalStop) {
+          nowstate = State.GOAL;
+          this.unschedule(this.addItemPlus);
+          this.unschedule(this.addItemMinus);
+        }
+        break;
+        case State.GOAL:
+        break;
+        default:
+        break;
+        }
+        
         player.updateY();
     },
     //プラスアイテムを追加
@@ -125,6 +143,13 @@ var gameSky = cc.Layer.extend({
       sponserlogo.setScale(0.2);
       //sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
       this.addChild(sponserlogo);
+    },
+    //ゴール
+    addGoal: function() {
+      var goalflag = new GoalFlag();
+      goalflag.setScale(0.2);
+      this.addChild(goalflag);
+      this.unschedule(this.addSponserBoard);
     },
     //オブジェクトを削除
     removeObject: function(object) {
@@ -383,6 +408,28 @@ var SponserLogo = cc.Sprite.extend({
    
 });
 
+//ゴール旗クラス
+var GoalFlag = cc.Sprite.extend({
+  ctor: function() {
+    this._super();
+    this.initWithFile(res.goal_flag_png);
+    this.setPosition(1200, 200);
+  },
+  onEnter: function() {
+    this._super();
+    this.scheduleUpdate();
+  },
+  update: function(dt) {
+      //座標を更新する
+      this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
+      //画面の外にでたアイテムを消去する処理
+      if (player.getPosition().x < 50) {
+        this.unscheduleUpdate();
+        goalStop = true;
+      }
+   }
+   
+});
 
 //背景管理
 function backgroundUpdate() {
