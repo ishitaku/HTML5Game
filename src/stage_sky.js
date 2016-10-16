@@ -118,12 +118,12 @@ var gameSky = cc.Layer.extend({
       var ground = new Ground();
       ground.setScale(0.5);
       this.addChild(ground);
-      var sponserboard = new SponserBoard();
-      sponserboard.setScale(0.2);
-      this.addChild(sponserboard);
-      var sponserlogo = new SponserLogo();
-      sponserlogo.setScale(0.2);
-      this.addChild(sponserlogo);
+      //var sponserboard = new SponserBoard();
+      //sponserboard.setScale(0.2);
+      //this.addChild(sponserboard);
+      //var sponserlogo = new SponserLogo();
+      //sponserlogo.setScale(0.2);
+      //this.addChild(sponserlogo);
     },
     //オブジェクトを削除
     removeObject: function(object) {
@@ -295,88 +295,49 @@ var ItemMinus = cc.Sprite.extend({
    }
 });
 
-//足場
+
+
+//背景管理
+function backgroundUpdate() {
+	background0.scroll();
+        background1.scroll();
+        background2.scroll();
+        //画面の端に到達したら反対側の座標にする
+        if(background0.getPosition().x < -size.width/2){
+            background0.setPosition(background2.getPosition().x+size.width, size.height/2);
+        }
+        if(background1.getPosition().x < -size.width/2){
+            background1.setPosition(background0.getPosition().x+size.width, size.height/2);
+        }
+        if(background2.getPosition().x < -size.width/2){
+            background2.setPosition(background1.getPosition().x+size.width, size.height/2);
+        }
+}
+
+//足場クラス
 var Ground = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
-    ctor:function() {
-        this._super();
-        this.initWithFile(res.ground_sky_png);
-        //描画開始位置
-      this.setPosition(size.width/2,size.height * 0.1 );
-    },
-    //onEnterメソッドはスプライト描画の際に必ず呼ばれる
-    onEnter:function() {
-      this.scheduleUpdate();
-    },
-    update:function(){
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
-        //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < -200) {
+  ctor: function() {
+    this._super();
+    this.initWithFile(ground_sky_png);
+  },
+  onEnter: function() {
+    this._super();
+    this.setPosition(1200, 200);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 200));
+    this.runAction(moveAction);
+    this.scheduleUpdate();
+  },
+  update: function(dt) {
+      
+      //画面の外にでたアイテムを消去する処理
+      if (this.getPosition().x < -50) {
       gameLayer.removeObject(this)
       }
-    },
-    setPos:function(x, y){
-      //座標を更新する
-        this.setPosition(x, y);
-    },
+      }
+   }
 });
 
-//スポンサー様看板
-var SponserBoard = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
-    ctor:function() {
-        this._super();
-        this.initWithFile(res.sponser_board_png);
-        //背景画像の描画開始位置
-      this.setPosition(size.width/2,size.height * 0.2);
-    },
-    //onEnterメソッドはスプライト描画の際に必ず呼ばれる
-    onEnter:function() {
-      this.scheduleUpdate();
-    },
-    update:function(){
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
-        //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < -200) {
-      gameLayer.removeObject(this)
-      }
-    },
-    setPos:function(x, y){
-      //座標を更新する
-        this.setPosition(x, y);
-    },
-});
 
-//スポンサー様ロゴ
-var SponserLogo = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
-    ctor:function() {
-        this._super();
-        this.initWithFile(res.sponser_logo_png);
-    },
-    
-    //onEnterメソッドはスプライト描画の際に必ず呼ばれる
-    onEnter:function() {
-    //描画開始位置
-      this.setPosition(size.width/2,size.height * 0.25);
-      this.scheduleUpdate();
-    },
-    update:function(dt){
-    
-      //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
-        //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < -200) {
-      gameLayer.removeObject(this)
-      }
-    },
-    setPos:function(x, y){
-      //座標を更新する
-        this.setPosition(x, y);
-    },
-});
 
 //背景管理
 function backgroundUpdate() {
