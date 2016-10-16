@@ -40,10 +40,10 @@ var stageSkyScene = cc.Scene.extend({
         this.addChild(gameLayer);
         
         //音楽再生エンジン
-        var cc.audioEngine = cc.cc.audioEngine;
+        var audioEngine = cc.audioEngine;
         //bgm再生
-        if (!cc.audioEngine.isMusicPlaying()) {
-          cc.audioEngine.playMusic(res.stagesky_bgm_mp3, true);
+        if (!audioEngine.isMusicPlaying()) {
+          audioEngine.playMusic(res.stagesky_bgm_mp3, true);
         }
     }
 });
