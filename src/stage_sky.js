@@ -93,7 +93,7 @@ var gameSky = cc.Layer.extend({
         //アイテム生成
         this.schedule(this.addItemPlus, 1.5);
         this.schedule(this.addItemMinus, 3);
-        this.schedule(this.addSponserBoard, 5);
+        this.schedule(this.addSponserBoard, 10);
         
     },
     update:function(dt){
