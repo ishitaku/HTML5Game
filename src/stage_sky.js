@@ -451,16 +451,15 @@ function backgroundUpdate() {
 function damage() {
       life--;
       lifeText.setString("LIFE : " + life);
+      //ボリュームを上げる
+      cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
+      //効果音を再生する
+      cc.audioEngine.playEffect(res.damage_se_mp3);
       if(life < 1){
         cc.audioEngine.stopMusic();
         gameover.score = score;
         cc.director.runScene(new GameOverSkyScene());
       }
-      
-      //ボリュームを上げる
-      cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
-      //効果音を再生する
-      cc.audioEngine.playEffect(res.damage_se_mp3);
       
       player.invulnerability = 100;
 }
