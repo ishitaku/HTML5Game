@@ -318,7 +318,7 @@ function backgroundUpdate() {
 var Ground = cc.Sprite.extend({
   ctor: function() {
     this._super();
-    this.initWithFile(ground_sky_png);
+    this.initWithFile(res.ground_sky_png);
   },
   onEnter: function() {
     this._super();
