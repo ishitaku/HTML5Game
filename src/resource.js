@@ -17,7 +17,7 @@
     gameover_logo_png : "res/gameover_logo.png",
     ground_sky_png : "res/ground_sky.png",
     retry_logo_png : "res/retry_logo.png",
-    stageclear_logo_png : "res/stageclear_png",
+    stageclear_logo_png : "res/stageclear_logo.png",
     nextstage_logo_png : "res/nextstage_logo.png",
     button_png : "res/button.png",
     buttonback_png: "res/button_back.png",

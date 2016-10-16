@@ -98,7 +98,7 @@ var gameSky = cc.Layer.extend({
         this.schedule(this.addItemPlus, 1.5);
         this.schedule(this.addItemMinus, 3);
         this.schedule(this.addSponserBoard, 10);
-        this.schedule(this.addGoal, 15);
+        this.scheduleOnce(this.addGoal, 15);
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
