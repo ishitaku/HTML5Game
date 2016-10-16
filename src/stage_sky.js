@@ -425,7 +425,7 @@ var GoalFlag = cc.Sprite.extend({
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
       }
       
-      if (player.getPosition().x < this.getPosition().x) {
+      if (player.getPosition().x > this.getPosition().x) {
         //this.unscheduleUpdate();
         goalStop = true;
       }
