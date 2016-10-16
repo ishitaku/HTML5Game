@@ -41,11 +41,11 @@ var stageSkyScene = cc.Scene.extend({
         this.addChild(gameLayer);
         
         //音楽再生エンジン
-    audioEngine = cc.audioEngine;
-    //bgm再生
-    if (!audioEngine.isMusicPlaying()) {
-      audioEngine.playMusic(res.stagesky_bgm_mp3, true);
-    }*/
+        audioEngine = cc.audioEngine;
+        //bgm再生
+        if (!audioEngine.isMusicPlaying()) {
+          audioEngine.playMusic(res.stagesky_bgm_mp3, true);
+        }
     }
 });
 
