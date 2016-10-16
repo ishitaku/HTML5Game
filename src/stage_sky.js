@@ -31,7 +31,7 @@ var stageSkyScene = cc.Scene.extend({
         this._super();
         life = 3;
         score = 0;
-        gameLayer = new game();
+        gameLayer = new gameSky();
         gameLayer.init();
         this.addChild(gameLayer);
 /*
@@ -44,13 +44,10 @@ var stageSkyScene = cc.Scene.extend({
     }
 });
 
-var game = cc.Layer.extend({
+var gameSky = cc.Layer.extend({
     init:function () {
         this._super();
         size = cc.director.getWinSize();
-        // mylabel = cc.LabelTTF.create("GO!", "Arial", "32");
-        // mylabel.setPosition(size.width / 2, size.height / 2);
-        // this.addChild(mylabel);
                
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
