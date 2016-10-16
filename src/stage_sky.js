@@ -424,8 +424,8 @@ var GoalFlag = cc.Sprite.extend({
       if(!goalStop) {
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
       }
-      //画面の外にでたアイテムを消去する処理
-      if (player.getPosition().x < 50) {
+      
+      if (player.getPosition().x < this.getPosition().x) {
         //this.unscheduleUpdate();
         goalStop = true;
       }
