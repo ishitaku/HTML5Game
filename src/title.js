@@ -39,7 +39,7 @@ var gamestart = cc.Layer.extend({
         	this.addChild(start_logo2);
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
-          cc.director.runScene(new stageSkyScene());
+          //cc.director.runScene(new stageSkyScene());
           
         },
       
