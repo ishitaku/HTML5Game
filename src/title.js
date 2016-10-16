@@ -1,5 +1,4 @@
 ﻿
-var audioEngine;
 
 var gamestart = cc.Layer.extend({
 	ctor: function() {
@@ -31,7 +30,7 @@ var gamestart = cc.Layer.extend({
                 }, this);
                 
                 //音楽再生エンジン
-    		audioEngine = cc.audioEngine;
+    		var audioEngine = cc.audioEngine;
     		//bgm再生
     		if (!audioEngine.isMusicPlaying()) {
       		  audioEngine.playMusic(res.title_bgm_mp3, true);

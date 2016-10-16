@@ -5,7 +5,6 @@
 var size;
 var mylabel;
 var gameLayer;
-var audioEngine;
 var background0;
 var background1;
 var background2;
@@ -41,7 +40,7 @@ var stageSkyScene = cc.Scene.extend({
         this.addChild(gameLayer);
         
         //音楽再生エンジン
-        audioEngine = cc.audioEngine;
+        var audioEngine = cc.audioEngine;
         //bgm再生
         if (!audioEngine.isMusicPlaying()) {
           audioEngine.playMusic(res.stagesky_bgm_mp3, true);
