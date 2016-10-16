@@ -118,9 +118,9 @@ var gameSky = cc.Layer.extend({
       var ground = new Ground();
       ground.setScale(0.5);
       this.addChild(ground);
-      //var sponserboard = new SponserBoard();
-      //sponserboard.setScale(0.2);
-      //this.addChild(sponserboard);
+      var sponserboard = new SponserBoard();
+      sponserboard.setScale(0.2);
+      this.addChild(sponserboard);
       //var sponserlogo = new SponserLogo();
       //sponserlogo.setScale(0.2);
       //this.addChild(sponserlogo);
@@ -334,7 +334,27 @@ var Ground = cc.Sprite.extend({
    }
 });
 
-
+//看板クラス
+var SponserBoard = cc.Sprite.extend({
+  ctor: function() {
+    this._super();
+    this.initWithFile(res.sponser_board_png);
+  },
+  onEnter: function() {
+    this._super();
+    this.setPosition(1200, 300);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 200));
+    this.runAction(moveAction);
+    this.scheduleUpdate();
+  },
+  update: function(dt) {
+      
+      //画面の外にでたアイテムを消去する処理
+      if (this.getPosition().x < 50) {
+      gameLayer.removeObject(this)
+      }
+   }
+});
 
 //背景管理
 function backgroundUpdate() {
