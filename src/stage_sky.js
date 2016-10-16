@@ -119,7 +119,7 @@ var gameSky = cc.Layer.extend({
       ground.setScale(0.5);
       this.addChild(ground);
       var sponserboard = new SponserBoard();
-      sponserboard.setScale(0.2);
+      sponserboard.setScale(0.15);
       this.addChild(sponserboard);
       var sponserlogo = new SponserLogo();
       sponserlogo.setScale(0.2);
@@ -321,7 +321,7 @@ var Ground = cc.Sprite.extend({
   onEnter: function() {
     this._super();
     this.setPosition(1200, 200);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 200));
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 100));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -342,8 +342,8 @@ var SponserBoard = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 300);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 300));
+    this.setPosition(1200, 250);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 200));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -364,8 +364,8 @@ var SponserLogo = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 400);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 400));
+    this.setPosition(1200, 300);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 300));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
