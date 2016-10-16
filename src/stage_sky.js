@@ -121,9 +121,9 @@ var gameSky = cc.Layer.extend({
       var sponserboard = new SponserBoard();
       sponserboard.setScale(0.2);
       this.addChild(sponserboard);
-      //var sponserlogo = new SponserLogo();
-      //sponserlogo.setScale(0.2);
-      //this.addChild(sponserlogo);
+      var sponserlogo = new SponserLogo();
+      sponserlogo.setScale(0.2);
+      this.addChild(sponserlogo);
     },
     //オブジェクトを削除
     removeObject: function(object) {
@@ -357,7 +357,7 @@ var SponserBoard = cc.Sprite.extend({
 });
 
 //看板ロゴクラス
-var SponserBoard = cc.Sprite.extend({
+var SponserLogo = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
