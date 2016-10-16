@@ -420,13 +420,10 @@ var GoalFlag = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
-      //座標を更新する
-      if(!goalStop) {
         this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
-      }
       
       if (player.getPosition().x > this.getPosition().x) {
-        //this.unscheduleUpdate();
+        this.unscheduleUpdate();
         goalStop = true;
       }
    }
