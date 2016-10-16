@@ -420,11 +420,16 @@ var GoalFlag = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
-        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
-      
+      this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
       if (player.getPosition().x > this.getPosition().x) {
         this.unscheduleUpdate();
         goalStop = true;
+      }
+      var playerBoundingBox = player.getBoundingBox();
+      var flagBoundingBox = this.getBoundingBox();
+      //rectIntersectsRectは２つの矩形が交わっているかチェックする
+      if (cc.rectIntersectsRect(playerBoundingBox, flagBoundingBox) ) {
+        cc.director.runScene(new GameClearSkyScene());
       }
    }
    
