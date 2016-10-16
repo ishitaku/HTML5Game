@@ -35,7 +35,7 @@ var gamestart = cc.Layer.extend({
         onTouchEnded: function(touch, event) {
         var start_logo2 = cc.Sprite.create(res.start_logo_png);
         	start_logo2.setScale(0.7);
-		start_logo2.setPosition(size.width/2,size.height * 0.2);
+		start_logo2.setPosition(300,200);
         	this.addChild(start_logo2);
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
