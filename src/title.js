@@ -33,13 +33,14 @@ var gamestart = cc.Layer.extend({
         },
         onTouchMoved: function(touch, event) {},
         onTouchEnded: function(touch, event) {
-          // 次のシーンに切り替える
-          cc.audioEngine.stopMusic();
-          cc.director.runScene(new stageSkyScene());
-          var start_logo2 = cc.Sprite.create(res.start_logo_png);
+        var start_logo2 = cc.Sprite.create(res.start_logo_png);
         	start_logo2.setScale(0.7);
 		start_logo2.setPosition(size.width/2,size.height * 0.2);
         	this.addChild(start_logo2);
+          // 次のシーンに切り替える
+          cc.audioEngine.stopMusic();
+          cc.director.runScene(new stageSkyScene());
+          
         },
       
 });
