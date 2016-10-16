@@ -320,8 +320,8 @@ var Ground = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 200);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 100));
+    this.setPosition(1200, 100);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -342,8 +342,8 @@ var SponserBoard = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 250);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 200));
+    this.setPosition(1200, 150);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -364,8 +364,8 @@ var SponserLogo = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setPosition(1200, 300);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, 300));
+    this.setPosition(1200, 200);
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
