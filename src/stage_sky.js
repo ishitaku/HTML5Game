@@ -423,7 +423,7 @@ var GoalFlag = cc.Sprite.extend({
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(playerBoundingBox, flagBoundingBox) ) {
-        cc.cc.audioEngine.stopMusic();
+        cc.audioEngine.stopMusic();
         cc.director.runScene(new StageClearSkyScene());
       }
    }
