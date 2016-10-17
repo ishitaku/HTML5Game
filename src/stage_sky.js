@@ -69,7 +69,7 @@ var gameSky = cc.Layer.extend({
         background_sky1.setPos(size_sky.width+size_sky.width/2-10, size_sky.height/2);
         this.addChild(background_sky1);
         background_sky2 = new ScrollingSkyBG();
-        background_sky2.setPos(size_sky.width*2+size_sky.width/2-10, size_sky.height/2);
+        background_sky2.setPos(size_sky.width*2+size_sky.width/2-20, size_sky.height/2);
         this.addChild(background_sky2);
         
         player_sky = new PlayerSky();
