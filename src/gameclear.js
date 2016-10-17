@@ -20,10 +20,11 @@ var gameClear = cc.Layer.extend({
         //ボタン
         //ボタンの背景
         var bgButton = new cc.Scale9Sprite(res.button_png);
+        bgButton.setScale(2);
         var bgHighlightedButton = new cc.Scale9Sprite(res.buttonback_png);
  
         //ボタンのラベル
-        var title = new cc.LabelTTF("Button", "Marker Felt", 30);
+        var title = new cc.LabelTTF("Button", "Marker Felt", 40);
         title.color = cc.color(159, 168, 176);
         //ボタン
         var button = new cc.ControlButton(title, bgButton);
