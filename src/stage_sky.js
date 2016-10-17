@@ -27,7 +27,7 @@ var State_sky = {
  GAME : 0,
  GOAL: 1
 };
-var nowstate_sky = State_sky.GAME;
+var nowstate_sky;
 
 var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
@@ -51,7 +51,9 @@ var gameSky = cc.Layer.extend({
     init:function () {
         this._super();
         size_sky = cc.director.getWinSize();
-               
+        goalStop_sky = false;
+        nowstate_sky = State_sky.GAME;
+        
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -62,7 +64,7 @@ var gameSky = cc.Layer.extend({
                 }, this);
 	
 
-        //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed_sky
+        //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_sky
         background_sky0 = new ScrollingSkyBG();
         this.addChild(background_sky0);
         background_sky1 = new ScrollingSkyBG();

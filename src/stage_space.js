@@ -27,7 +27,7 @@ var State_space = {
  GAME : 0,
  GOAL: 1
 };
-var nowstate_space = State_space.GAME;
+var nowstate_space;
 
 var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
@@ -51,7 +51,8 @@ var gameSpace = cc.Layer.extend({
     init:function () {
         this._super();
         size_space = cc.director.getWinSize();
-               
+        goalStop_space = false;
+        nowstate_space = State_space.GAME;
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,

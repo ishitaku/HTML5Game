@@ -27,7 +27,7 @@ var State_sea = {
  GAME : 0,
  GOAL: 1
 };
-var nowstate_sea = State_sea.GAME;
+var nowstate_sea;
 
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
@@ -51,7 +51,8 @@ var gameSea = cc.Layer.extend({
     init:function () {
         this._super();
         size_sea = cc.director.getWinSize();
-               
+        goalStop_sea = false;
+        nowstate_sea = State_sea.GAME;
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
