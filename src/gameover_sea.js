@@ -45,8 +45,13 @@ var gameOverSea = cc.Layer.extend({
 var GameOverSeaScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-
         var layer1 = new gameOverSea();
         this.addChild(layer1);
+        //音楽再生エンジン
+    	var audioEngine = cc.audioEngine;
+    	//bgm再生
+    	if (!audioEngine.isMusicPlaying()) {
+    	  audioEngine.playMusic(res.gameover_bgm_mp3, true);
+    	}
     }
 });
