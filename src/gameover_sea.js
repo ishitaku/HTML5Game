@@ -1,20 +1,20 @@
-﻿//stageclear.js
-var stageClearSky = cc.Layer.extend({
+﻿//gameover.js
+var gameOverSea = cc.Layer.extend({
     ctor: function() {
         this._super();
         var size = cc.director.getWinSize();
 
         // 背景レイヤーをその場で作る
-        var backgroundLayer = cc.Sprite.create(res.background_sky_png);
+        var backgroundLayer = cc.Sprite.create(res.background_sea_png);
         backgroundLayer.setPosition(size.width / 2, size.height /2 );
         this.addChild(backgroundLayer);
 
-        var gameover_logo = cc.Sprite.create(res.stageclear_logo_png);
+        var gameover_logo = cc.Sprite.create(res.gameover_logo_png);
         gameover_logo.setScale(0.5);　
         gameover_logo.setPosition(size.width / 2, size.height * 0.7);　
         this.addChild(gameover_logo);
 
-        var retry_logo = cc.Sprite.create(res.nextstage_logo_png);　
+        var retry_logo = cc.Sprite.create(res.retry_logo_png);　
         retry_logo.setPosition(size.width / 2, size.height * 0.3);　
         retry_logo.setScale(0.7);
         this.addChild(retry_logo);
@@ -41,11 +41,11 @@ var stageClearSky = cc.Layer.extend({
     },
 });
 
-var StageClearSkyScene = cc.Scene.extend({
+var GameOverSeaScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
 
-        var layer1 = new stageClearSky();
+        var layer1 = new gameOverSea();
         this.addChild(layer1);
     }
 });
