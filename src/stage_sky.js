@@ -445,7 +445,7 @@ var GoalChara = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.goal_chara_png);
-    this.setPosition(1350, 100);
+    this.setPosition(1350, 150);
   },
   onEnter: function() {
     this._super();
