@@ -4,37 +4,37 @@
 
 var size;
 var gameLayer;
-var background_sky0;
-var background_sky1;
-var background_sky2;
-var scrollSpeed_sky = 2;
-var player_sky;
-var gameGravity_sky = -0.05;
-var gameThrust_sky = 0.15;
-var life_sky = 3;
-var score_sky = 0;
-var life_Score_sky = 0;
+var background_sea0;
+var background_sea1;
+var background_sea2;
+var scrollSpeed_sea = 2;
+var player_sea;
+var gameGravity_sea = -0.05;
+var gameThrust_sea = 0.15;
+var life_sea = 3;
+var score_sea = 0;
+var life_Score_sea = 0;
 var LIFE_UP_SCORE_SKY = 100;
-var goalStop_sky = false;
-var itemPlusArray_sky;
-var itemMinusArray_sky;
-itemPlusArray_sky = new Array(res.item_plus00_png, res.item_plus01_png);
-itemMinusArray_sky = new Array(res.item_minus00_png, res.item_minus01_png);
-var animflg_sky;
-var playerArray_sky;
-playerArray_sky = new Array(res.player_sky_sky01_png, res.player_sky_sky02_png, res.player_sky_sky03_png);
-var State_sky = {
+var goalStop_sea = false;
+var itemPlusArray_sea;
+var itemMinusArray_sea;
+itemPlusArray_sea = new Array(res.item_plus00_png, res.item_plus01_png);
+itemMinusArray_sea = new Array(res.item_minus00_png, res.item_minus01_png);
+var animflg_sea;
+var playerArray_sea;
+playerArray_sea = new Array(res.player_sea_sea01_png, res.player_sea_sea02_png, res.player_sea_sea03_png);
+var State_sea = {
  GAME : 0,
  GOAL: 1
 };
-var nowstate_sky = State_sky.GAME;
+var nowstate_sea = State_sea.GAME;
 
-var stageSkyScene = cc.Scene.extend({
+var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        life_sky = 3;
-        score_sky = 0;
-        gameLayer = new gameSky();
+        life_sea = 3;
+        score_sea = 0;
+        gameLayer = new gameSea();
         gameLayer.init();
         this.addChild(gameLayer);
         
@@ -42,12 +42,12 @@ var stageSkyScene = cc.Scene.extend({
         var audioEngine = cc.audioEngine;
         //bgm再生
         if (!audioEngine.isMusicPlaying()) {
-          audioEngine.playMusic(res.stagesky_bgm_mp3, true);
+          audioEngine.playMusic(res.stagesea_bgm_mp3, true);
         }
     }
 });
 
-var gameSky = cc.Layer.extend({
+var gameSea = cc.Layer.extend({
     init:function () {
         this._super();
         size = cc.director.getWinSize();
@@ -62,33 +62,33 @@ var gameSky = cc.Layer.extend({
                 }, this);
 	
 
-        //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed_sky
-        background_sky0 = new ScrollingBG();
-        this.addChild(background_sky0);
-        background_sky1 = new ScrollingBG();
-        background_sky1.setPos(size.width+size.width/2, size.height/2);
-        this.addChild(background_sky1);
-        background_sky2 = new ScrollingBG();
-        background_sky2.setPos(size.width*2+size.width/2, size.height/2);
-        this.addChild(background_sky2);
+        //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed_sea
+        background_sea0 = new ScrollingBG();
+        this.addChild(background_sea0);
+        background_sea1 = new ScrollingBG();
+        background_sea1.setPos(size.width+size.width/2, size.height/2);
+        this.addChild(background_sea1);
+        background_sea2 = new ScrollingBG();
+        background_sea2.setPos(size.width*2+size.width/2, size.height/2);
+        this.addChild(background_sea2);
         
-        player_sky = new Player();
-        player_sky.setScale(0.1);
-        this.addChild(player_sky);
+        player_sea = new Player();
+        player_sea.setScale(0.1);
+        this.addChild(player_sea);
 
         // 残機表示
-        life_skyText = cc.LabelTTF.create("LIFE : " +life_sky ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
-        this.addChild(life_skyText);
-        life_skyText.setPosition(100,850);
-        life_skyText.setColor(cc.color(0, 0, 0, 255));
-        this.reorderChild(life_skyText, 10);
+        life_seaText = cc.LabelTTF.create("LIFE : " +life_sea ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
+        this.addChild(life_seaText);
+        life_seaText.setPosition(100,850);
+        life_seaText.setColor(cc.color(0, 0, 0, 255));
+        this.reorderChild(life_seaText, 10);
 
         //スコア表示
-        score_skyText = cc.LabelTTF.create("SCORE : " +score_sky ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
-        this.addChild(score_skyText);
-        score_skyText.setPosition(450,850);
-        score_skyText.setColor(cc.color(0, 0, 0, 255));
-        this.reorderChild(score_skyText, 10);
+        score_seaText = cc.LabelTTF.create("SCORE : " +score_sea ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
+        this.addChild(score_seaText);
+        score_seaText.setPosition(450,850);
+        score_seaText.setColor(cc.color(0, 0, 0, 255));
+        this.reorderChild(score_seaText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
         this.scheduleUpdate();
@@ -101,22 +101,22 @@ var gameSky = cc.Layer.extend({
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
-        switch(nowstate_sky) {
-        case State_sky.GAME:
+        switch(nowstate_sea) {
+        case State_sea.GAME:
         backgroundUpdate();
-        if(goalStop_sky) {
-          nowstate_sky = State_sky.GOAL;
+        if(goalStop_sea) {
+          nowstate_sea = State_sea.GOAL;
           this.unschedule(this.addItemPlus);
           this.unschedule(this.addItemMinus);
         }
         break;
-        case State_sky.GOAL:
+        case State_sea.GOAL:
         break;
         default:
         break;
         }
         
-        player_sky.updateY();
+        player_sea.updateY();
     },
     //プラスアイテムを追加
     addItemPlus: function(event){
@@ -166,12 +166,12 @@ var gameSky = cc.Layer.extend({
     },
     //タッチ
     onTouchBegan: function(touch, event) {
-	player_sky.engineOn = true;
+	player_sea.engineOn = true;
         return true;
       },
       onTouchMoved: function(touch, event) {},
       onTouchEnded: function(touch, event) {
-        player_sky.engineOn = false;
+        player_sea.engineOn = false;
       },
     
 });
@@ -181,7 +181,7 @@ var ScrollingBG = cc.Sprite.extend({
     //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
     ctor:function() {
         this._super();
-        this.initWithFile(res.background_sky_png);
+        this.initWithFile(res.background_sea_png);
         //背景画像の描画開始位置
       this.setPosition(size.width/2,size.height /2 );
     },
@@ -191,7 +191,7 @@ var ScrollingBG = cc.Sprite.extend({
     },
     scroll:function(){
       //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
+        this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
         
     },
     setPos:function(x, y){
@@ -203,9 +203,9 @@ var ScrollingBG = cc.Sprite.extend({
 //重力（仮）で落下する　プレイヤー　
 var Player = cc.Sprite.extend({
   ctor: function() {
-    animflg_sky = 0;
+    animflg_sea = 0;
     this._super();
-    this.initWithFile(playerArray_sky[0]);
+    this.initWithFile(playerArray_sea[0]);
     this.ySpeed = 0; //プレイヤーの垂直速度
 
     this.engineOn = false; //カスタム属性追加　プレイヤーのジャンプON OFF
@@ -216,13 +216,13 @@ var Player = cc.Sprite.extend({
   },
   updateY: function() {
     if(this.engineOn){
-      animflg_sky++;
-      if(animflg_sky >= 15) {
-      animflg_sky = 0;
+      animflg_sea++;
+      if(animflg_sea >= 15) {
+      animflg_sea = 0;
       }
       
-      this.initWithFile(playerArray_sky[Math.floor(animflg_sky/5)]);
-      this.ySpeed += gameThrust_sky;
+      this.initWithFile(playerArray_sea[Math.floor(animflg_sea/5)]);
+      this.ySpeed += gameThrust_sea;
       
     }
     //無敵モード中の視覚効果
@@ -232,7 +232,7 @@ var Player = cc.Sprite.extend({
     }
 
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
-    this.ySpeed += gameGravity_sky;
+    this.ySpeed += gameGravity_sea;
 
     //プレイヤーが画面外にでたら、リスタートさせる
      if (this.getPosition().y < 0 || this.getPosition().y > 1500) {
@@ -247,8 +247,8 @@ var ItemPlus = cc.Sprite.extend({
 
   ctor: function() {
     this._super();
-    var num = Math.floor(Math.random() * itemPlusArray_sky.length);
-    this.initWithFile(itemPlusArray_sky[num]);
+    var num = Math.floor(Math.random() * itemPlusArray_sea.length);
+    this.initWithFile(itemPlusArray_sea[num]);
   },
   onEnter: function() {
     this._super();
@@ -259,10 +259,10 @@ var ItemPlus = cc.Sprite.extend({
   },
   update: function(dt) {
     //アイテムとの衝突を判定する処理
-    var player_skyBoundingBox = player_sky.getBoundingBox();
+    var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
 		//rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
+    if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
       gameLayer.removeObject(this);//アイテムを削除する
       //ボリュームを上げる
       cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
@@ -270,14 +270,14 @@ var ItemPlus = cc.Sprite.extend({
       cc.audioEngine.playEffect(res.plus_se_mp3);
       
       //スコア追加処理
-      score_sky += 10;
-      score_skyText.setString("SCORE : " + score_sky);
-      life_Score_sky += 10;
-      if(life_Score_sky >= LIFE_UP_SCORE_SKY) {
-        life_Score_sky -= LIFE_UP_SCORE_SKY;
-        if(life_sky < 10) {
-          life_sky++;
-          life_skyText.setString("LIFE : " + life_sky);
+      score_sea += 10;
+      score_seaText.setString("SCORE : " + score_sea);
+      life_Score_sea += 10;
+      if(life_Score_sea >= LIFE_UP_SCORE_SKY) {
+        life_Score_sea -= LIFE_UP_SCORE_SKY;
+        if(life_sea < 10) {
+          life_sea++;
+          life_seaText.setString("LIFE : " + life_sea);
         }
       }
     }
@@ -292,8 +292,8 @@ var ItemPlus = cc.Sprite.extend({
 var ItemMinus = cc.Sprite.extend({
   ctor: function() {
     this._super();
-    var num = Math.floor(Math.random() * itemMinusArray_sky.length);
-    this.initWithFile(itemMinusArray_sky[num]);
+    var num = Math.floor(Math.random() * itemMinusArray_sea.length);
+    this.initWithFile(itemMinusArray_sea[num]);
   },
   onEnter: function() {
     this._super();
@@ -304,10 +304,10 @@ var ItemMinus = cc.Sprite.extend({
   },
   update: function(dt) {
     //アイテムとの衝突を判定する処理
-    var player_skyBoundingBox = player_sky.getBoundingBox();
+    var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
+    if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する
       gameLayer.removeObject(this);
       //ダメージ
@@ -324,18 +324,18 @@ var ItemMinus = cc.Sprite.extend({
 
 //背景管理
 function backgroundUpdate() {
-	background_sky0.scroll();
-        background_sky1.scroll();
-        background_sky2.scroll();
+	background_sea0.scroll();
+        background_sea1.scroll();
+        background_sea2.scroll();
         //画面の端に到達したら反対側の座標にする
-        if(background_sky0.getPosition().x < -size.width/2){
-            background_sky0.setPosition(background_sky2.getPosition().x+size.width, size.height/2);
+        if(background_sea0.getPosition().x < -size.width/2){
+            background_sea0.setPosition(background_sea2.getPosition().x+size.width, size.height/2);
         }
-        if(background_sky1.getPosition().x < -size.width/2){
-            background_sky1.setPosition(background_sky0.getPosition().x+size.width, size.height/2);
+        if(background_sea1.getPosition().x < -size.width/2){
+            background_sea1.setPosition(background_sea0.getPosition().x+size.width, size.height/2);
         }
-        if(background_sky2.getPosition().x < -size.width/2){
-            background_sky2.setPosition(background_sky1.getPosition().x+size.width, size.height/2);
+        if(background_sea2.getPosition().x < -size.width/2){
+            background_sea2.setPosition(background_sea1.getPosition().x+size.width, size.height/2);
         }
 }
 
@@ -343,7 +343,7 @@ function backgroundUpdate() {
 var Ground = cc.Sprite.extend({
   ctor: function() {
     this._super();
-    this.initWithFile(res.ground_sky_png);
+    this.initWithFile(res.ground_sea_png);
     this.setPosition(1200, 50);
   },
   onEnter: function() {
@@ -354,7 +354,7 @@ var Ground = cc.Sprite.extend({
   },
   update: function(dt) {
       //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
+        this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
@@ -377,7 +377,7 @@ var SponserBoard = cc.Sprite.extend({
   },
   update: function(dt) {
       //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
+        this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
@@ -400,7 +400,7 @@ var SponserLogo = cc.Sprite.extend({
   },
   update: function(dt) {
       //座標を更新する
-        this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
+        this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
       gameLayer.removeObject(this)
@@ -421,19 +421,19 @@ var GoalFlag = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
-      if(!goalStop_sky) {
-        this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
+      if(!goalStop_sea) {
+        this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       }
-      if (player_sky.getPosition().x > this.getPosition().x) {
+      if (player_sea.getPosition().x > this.getPosition().x) {
         //this.unscheduleUpdate();
-        goalStop_sky = true;
+        goalStop_sea = true;
       }
-      var player_skyBoundingBox = player_sky.getBoundingBox();
+      var player_seaBoundingBox = player_sea.getBoundingBox();
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
-      if (cc.rectIntersectsRect(player_skyBoundingBox, flagBoundingBox) ) {
+      if (cc.rectIntersectsRect(player_seaBoundingBox, flagBoundingBox) ) {
         cc.audioEngine.stopMusic();
-        cc.director.runScene(new StageClearSkyScene());
+        cc.director.runScene(new StageClearSeaScene());
       }
    }
    
@@ -451,13 +451,13 @@ var GoalChara = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
-      if(!goalStop_sky) {
-        this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
+      if(!goalStop_sea) {
+        this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       }
       /*
-      if (player_sky.getPosition().x > this.getPosition().x) {
+      if (player_sea.getPosition().x > this.getPosition().x) {
         //this.unscheduleUpdate();
-        goalStop_sky = true;
+        goalStop_sea = true;
       }*/
       
    }
@@ -468,7 +468,7 @@ var GoalChara = cc.Sprite.extend({
 var GoalGround = cc.Sprite.extend({
   ctor: function() {
     this._super();
-    this.initWithFile(res.ground_sky_png);
+    this.initWithFile(res.ground_sea_png);
     this.setPosition(1300, 100);
   },
   onEnter: function() {
@@ -476,13 +476,13 @@ var GoalGround = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
-      if(!goalStop_sky) {
-        this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
+      if(!goalStop_sea) {
+        this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       }
       /*
-      if (player_sky.getPosition().x > this.getPosition().x) {
+      if (player_sea.getPosition().x > this.getPosition().x) {
         //this.unscheduleUpdate();
-        goalStop_sky = true;
+        goalStop_sea = true;
       }*/
       
    }
@@ -491,43 +491,43 @@ var GoalGround = cc.Sprite.extend({
 
 //背景管理
 function backgroundUpdate() {
-	background_sky0.scroll();
-        background_sky1.scroll();
-        background_sky2.scroll();
+	background_sea0.scroll();
+        background_sea1.scroll();
+        background_sea2.scroll();
         //画面の端に到達したら反対側の座標にする
-        if(background_sky0.getPosition().x < -size.width/2){
-            background_sky0.setPosition(background_sky2.getPosition().x+size.width, size.height/2);
+        if(background_sea0.getPosition().x < -size.width/2){
+            background_sea0.setPosition(background_sea2.getPosition().x+size.width, size.height/2);
         }
-        if(background_sky1.getPosition().x < -size.width/2){
-            background_sky1.setPosition(background_sky0.getPosition().x+size.width, size.height/2);
+        if(background_sea1.getPosition().x < -size.width/2){
+            background_sea1.setPosition(background_sea0.getPosition().x+size.width, size.height/2);
         }
-        if(background_sky2.getPosition().x < -size.width/2){
-            background_sky2.setPosition(background_sky1.getPosition().x+size.width, size.height/2);
+        if(background_sea2.getPosition().x < -size.width/2){
+            background_sea2.setPosition(background_sea1.getPosition().x+size.width, size.height/2);
         }
 }
 
 //ダメージ
 function damage() {
-      life_sky--;
-      life_skyText.setString("LIFE : " + life_sky);
+      life_sea--;
+      life_seaText.setString("LIFE : " + life_sea);
       //ボリュームを上げる
       cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
       cc.audioEngine.playEffect(res.damage_se_mp3);
-      if(life_sky < 1){
+      if(life_sea < 1){
         cc.audioEngine.stopMusic();
-        gameover.score_sky = score_sky;
-        cc.director.runScene(new GameOverSkyScene());
+        gameover.score_sea = score_sea;
+        cc.director.runScene(new GameOverSeaScene());
       }
       
-      player_sky.invulnerability = 100;
+      player_sea.invulnerability = 100;
 }
 
 //プレイヤー元の位置に戻す
 function restartGame() {
   damage();
-  player_sky.ySpeed = 0;
-  player_sky.setPosition(player_sky.getPosition().x, size.height * 0.5);
+  player_sea.ySpeed = 0;
+  player_sea.setPosition(player_sea.getPosition().x, size.height * 0.5);
   
   /*
   //bgmリスタート
