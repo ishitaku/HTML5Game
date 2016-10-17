@@ -1,9 +1,9 @@
 ﻿
 /* 空ステージ */
-//app.js
+//stage_sky.js
 
-var size;
-var gameLayer;
+var size_sky_sky;
+var gameLayer_sky_sky;
 var background_sky0;
 var background_sky1;
 var background_sky2;
@@ -34,9 +34,9 @@ var stageSkyScene = cc.Scene.extend({
         this._super();
         life_sky = 3;
         score_sky = 0;
-        gameLayer = new gameSky();
-        gameLayer.init();
-        this.addChild(gameLayer);
+        gameLayer_sky = new gameSky();
+        gameLayer_sky.init();
+        this.addChild(gameLayer_sky);
         
         //音楽再生エンジン
         var audioEngine = cc.audioEngine;
@@ -50,7 +50,7 @@ var stageSkyScene = cc.Scene.extend({
 var gameSky = cc.Layer.extend({
     init:function () {
         this._super();
-        size = cc.director.getWinSize();
+        size_sky = cc.director.getWinSize();
                
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
@@ -66,10 +66,10 @@ var gameSky = cc.Layer.extend({
         background_sky0 = new ScrollingSkyBG();
         this.addChild(background_sky0);
         background_sky1 = new ScrollingSkyBG();
-        background_sky1.setPos(size.width+size.width/2, size.height/2);
+        background_sky1.setPos(size_sky.width+size_sky.width/2, size_sky.height/2);
         this.addChild(background_sky1);
         background_sky2 = new ScrollingSkyBG();
-        background_sky2.setPos(size.width*2+size.width/2, size.height/2);
+        background_sky2.setPos(size_sky.width*2+size_sky.width/2, size_sky.height/2);
         this.addChild(background_sky2);
         
         player_sky = new PlayerSky();
@@ -178,12 +178,12 @@ var gameSky = cc.Layer.extend({
 
 //スクロール移動する背景クラス
 var ScrollingSkyBG = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
+    //ctorはコンストラクタクラスがインスタンスされたときに必ず実行される
     ctor:function() {
         this._super();
         this.initWithFile(res.background_sky_png);
         //背景画像の描画開始位置
-      this.setPosition(size.width/2,size.height /2 );
+      this.setPosition(size_sky.width/2,size_sky.height /2 );
     },
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
@@ -212,7 +212,7 @@ var PlayerSky = cc.Sprite.extend({
     this.invulnerability = 0; //無敵モード時間　初期値0
   },
   onEnter: function() {
-    this.setPosition(60, size.height * 0.5);
+    this.setPosition(60, size_sky.height * 0.5);
   },
   updateY: function() {
     if(this.engineOn){
@@ -263,7 +263,7 @@ var ItemPlusSky = cc.Sprite.extend({
     var itemBoundingBox = this.getBoundingBox();
 		//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
-      gameLayer.removeObject(this);//アイテムを削除する
+      gameLayer_sky.removeObject(this);//アイテムを削除する
       //ボリュームを上げる
       cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
@@ -283,7 +283,7 @@ var ItemPlusSky = cc.Sprite.extend({
     }
 		//画面の外にでたアイテムを消去する処理
     if (this.getPosition().x < 50) {
-      gameLayer.removeObject(this)
+      gameLayer_sky.removeObject(this)
     }
   }
 });
@@ -309,18 +309,16 @@ var ItemMinusSky = cc.Sprite.extend({
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する
-      gameLayer.removeObject(this);
+      gameLayer_sky.removeObject(this);
       //ダメージ
       damageSky();
       
     }
     if (this.getPosition().x < 50) {
-      gameLayer.removeObject(this)
+      gameLayer_sky.removeObject(this)
     }
   }
 });
-
-
 
 //背景管理
 function backgroundSkyUpdate() {
@@ -328,14 +326,14 @@ function backgroundSkyUpdate() {
         background_sky1.scroll();
         background_sky2.scroll();
         //画面の端に到達したら反対側の座標にする
-        if(background_sky0.getPosition().x < -size.width/2){
-            background_sky0.setPosition(background_sky2.getPosition().x+size.width, size.height/2);
+        if(background_sky0.getPosition().x < -size_sky.width/2){
+            background_sky0.setPosition(background_sky2.getPosition().x+size_sky.width, size_sky.height/2);
         }
-        if(background_sky1.getPosition().x < -size.width/2){
-            background_sky1.setPosition(background_sky0.getPosition().x+size.width, size.height/2);
+        if(background_sky1.getPosition().x < -size_sky.width/2){
+            background_sky1.setPosition(background_sky0.getPosition().x+size_sky.width, size_sky.height/2);
         }
-        if(background_sky2.getPosition().x < -size.width/2){
-            background_sky2.setPosition(background_sky1.getPosition().x+size.width, size.height/2);
+        if(background_sky2.getPosition().x < -size_sky.width/2){
+            background_sky2.setPosition(background_sky1.getPosition().x+size_sky.width, size_sky.height/2);
         }
 }
 
@@ -357,7 +355,7 @@ var GroundSky = cc.Sprite.extend({
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
-      gameLayer.removeObject(this)
+      gameLayer_sky.removeObject(this)
       }
    }
 });
@@ -380,7 +378,7 @@ var SponserBoardSky = cc.Sprite.extend({
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
-      gameLayer.removeObject(this)
+      gameLayer_sky.removeObject(this)
       }
    }
 });
@@ -403,7 +401,7 @@ var SponserLogoSky = cc.Sprite.extend({
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
       if (this.getPosition().x < 50) {
-      gameLayer.removeObject(this)
+      gameLayer_sky.removeObject(this)
       }
    }
    
@@ -489,22 +487,6 @@ var GoalGroundSky = cc.Sprite.extend({
    
 });
 
-//背景管理
-function backgroundSkyUpdate() {
-	background_sky0.scroll();
-        background_sky1.scroll();
-        background_sky2.scroll();
-        //画面の端に到達したら反対側の座標にする
-        if(background_sky0.getPosition().x < -size.width/2){
-            background_sky0.setPosition(background_sky2.getPosition().x+size.width, size.height/2);
-        }
-        if(background_sky1.getPosition().x < -size.width/2){
-            background_sky1.setPosition(background_sky0.getPosition().x+size.width, size.height/2);
-        }
-        if(background_sky2.getPosition().x < -size.width/2){
-            background_sky2.setPosition(background_sky1.getPosition().x+size.width, size.height/2);
-        }
-}
 
 //ダメージ
 function damageSky() {
@@ -527,7 +509,7 @@ function damageSky() {
 function restartGameSky() {
   damageSky();
   player_sky.ySpeed = 0;
-  player_sky.setPosition(player_sky.getPosition().x, size.height * 0.5);
+  player_sky.setPosition(player_sky.getPosition().x, size_sky.height * 0.5);
   
   /*
   //bgmリスタート
