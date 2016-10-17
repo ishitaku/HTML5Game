@@ -444,7 +444,7 @@ var GoalFlag = cc.Sprite.extend({
 var GoalChara = cc.Sprite.extend({
   ctor: function() {
     this._super();
-    this.initWithFile(goal_chara_png);
+    this.initWithFile(res.goal_chara_png);
     this.setPosition(1350, 100);
   },
   onEnter: function() {
