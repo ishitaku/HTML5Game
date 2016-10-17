@@ -62,14 +62,14 @@ var gameSea = cc.Layer.extend({
                 }, this);
 	
 
-        //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed_sea
+        //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_sea
         background_sea0 = new ScrollingSeaBG();
         this.addChild(background_sea0);
         background_sea1 = new ScrollingSeaBG();
-        background_sea1.setPos(size_sea.width+size_sea.width/2, size_sea.height/2);
+        background_sea1.setPos(size_sea.width+size_sea.width/2-10, size_sea.height/2);
         this.addChild(background_sea1);
         background_sea2 = new ScrollingSeaBG();
-        background_sea2.setPos(size_sea.width*2+size_sea.width/2, size_sea.height/2);
+        background_sea2.setPos(size_sea.width*2+size_sea.width/2-20, size_sea.height/2);
         this.addChild(background_sea2);
         
         player_sea = new PlayerSea();
@@ -329,13 +329,13 @@ function backgroundSeaUpdate() {
         background_sea2.scroll();
         //画面の端に到達したら反対側の座標にする
         if(background_sea0.getPosition().x < -size_sea.width/2){
-            background_sea0.setPosition(background_sea2.getPosition().x+size_sea.width, size_sea.height/2);
+            background_sea0.setPosition(background_sea2.getPosition().x+size_sea.width-10, size_sea.height/2);
         }
         if(background_sea1.getPosition().x < -size_sea.width/2){
-            background_sea1.setPosition(background_sea0.getPosition().x+size_sea.width, size_sea.height/2);
+            background_sea1.setPosition(background_sea0.getPosition().x+size_sea.width-10, size_sea.height/2);
         }
         if(background_sea2.getPosition().x < -size_sea.width/2){
-            background_sea2.setPosition(background_sea1.getPosition().x+size_sea.width, size_sea.height/2);
+            background_sea2.setPosition(background_sea1.getPosition().x+size_sea.width-10, size_sea.height/2);
         }
 }
 

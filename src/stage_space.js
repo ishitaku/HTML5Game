@@ -66,10 +66,10 @@ var gameSpace = cc.Layer.extend({
         background_space0 = new ScrollingSpaceBG();
         this.addChild(background_space0);
         background_space1 = new ScrollingSpaceBG();
-        background_space1.setPos(size_space.width+size_space.width/2, size_space.height/2);
+        background_space1.setPos(size_space.width+size_space.width/2-10, size_space.height/2);
         this.addChild(background_space1);
         background_space2 = new ScrollingSpaceBG();
-        background_space2.setPos(size_space.width*2+size_space.width/2, size_space.height/2);
+        background_space2.setPos(size_space.width*2+size_space.width/2-20, size_space.height/2);
         this.addChild(background_space2);
         
         player_space = new PlayerSpace();
@@ -329,13 +329,13 @@ function backgroundSpaceUpdate() {
         background_space2.scroll();
         //画面の端に到達したら反対側の座標にする
         if(background_space0.getPosition().x < -size_space.width/2){
-            background_space0.setPosition(background_space2.getPosition().x+size_space.width, size_space.height/2);
+            background_space0.setPosition(background_space2.getPosition().x+size_space.width-10, size_space.height/2);
         }
         if(background_space1.getPosition().x < -size_space.width/2){
-            background_space1.setPosition(background_space0.getPosition().x+size_space.width, size_space.height/2);
+            background_space1.setPosition(background_space0.getPosition().x+size_space.width-10, size_space.height/2);
         }
         if(background_space2.getPosition().x < -size_space.width/2){
-            background_space2.setPosition(background_space1.getPosition().x+size_space.width, size_space.height/2);
+            background_space2.setPosition(background_space1.getPosition().x+size_space.width-10, size_space.height/2);
         }
 }
 
