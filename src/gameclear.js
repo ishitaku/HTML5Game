@@ -9,7 +9,8 @@ var gameClear = cc.Layer.extend({
         var backgroundLayer = cc.Sprite.create(res.background_space_png);
         backgroundLayer.setPosition(size.width / 2, size.height /2 );
         this.addChild(backgroundLayer);
-
+        
+        ゲームクリアロゴ
         var gameclear_logo = cc.Sprite.create(res.gameclear_logo_png);
         gameclear_logo.setScale(0.5);
         gameclear_logo.setPosition(size.width / 2, size.height * 0.7);　
@@ -24,12 +25,6 @@ var gameClear = cc.Layer.extend({
         //ボタンのラベル
         var title = new cc.LabelTTF("Button", "Marker Felt", 30);
         title.color = cc.color(159, 168, 176);
-        scoreText = cc.LabelTTF.create("SCORE : " +score ,"Arial","30",cc.TEXT_ALIGNMENT_CENTER);
-        this.addChild(scoreText);
-        scoreText.setPosition(220,220);
-        scoreText.setColor(cc.color(250, 250, 0, 255));
-        this.reorderChild(scoreText, 10);
-
         //ボタン
         var button = new cc.ControlButton(title, bgButton);
         //button.setBackgroundSpriteForState(bgHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);

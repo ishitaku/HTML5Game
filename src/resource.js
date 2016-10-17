@@ -27,6 +27,7 @@
     ground_space_png : "res/ground_space.png",
     retry_logo_png : "res/retry_logo.png",
     stageclear_logo_png : "res/stageclear_logo.png",
+    gameclear_logo_png : "res/gameclear_logo.png",
     nextstage_logo_png : "res/nextstage_logo.png",
     button_png : "res/button.png",
     buttonback_png: "res/button_back.png",
