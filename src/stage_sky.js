@@ -513,7 +513,7 @@ function damageSky() {
       //ボリュームを上げる
       cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
-      cc.audioEngine.playEffect(res.damageSky_se_mp3);
+      cc.audioEngine.playEffect(res.damage_se_mp3);
       if(life_sky < 1){
         cc.audioEngine.stopMusic();
         gameover.score_sky = score_sky;
