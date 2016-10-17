@@ -3,11 +3,10 @@
 //app.js
 
 var size;
-var mylabel;
 var gameLayer;
-var background0;
-var background1;
-var background2;
+var background_0;
+var background_1;
+var background_2;
 var scrollSpeed = 2;
 var player;
 var gameGravity = -0.05;
