@@ -45,8 +45,13 @@ var stageClearSea = cc.Layer.extend({
 var StageClearSeaScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-
         var layer1 = new stageClearSea();
         this.addChild(layer1);
+        //音楽再生エンジン
+    	var audioEngine = cc.audioEngine;
+    	//bgm再生
+    	if (!audioEngine.isMusicPlaying()) {
+    	  audioEngine.playMusic(res.stageclear_bgm_mp3, true);
+    	}
     }
 });
