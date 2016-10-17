@@ -465,7 +465,7 @@ var GoalCharaSky = cc.Sprite.extend({
 });
 
 //ゴール足場クラス
-var GoalGroundSkySky = cc.Sprite.extend({
+var GoalGroundSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_sky_png);

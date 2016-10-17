@@ -465,7 +465,7 @@ var GoalCharaSea = cc.Sprite.extend({
 });
 
 //ゴール足場クラス
-var GoalGroundSeaSea = cc.Sprite.extend({
+var GoalGroundSea = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_sea_png);
