@@ -22,7 +22,7 @@ itemPlusArray_sky = new Array(res.item_plus00_png, res.item_plus01_png);
 itemMinusArray_sky = new Array(res.item_minus00_png, res.item_minus01_png);
 var animflg_sky;
 var playerArray_sky;
-playerArray_sky = new Array(res.player_sky_sky01_png, res.player_sky_sky02_png, res.player_sky_sky03_png);
+playerArray_sky = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png);
 var State_sky = {
  GAME : 0,
  GOAL: 1
@@ -63,16 +63,16 @@ var gameSky = cc.Layer.extend({
 	
 
         //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed_sky
-        background_sky0 = new ScrollingBG();
+        background_sky0 = new ScrollingSkyBG();
         this.addChild(background_sky0);
-        background_sky1 = new ScrollingBG();
+        background_sky1 = new ScrollingSkyBG();
         background_sky1.setPos(size.width+size.width/2, size.height/2);
         this.addChild(background_sky1);
-        background_sky2 = new ScrollingBG();
+        background_sky2 = new ScrollingSkyBG();
         background_sky2.setPos(size.width*2+size.width/2, size.height/2);
         this.addChild(background_sky2);
         
-        player_sky = new Player();
+        player_sky = new PlayerSky();
         player_sky.setScale(0.1);
         this.addChild(player_sky);
 
@@ -94,20 +94,20 @@ var gameSky = cc.Layer.extend({
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItemPlus, 1.5);
-        this.schedule(this.addItemMinus, 3);
-        this.schedule(this.addSponserBoard, 10);
+        this.schedule(this.addItemPlusSky, 1.5);
+        this.schedule(this.addItemMinusSky, 3);
+        this.schedule(this.addSponserBoardSky, 10);
         this.scheduleOnce(this.addGoal, 15);
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
         switch(nowstate_sky) {
         case State_sky.GAME:
-        backgroundUpdate();
+        backgroundSkyUpdate();
         if(goalStop_sky) {
           nowstate_sky = State_sky.GOAL;
-          this.unschedule(this.addItemPlus);
-          this.unschedule(this.addItemMinus);
+          this.unschedule(this.addItemPlusSky);
+          this.unschedule(this.addItemMinusSky);
         }
         break;
         case State_sky.GOAL:
@@ -119,26 +119,26 @@ var gameSky = cc.Layer.extend({
         player_sky.updateY();
     },
     //プラスアイテムを追加
-    addItemPlus: function(event){
-      var itemPlus = new ItemPlus();
+    addItemPlusSky: function(event){
+      var itemPlus = new ItemPlusSky();
       itemPlus.setScale(0.2);
       this.addChild(itemPlus);
     },
     //マイナスアイテムを追加
-    addItemMinus: function(event){
-      var itemMinus = new ItemMinus();
+    addItemMinusSky: function(event){
+      var itemMinus = new ItemMinusSky();
       itemMinus.setScale(0.2);
       this.addChild(itemMinus);
     },
     //スポンサー様看板
-    addSponserBoard: function(event) {
-      var ground = new Ground();
+    addSponserBoardSky: function(event) {
+      var ground = new GroundSky();
       ground.setScale(0.5);
       this.addChild(ground);
-      var sponserboard = new SponserBoard();
+      var sponserboard = new SponserBoardSky();
       sponserboard.setScale(0.15);
       this.addChild(sponserboard);
-      var sponserlogo = new SponserLogo();
+      var sponserlogo = new SponserLogoSky();
       sponserlogo.setScale(0.2);
       //sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
       this.addChild(sponserlogo);
@@ -146,19 +146,19 @@ var gameSky = cc.Layer.extend({
     //ゴール
     addGoal: function() {
       //ゴール足場
-      var goalground = new GoalGround();
+      var goalground = new GoalGroundSky();
       goalground.setScale(0.7);
       this.addChild(goalground);
-      var goalflag = new GoalFlag();
+      var goalflag = new GoalFlagSky();
       //ゴール旗
       goalflag.setScale(0.2);
       this.addChild(goalflag);
       //ゴール仲間
-      var goalchara = new GoalChara();
+      var goalchara = new GoalCharaSky();
       goalchara.setScale(0.1);
       this.addChild(goalchara);
       //スポンサー様看板の停止
-      this.unschedule(this.addSponserBoard);
+      this.unschedule(this.addSponserBoardSky);
     },
     //オブジェクトを削除
     removeObject: function(object) {
@@ -177,7 +177,7 @@ var gameSky = cc.Layer.extend({
 });
 
 //スクロール移動する背景クラス
-var ScrollingBG = cc.Sprite.extend({
+var ScrollingSkyBG = cc.Sprite.extend({
     //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
     ctor:function() {
         this._super();
@@ -201,7 +201,7 @@ var ScrollingBG = cc.Sprite.extend({
 });
 
 //重力（仮）で落下する　プレイヤー　
-var Player = cc.Sprite.extend({
+var PlayerSky = cc.Sprite.extend({
   ctor: function() {
     animflg_sky = 0;
     this._super();
@@ -237,13 +237,13 @@ var Player = cc.Sprite.extend({
     //プレイヤーが画面外にでたら、リスタートさせる
      if (this.getPosition().y < 0 || this.getPosition().y > 1500) {
        
-       restartGame();
+       restartGameSky();
      }
   }
 });
 
 //プラスアイテムクラス
-var ItemPlus = cc.Sprite.extend({
+var ItemPlusSky = cc.Sprite.extend({
 
   ctor: function() {
     this._super();
@@ -289,7 +289,7 @@ var ItemPlus = cc.Sprite.extend({
 });
 
 //マイナスアイテムクラス
-var ItemMinus = cc.Sprite.extend({
+var ItemMinusSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     var num = Math.floor(Math.random() * itemMinusArray_sky.length);
@@ -311,7 +311,7 @@ var ItemMinus = cc.Sprite.extend({
       //アイテムを削除する
       gameLayer.removeObject(this);
       //ダメージ
-      damage();
+      damageSky();
       
     }
     if (this.getPosition().x < 50) {
@@ -323,7 +323,7 @@ var ItemMinus = cc.Sprite.extend({
 
 
 //背景管理
-function backgroundUpdate() {
+function backgroundSkyUpdate() {
 	background_sky0.scroll();
         background_sky1.scroll();
         background_sky2.scroll();
@@ -340,7 +340,7 @@ function backgroundUpdate() {
 }
 
 //足場クラス
-var Ground = cc.Sprite.extend({
+var GroundSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_sky_png);
@@ -363,7 +363,7 @@ var Ground = cc.Sprite.extend({
 });
 
 //看板クラス
-var SponserBoard = cc.Sprite.extend({
+var SponserBoardSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_board_png);
@@ -386,7 +386,7 @@ var SponserBoard = cc.Sprite.extend({
 });
 
 //看板ロゴクラス
-var SponserLogo = cc.Sprite.extend({
+var SponserLogoSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
@@ -410,7 +410,7 @@ var SponserLogo = cc.Sprite.extend({
 });
 
 //ゴール旗クラス
-var GoalFlag = cc.Sprite.extend({
+var GoalFlagSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.goal_flag_png);
@@ -440,7 +440,7 @@ var GoalFlag = cc.Sprite.extend({
 });
 
 //ゴール仲間クラス
-var GoalChara = cc.Sprite.extend({
+var GoalCharaSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.goal_chara_png);
@@ -465,7 +465,7 @@ var GoalChara = cc.Sprite.extend({
 });
 
 //ゴール足場クラス
-var GoalGround = cc.Sprite.extend({
+var GoalGroundSkySky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_sky_png);
@@ -490,7 +490,7 @@ var GoalGround = cc.Sprite.extend({
 });
 
 //背景管理
-function backgroundUpdate() {
+function backgroundSkyUpdate() {
 	background_sky0.scroll();
         background_sky1.scroll();
         background_sky2.scroll();
@@ -507,13 +507,13 @@ function backgroundUpdate() {
 }
 
 //ダメージ
-function damage() {
+function damageSky() {
       life_sky--;
       life_skyText.setString("LIFE : " + life_sky);
       //ボリュームを上げる
       cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
-      cc.audioEngine.playEffect(res.damage_se_mp3);
+      cc.audioEngine.playEffect(res.damageSky_se_mp3);
       if(life_sky < 1){
         cc.audioEngine.stopMusic();
         gameover.score_sky = score_sky;
@@ -524,8 +524,8 @@ function damage() {
 }
 
 //プレイヤー元の位置に戻す
-function restartGame() {
-  damage();
+function restartGameSky() {
+  damageSky();
   player_sky.ySpeed = 0;
   player_sky.setPosition(player_sky.getPosition().x, size.height * 0.5);
   
