@@ -146,12 +146,12 @@ var gameSky = cc.Layer.extend({
     },
     //ゴール
     addGoal: function() {
+      var goalground = new GoalGround();
+      goalground.setScale(0.7);
+      this.addChild(goalground);
       var goalflag = new GoalFlag();
       goalflag.setScale(0.2);
       this.addChild(goalflag);
-      var goalground = new GoalGround();
-      //goalground.setScale(0.2);
-      this.addChild(goalground);
       
       //スポンサー様看板の停止
       this.unschedule(this.addSponserBoard);
