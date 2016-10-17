@@ -37,7 +37,8 @@ var stageClearSea = cc.Layer.extend({
     onTouchEnded: function(touch, event) {
     // 次のシーンに切り替える
       cc.audioEngine.stopMusic();
-      //cc.director.runScene(new stageSeaScene());
+      //宇宙ステージへ
+      cc.director.runScene(new stageSpaceScene());
     },
 });
 
