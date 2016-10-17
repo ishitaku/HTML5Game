@@ -8676,7 +8676,7 @@ cc.LoaderScene = cc.Scene.extend({
                 self._initStage(img, cc.visibleRect.center);
             });
             fontSize = 14;
-            lblHeight = -logoHeight / 2 - 10;
+            lblHeight = -logoHeight / 2 - 200;
         }
         var label = self._label = new cc.LabelTTF("Loading... 0%", "Arial", fontSize);
         label.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(0, lblHeight)));
