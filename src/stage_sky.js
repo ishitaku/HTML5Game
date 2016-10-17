@@ -2,8 +2,8 @@
 /* 空ステージ */
 //stage_sky.js
 
-var size_sky_sky;
-var gameLayer_sky_sky;
+var size_sky;
+var gameLayer_sky;
 var background_sky0;
 var background_sky1;
 var background_sky2;
