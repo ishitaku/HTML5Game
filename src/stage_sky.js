@@ -146,13 +146,18 @@ var gameSky = cc.Layer.extend({
     },
     //ゴール
     addGoal: function() {
+      //ゴール足場
       var goalground = new GoalGround();
       goalground.setScale(0.7);
       this.addChild(goalground);
       var goalflag = new GoalFlag();
+      //ゴール旗
       goalflag.setScale(0.2);
       this.addChild(goalflag);
-      
+      //ゴール仲間
+      var goalchara = new GoalChara();
+      goalchara.setScale(0.1);
+      this.addChild(goalchara);
       //スポンサー様看板の停止
       this.unschedule(this.addSponserBoard);
     },
@@ -431,6 +436,31 @@ var GoalFlag = cc.Sprite.extend({
         cc.audioEngine.stopMusic();
         cc.director.runScene(new StageClearSkyScene());
       }
+   }
+   
+});
+
+//ゴール仲間クラス
+var GoalChara = cc.Sprite.extend({
+  ctor: function() {
+    this._super();
+    this.initWithFile(goal_chara_png);
+    this.setPosition(1350, 100);
+  },
+  onEnter: function() {
+    this._super();
+    this.scheduleUpdate();
+  },
+  update: function(dt) {
+      if(!goalStop) {
+        this.setPosition(this.getPosition().x-scrollSpeed,this.getPosition().y);
+      }
+      /*
+      if (player.getPosition().x > this.getPosition().x) {
+        //this.unscheduleUpdate();
+        goalStop = true;
+      }*/
+      
    }
    
 });

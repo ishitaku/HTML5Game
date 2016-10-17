@@ -14,6 +14,7 @@
     sponser_board_png : "res/sponser_board.png",
     sponser_logo_png : "res/sponser_logo.png",
     goal_flag_png : "res/goal_flag.png",
+    goal_chara_png : "res/goal_chara.png",
     gameover_logo_png : "res/gameover_logo.png",
     ground_sky_png : "res/ground_sky.png",
     retry_logo_png : "res/retry_logo.png",
