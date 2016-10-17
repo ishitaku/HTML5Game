@@ -10,7 +10,7 @@ var gameClear = cc.Layer.extend({
         backgroundLayer.setPosition(size.width / 2, size.height /2 );
         this.addChild(backgroundLayer);
         
-        ゲームクリアロゴ
+        //ゲームクリアロゴ
         var gameclear_logo = cc.Sprite.create(res.gameclear_logo_png);
         gameclear_logo.setScale(0.5);
         gameclear_logo.setPosition(size.width / 2, size.height * 0.7);　

@@ -80,7 +80,7 @@ var gameSpace = cc.Layer.extend({
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_spaceText);
         life_spaceText.setPosition(100,850);
-        life_spaceText.setColor(cc.color(0, 0, 0, 255));
+        life_spaceText.setColor(cc.color(255, 255, 255, 255));
         this.reorderChild(life_spaceText, 10);
 
         //スコア表示
