@@ -3,7 +3,8 @@ var gameOverSky = cc.Layer.extend({
     ctor: function() {
         this._super();
         var size = cc.director.getWinSize();
-
+        
+        
         // 背景レイヤーをその場で作る
         var backgroundLayer = cc.Sprite.create(res.background_sky_png);
         backgroundLayer.setPosition(size.width / 2, size.height /2 );
