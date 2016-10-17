@@ -29,7 +29,7 @@ var gameClear = cc.Layer.extend({
         var button = new cc.ControlButton(title, bgButton);
         //button.setBackgroundSpriteForState(bgHighlightedButton, cc.CONTROL_STATE_HIGHLIGHTED);
         button.setTitleColorForState(cc.color.WHITE, cc.CONTROL_STATE_HIGHLIGHTED);
-        button.setPosition(size.width / 2, size.height / 2);
+        button.setPosition(size.width / 2, size.height * 0.3);
         button.zoomOnTouchDown = false;
  
         //イベント
