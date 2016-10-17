@@ -440,7 +440,7 @@ var GoalGround = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_sky_png);
-    this.setPosition(1400, 100);
+    this.setPosition(1300, 100);
   },
   onEnter: function() {
     this._super();
