@@ -66,10 +66,10 @@ var gameSky = cc.Layer.extend({
         background_sky0 = new ScrollingSkyBG();
         this.addChild(background_sky0);
         background_sky1 = new ScrollingSkyBG();
-        background_sky1.setPos(size_sky.width+size_sky.width/2, size_sky.height/2);
+        background_sky1.setPos(size_sky.width+size_sky.width/2-5, size_sky.height/2);
         this.addChild(background_sky1);
         background_sky2 = new ScrollingSkyBG();
-        background_sky2.setPos(size_sky.width*2+size_sky.width/2, size_sky.height/2);
+        background_sky2.setPos(size_sky.width*2+size_sky.width/2-5, size_sky.height/2);
         this.addChild(background_sky2);
         
         player_sky = new PlayerSky();
@@ -327,13 +327,13 @@ function backgroundSkyUpdate() {
         background_sky2.scroll();
         //画面の端に到達したら反対側の座標にする
         if(background_sky0.getPosition().x < -size_sky.width/2){
-            background_sky0.setPosition(background_sky2.getPosition().x+size_sky.width, size_sky.height/2);
+            background_sky0.setPosition(background_sky2.getPosition().x+size_sky.width-5, size_sky.height/2);
         }
         if(background_sky1.getPosition().x < -size_sky.width/2){
-            background_sky1.setPosition(background_sky0.getPosition().x+size_sky.width, size_sky.height/2);
+            background_sky1.setPosition(background_sky0.getPosition().x+size_sky.width-5, size_sky.height/2);
         }
         if(background_sky2.getPosition().x < -size_sky.width/2){
-            background_sky2.setPosition(background_sky1.getPosition().x+size_sky.width, size_sky.height/2);
+            background_sky2.setPosition(background_sky1.getPosition().x+size_sky.width-5, size_sky.height/2);
         }
 }
 
