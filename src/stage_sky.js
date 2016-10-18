@@ -431,7 +431,7 @@ var GoalFlagSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.goal_flag_png);
-    this.setPosition(1200, 200);
+    this.setPosition(1200, 150);
   },
   onEnter: function() {
     this._super();
@@ -461,7 +461,7 @@ var GoalCharaSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.goal_chara_png);
-    this.setPosition(1350, 150);
+    this.setPosition(1350, 100);
   },
   onEnter: function() {
     this._super();
@@ -479,7 +479,7 @@ var GoalGroundSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_sky_png);
-    this.setPosition(1300, 100);
+    this.setPosition(1300, 50);
   },
   onEnter: function() {
     this._super();
