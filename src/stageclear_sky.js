@@ -50,7 +50,7 @@ var StageClearSkyScene = cc.Scene.extend({
     	var audioEngine = cc.audioEngine;
     	//bgm再生
     	if (!audioEngine.isMusicPlaying()) {
-    	  audioEngine.playMusic(res.gameover_bgm_mp3, true);
+    	  audioEngine.playMusic(res.stageclear_bgm_mp3, true);
     	}
     }
 });
