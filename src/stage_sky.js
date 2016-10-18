@@ -407,7 +407,7 @@ var SponserLogoSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
-    this.setPosition(1200, 180);
+    this.setPosition(1200, 150);
   },
   onEnter: function() {
     this._super();
