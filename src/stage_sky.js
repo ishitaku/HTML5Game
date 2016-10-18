@@ -111,7 +111,7 @@ var gameSky = cc.Layer.extend({
         //スポンサー様看板を生成
         this.schedule(this.addSponserBoardSky, 5);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 10);
+        this.scheduleOnce(this.addGoal, 12);
     },
     update:function(dt){
     
