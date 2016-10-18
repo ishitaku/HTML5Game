@@ -107,7 +107,7 @@ var gameSpace = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSpace, 1);
-        this.schedule(this.addItemMinusSpace, 2);
+        this.schedule(this.addItemMinusSpace, 1);
         //スポンサー様看板を生成
         this.schedule(this.addSponserBoardSpace, 10);
         //ゴールを生成

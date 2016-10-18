@@ -107,11 +107,11 @@ var gameSea = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSea, 1.5);
-        this.schedule(this.addItemMinusSea, 3);
+        this.schedule(this.addItemMinusSea, 2);
         //スポンサー様看板を生成
         this.schedule(this.addSponserBoardSea, 10);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 15);
+        this.scheduleOnce(this.addGoal, 25);
     },
     update:function(dt){
     
