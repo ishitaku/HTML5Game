@@ -252,7 +252,7 @@ var PlayerSky = cc.Sprite.extend({
     this.ySpeed += gameGravity_sky;
     
     //プレイヤーが画面外にでたら、リスタートさせる
-     if (this.getPosition().y < 0 || this.getPosition().y > 1500) {
+     if (this.getPosition().y < 0 || this.getPosition().y > 1000) {
        
        restartGameSky();
      }
