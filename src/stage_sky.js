@@ -224,8 +224,8 @@ var PlayerSky = cc.Sprite.extend({
     this._super();
     this.initWithFile(playerArray_sky[0]);
     this.ySpeed = 0; 		//プレイヤーの垂直速度
-    this.engineOn = false; 	//カスタム属性追加　プレイヤーのジャンプON OFF
-    this.invulnerability = 0; 	//無敵モード時間　初期値0
+    this.engineOn = false; 	//カスタム属性追加プレイヤーのジャンプON OFF
+    this.invulnerability = 0; 	//無敵モード時間初期値0
   },
   onEnter: function() {
     this.setPosition(60, size_sky.height * 0.5);
@@ -252,7 +252,7 @@ var PlayerSky = cc.Sprite.extend({
     this.ySpeed += gameGravity_sky;
     
     //プレイヤーが画面外にでたら、リスタートさせる
-     if (this.getPosition().y < 0 || this.getPosition().y > 1000) {
+     if (this.getPosition().y < 0 || this.getPosition().y > 900) {
        
        restartGameSky();
      }
