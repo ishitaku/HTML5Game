@@ -33,15 +33,11 @@
     buttonback_png: "res/button_back.png",
     title_bgm_mp3: "res/title_bgm.mp3",
     stagesky_bgm_mp3: "res/title_bgm.mp3",
-<<<<<<< HEAD
-    stageclear_bgm_mp3: "res/stageclear_bgm.mp3",
-=======
     stagesea_bgm_mp3: "res/title_bgm.mp3",
     stagespace_bgm_mp3: "res/title_bgm.mp3",
     gameover_bgm_mp3: "res/title_bgm.mp3",
-    stageclear_bgm_mp3: "res/title_bgm.mp3",
+    stageclear_bgm_mp3: "res/stageclear_bgm.mp3",
     gameclear_bgm_mp3: "res/title_bgm.mp3",
->>>>>>> 9b47f1a39ead29e2380bac66b89727732b1f5de2
     plus_se_mp3 : "res/plus_se.mp3",
     damage_se_mp3 : "res/damage_se.mp3",
 };
