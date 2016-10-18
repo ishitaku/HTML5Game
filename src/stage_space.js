@@ -1,40 +1,45 @@
 ﻿
 /* 宇宙ステージ */
-//app.js
+//stage_space.js
 
-var size_space;
-var gameLayer_space;
-var background_space0;
-var background_space1;
-var background_space2;
-var scrollSpeed_space = 2;
-var player_space;
-var gameGravity_space = -0.05;
-var gameThrust_space = 0.15;
-var life_space = 3;
-var score_space = 0;
-var life_Score_space = 0;
-var LIFE_UP_SCORE_SKY = 100;
-var goalStop_space = false;
-var itemPlusArray_space;
-var itemMinusArray_space;
-itemPlusArray_space = new Array(res.item_plus00_png, res.item_plus01_png);
-itemMinusArray_space = new Array(res.item_minus00_png, res.item_minus01_png);
-var animflg_space;
-var playerArray_space;
+var size_space;			//画面のサイズ
+var gameLayer_space;		//レイヤー
+var background_space0;	//背景1
+var background_space1;	//背景2
+var background_space2;	//背景3
+var scrollSpeed_space = 2;		//スクロール速度
+var player_space;					//プレイヤー
+var gameGravity_space = -0.05;	//重力
+var gameThrust_space = 0.15;		//上昇力
+var life_space = 3;		//ライフ
+var score_space = 0;		//スコア
+var life_Score_space = 0;	//ライフが回復するスコア
+var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
+var goalStop_space = false;		//ゴールまでついたか
+var itemPlusArray_space;			//プラスアイテム配列
+var itemMinusArray_space;			//マイナスアイテム配列
+itemPlusArray_space = new Array(res.item_plus00_png, res.item_plus01_png);		//プラスアイテムを初期化
+itemMinusArray_space = new Array(res.item_minus00_png, res.item_minus01_png);		//マイナスアイテムを初期化
+var animflg_space;		//アニメーションのコマ
+var playerArray_space;	//プレイヤーのアニメーション配列
 playerArray_space = new Array(res.player_space01_png, res.player_space02_png, res.player_space03_png);
 var State_space = {
  GAME : 0,
  GOAL: 1
 };
-var nowstate_space;
+var nowstate_space;	//ゲームステート
 
+//空ステージのシーン
 var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
+        //ライフを3に設定
         life_space = 3;
+        //スコアを0に初期化
         score_space = 0;
+        //レイヤーを生成
         gameLayer_space = new gameSpace();
+        //レイヤーを初期化
         gameLayer_space.init();
         this.addChild(gameLayer_space);
         
@@ -47,12 +52,17 @@ var stageSpaceScene = cc.Scene.extend({
     }
 });
 
+//レイヤー
 var gameSpace = cc.Layer.extend({
     init:function () {
         this._super();
+        //画面のサイズを取得
         size_space = cc.director.getWinSize();
+        //ゴールのフラグ
         goalStop_space = false;
+        //ステートをゲームに初期化
         nowstate_space = State_space.GAME;
+        
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -63,7 +73,7 @@ var gameSpace = cc.Layer.extend({
                 }, this);
 	
 
-        //スクロールする背景スプライトをインスタンス　スクロール速度:scrollSpeed_space
+        //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_space
         background_space0 = new ScrollingSpaceBG();
         this.addChild(background_space0);
         background_space1 = new ScrollingSpaceBG();
@@ -73,6 +83,7 @@ var gameSpace = cc.Layer.extend({
         background_space2.setPos(size_space.width*2+size_space.width/2-20, size_space.height/2);
         this.addChild(background_space2);
         
+        //プレイヤーを生成
         player_space = new PlayerSpace();
         player_space.setScale(0.1);
         this.addChild(player_space);
@@ -81,14 +92,14 @@ var gameSpace = cc.Layer.extend({
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_spaceText);
         life_spaceText.setPosition(100,850);
-        life_spaceText.setColor(cc.color(255, 255, 255, 255));
+        life_spaceText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(life_spaceText, 10);
 
         //スコア表示
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(255, 255, 255, 255));
+        score_spaceText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -97,16 +108,21 @@ var gameSpace = cc.Layer.extend({
         //アイテム生成
         this.schedule(this.addItemPlusSpace, 1.5);
         this.schedule(this.addItemMinusSpace, 3);
+        //スポンサー様看板を生成
         this.schedule(this.addSponserBoardSpace, 10);
+        //ゴールを生成
         this.scheduleOnce(this.addGoal, 15);
     },
     update:function(dt){
-      //background・その他のscrollメソッドを呼び出す
+    
         switch(nowstate_space) {
         case State_space.GAME:
         backgroundSpaceUpdate();
+        //ゴールにたどり着いたら
         if(goalStop_space) {
+        //ステートをゴールに
           nowstate_space = State_space.GOAL;
+          //プラスアイテムとマイナスアイテムの生成を停止
           this.unschedule(this.addItemPlusSpace);
           this.unschedule(this.addItemMinusSpace);
         }
@@ -131,7 +147,7 @@ var gameSpace = cc.Layer.extend({
       itemMinus.setScale(0.2);
       this.addChild(itemMinus);
     },
-    //スポンサー様看板
+    //スポンサー様看板を追加
     addSponserBoardSpace: function(event) {
       var ground = new GroundSpace();
       ground.setScale(0.5);
@@ -144,7 +160,7 @@ var gameSpace = cc.Layer.extend({
       //sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
       this.addChild(sponserlogo);
     },
-    //ゴール
+    //ゴールを追加
     addGoal: function() {
       //ゴール足場
       var goalground = new GoalGroundSpace();
@@ -165,7 +181,7 @@ var gameSpace = cc.Layer.extend({
     removeObject: function(object) {
       this.removeChild(object);
     },
-    //タッチ
+    //タッチ用の関数
     onTouchBegan: function(touch, event) {
 	player_space.engineOn = true;
         return true;
@@ -179,12 +195,12 @@ var gameSpace = cc.Layer.extend({
 
 //スクロール移動する背景クラス
 var ScrollingSpaceBG = cc.Sprite.extend({
-    //ctorはコンストラクタ　クラスがインスタンスされたときに必ず実行される
+    //ctorはコンストラクタクラスがインスタンスされたときに必ず実行される
     ctor:function() {
         this._super();
         this.initWithFile(res.background_space_png);
         //背景画像の描画開始位置
-      this.setPosition(size_space.width/2,size_space.height /2 );
+        this.setPosition(size_space.width/2,size_space.height /2 );
     },
     //onEnterメソッドはスプライト描画の際に必ず呼ばれる
     onEnter:function() {
@@ -196,28 +212,28 @@ var ScrollingSpaceBG = cc.Sprite.extend({
         
     },
     setPos:function(x, y){
-      //座標を更新する
+      //座標を設定する
         this.setPosition(x, y);
     },
 });
 
-//重力（仮）で落下する　プレイヤー　
+//重力（仮）で落下するプレイヤー
 var PlayerSpace = cc.Sprite.extend({
   ctor: function() {
     animflg_space = 0;
     this._super();
     this.initWithFile(playerArray_space[0]);
-    this.ySpeed = 0; //プレイヤーの垂直速度
-
-    this.engineOn = false; //カスタム属性追加　プレイヤーのジャンプON OFF
-    this.invulnerability = 0; //無敵モード時間　初期値0
+    this.ySpeed = 0; 		//プレイヤーの垂直速度
+    this.engineOn = false; 	//カスタム属性追加プレイヤーのジャンプON OFF
+    this.invulnerability = 0; 	//無敵モード時間初期値0
   },
   onEnter: function() {
     this.setPosition(60, size_space.height * 0.5);
   },
   updateY: function() {
+    //ジャンプ中なら
     if(this.engineOn){
-      animflg_space++;
+      animflg_space++;	//アニメーションを更新
       if(animflg_space >= 15) {
       animflg_space = 0;
       }
@@ -231,12 +247,12 @@ var PlayerSpace = cc.Sprite.extend({
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
     }
-
+    
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
     this.ySpeed += gameGravity_space;
-
+    
     //プレイヤーが画面外にでたら、リスタートさせる
-     if (this.getPosition().y < 0 || this.getPosition().y > 1500) {
+     if (this.getPosition().y < 0 || this.getPosition().y > 900) {
        
        restartGameSpace();
      }
@@ -245,14 +261,15 @@ var PlayerSpace = cc.Sprite.extend({
 
 //プラスアイテムクラス
 var ItemPlusSpace = cc.Sprite.extend({
-
   ctor: function() {
     this._super();
+    //ランダムで画像を選択
     var num = Math.floor(Math.random() * itemPlusArray_space.length);
     this.initWithFile(itemPlusArray_space[num]);
   },
   onEnter: function() {
     this._super();
+    //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
@@ -262,7 +279,7 @@ var ItemPlusSpace = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
-		//rectIntersectsRectは２つの矩形が交わっているかチェックする
+	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) ) {
       gameLayer_space.removeObject(this);//アイテムを削除する
       //ボリュームを上げる
@@ -282,7 +299,7 @@ var ItemPlusSpace = cc.Sprite.extend({
         }
       }
     }
-		//画面の外にでたアイテムを消去する処理
+	//画面の外にでたアイテムを消去する処理
     if (this.getPosition().x < 50) {
       gameLayer_space.removeObject(this)
     }
@@ -293,11 +310,13 @@ var ItemPlusSpace = cc.Sprite.extend({
 var ItemMinusSpace = cc.Sprite.extend({
   ctor: function() {
     this._super();
+    //ランダムで画像を選択
     var num = Math.floor(Math.random() * itemMinusArray_space.length);
     this.initWithFile(itemMinusArray_space[num]);
   },
   onEnter: function() {
     this._super();
+    //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
@@ -313,7 +332,6 @@ var ItemMinusSpace = cc.Sprite.extend({
       gameLayer_space.removeObject(this);
       //ダメージ
       damageSpace();
-      
     }
     if (this.getPosition().x < 50) {
       gameLayer_space.removeObject(this)
@@ -321,23 +339,21 @@ var ItemMinusSpace = cc.Sprite.extend({
   }
 });
 
-
-
 //背景管理
 function backgroundSpaceUpdate() {
 	background_space0.scroll();
-        background_space1.scroll();
-        background_space2.scroll();
-        //画面の端に到達したら反対側の座標にする
-        if(background_space0.getPosition().x < -size_space.width/2){
-            background_space0.setPosition(background_space2.getPosition().x+size_space.width-10, size_space.height/2);
-        }
-        if(background_space1.getPosition().x < -size_space.width/2){
-            background_space1.setPosition(background_space0.getPosition().x+size_space.width-10, size_space.height/2);
-        }
-        if(background_space2.getPosition().x < -size_space.width/2){
-            background_space2.setPosition(background_space1.getPosition().x+size_space.width-10, size_space.height/2);
-        }
+    background_space1.scroll();
+    background_space2.scroll();
+    //画面の端に到達したら反対側の座標にする
+    if(background_space0.getPosition().x < -size_space.width/2){
+        background_space0.setPosition(background_space2.getPosition().x+size_space.width-10, size_space.height/2);
+    }
+     if(background_space1.getPosition().x < -size_space.width/2){
+        background_space1.setPosition(background_space0.getPosition().x+size_space.width-10, size_space.height/2);
+    }
+    if(background_space2.getPosition().x < -size_space.width/2){
+        background_space2.setPosition(background_space1.getPosition().x+size_space.width-10, size_space.height/2);
+    }
 }
 
 //足場クラス
@@ -391,7 +407,7 @@ var SponserLogoSpace = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
-    this.setPosition(1200, 200);
+    this.setPosition(1200, 190);
   },
   onEnter: function() {
     this._super();
@@ -415,7 +431,7 @@ var GoalFlagSpace = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.goal_flag_png);
-    this.setPosition(1200, 200);
+    this.setPosition(1200, 150);
   },
   onEnter: function() {
     this._super();
@@ -434,8 +450,7 @@ var GoalFlagSpace = cc.Sprite.extend({
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_spaceBoundingBox, flagBoundingBox) ) {
         cc.audioEngine.stopMusic();
-        //ゲームクリア画面へ
-        cc.director.runScene(new GameClearScene());
+        cc.director.runScene(new StageClearSpaceScene());
       }
    }
    
@@ -446,7 +461,7 @@ var GoalCharaSpace = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.goal_chara_png);
-    this.setPosition(1350, 150);
+    this.setPosition(1350, 100);
   },
   onEnter: function() {
     this._super();
@@ -456,14 +471,7 @@ var GoalCharaSpace = cc.Sprite.extend({
       if(!goalStop_space) {
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       }
-      /*
-      if (player_space.getPosition().x > this.getPosition().x) {
-        //this.unscheduleUpdate();
-        goalStop_space = true;
-      }*/
-      
    }
-   
 });
 
 //ゴール足場クラス
@@ -471,7 +479,7 @@ var GoalGroundSpace = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.ground_space_png);
-    this.setPosition(1300, 100);
+    this.setPosition(1300, 50);
   },
   onEnter: function() {
     this._super();
@@ -481,27 +489,24 @@ var GoalGroundSpace = cc.Sprite.extend({
       if(!goalStop_space) {
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       }
-      /*
-      if (player_space.getPosition().x > this.getPosition().x) {
-        //this.unscheduleUpdate();
-        goalStop_space = true;
-      }*/
-      
    }
-   
 });
 
-//ダメージ
+
+//ダメージ関数
 function damageSpace() {
+      //ライフを減らす
       life_space--;
       life_spaceText.setString("LIFE : " + life_space);
       //ボリュームを上げる
       cc.audioEngine.setEffectsVolume(cc.audioEngine.getEffectsVolume() + 0.3);
       //効果音を再生する
       cc.audioEngine.playEffect(res.damage_se_mp3);
+      //ライフが0なら
       if(life_space < 1){
         cc.audioEngine.stopMusic();
-        gameover.score_space = score_space;
+        //gameover.score_space = score_space;
+        //ゲームオーバー画面へ移動
         cc.director.runScene(new GameOverSpaceScene());
       }
       
@@ -513,10 +518,4 @@ function restartGameSpace() {
   damageSpace();
   player_space.ySpeed = 0;
   player_space.setPosition(player_space.getPosition().x, size_space.height * 0.5);
-  
-  /*
-  //bgmリスタート
-  if (!cc.audioEngine.isMusicPlaying()) {
-    cc.audioEngine.resumeMusic();
-  }*/
 }
