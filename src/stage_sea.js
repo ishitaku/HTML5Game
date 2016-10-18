@@ -96,9 +96,9 @@ var gameSea = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSea, 1.5);
-        this.schedule(this.addItemMinusSea, 3);
+        this.schedule(this.addItemMinusSea, 2);
         this.schedule(this.addSponserBoardSea, 10);
-        this.scheduleOnce(this.addGoal, 15);
+        this.scheduleOnce(this.addGoal, 25);
     },
     update:function(dt){
       //background・その他のscrollメソッドを呼び出す
@@ -201,7 +201,7 @@ var ScrollingSeaBG = cc.Sprite.extend({
     },
 });
 
-//重力（仮）で落下する　プレイヤー　
+//重力（仮）で落下するプレイヤー　
 var PlayerSea = cc.Sprite.extend({
   ctor: function() {
     animflg_sea = 0;
@@ -254,7 +254,7 @@ var ItemPlusSea = cc.Sprite.extend({
   onEnter: function() {
     this._super();
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -299,7 +299,7 @@ var ItemMinusSea = cc.Sprite.extend({
   onEnter: function() {
     this._super();
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
