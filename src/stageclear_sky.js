@@ -37,15 +37,20 @@ var stageClearSky = cc.Layer.extend({
     onTouchEnded: function(touch, event) {
     // 次のシーンに切り替える
       cc.audioEngine.stopMusic();
-      //cc.director.runScene(new stageSkyScene());
+      cc.director.runScene(new stageSeaScene());
     },
 });
 
 var StageClearSkyScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-
         var layer1 = new stageClearSky();
         this.addChild(layer1);
+        //音楽再生エンジン
+    	var audioEngine = cc.audioEngine;
+    	//bgm再生
+    	if (!audioEngine.isMusicPlaying()) {
+    	  audioEngine.playMusic(res.gameover_bgm_mp3, true);
+    	}
     }
 });

@@ -52,11 +52,11 @@ var GameStartScene = cc.Scene.extend({
         var layer1 = new gamestart();
         this.addChild(layer1);
         //音楽再生エンジン
-    		var audioEngine = cc.audioEngine;
-    		//bgm再生
-    		if (!audioEngine.isMusicPlaying()) {
-      		  audioEngine.playMusic(res.title_bgm_mp3, true);
-    		}
+    	var audioEngine = cc.audioEngine;
+    	//bgm再生
+    	if (!audioEngine.isMusicPlaying()) {
+    	  audioEngine.playMusic(res.title_bgm_mp3, true);
+    	}
     }
 });
 

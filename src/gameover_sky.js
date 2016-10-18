@@ -3,7 +3,8 @@ var gameOverSky = cc.Layer.extend({
     ctor: function() {
         this._super();
         var size = cc.director.getWinSize();
-
+        
+        
         // 背景レイヤーをその場で作る
         var backgroundLayer = cc.Sprite.create(res.background_sky_png);
         backgroundLayer.setPosition(size.width / 2, size.height /2 );
@@ -44,8 +45,13 @@ var gameOverSky = cc.Layer.extend({
 var GameOverSkyScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-
         var layer1 = new gameOverSky();
         this.addChild(layer1);
+        //音楽再生エンジン
+    	var audioEngine = cc.audioEngine;
+    	//bgm再生
+    	if (!audioEngine.isMusicPlaying()) {
+    	  audioEngine.playMusic(res.gameover_bgm_mp3, true);
+    	}
     }
 });
