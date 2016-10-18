@@ -92,7 +92,7 @@ var gameSpace = cc.Layer.extend({
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_spaceText);
         life_spaceText.setPosition(100,850);
-        life_spaceText.setColor(cc.color(0, 0, 0, 255));
+        life_spaceText.setColor(cc.color(255, 255, 255, 255));
         this.reorderChild(life_spaceText, 10);
 
         //スコア表示
@@ -450,7 +450,7 @@ var GoalFlagSpace = cc.Sprite.extend({
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_spaceBoundingBox, flagBoundingBox) ) {
         cc.audioEngine.stopMusic();
-        cc.director.runScene(new StageClearSpaceScene());
+        cc.director.runScene(new GameClearScene());
       }
    }
    
@@ -507,7 +507,7 @@ function damageSpace() {
         cc.audioEngine.stopMusic();
         //gameover.score_space = score_space;
         //ゲームオーバー画面へ移動
-        cc.director.runScene(new GameClearScene());
+        cc.director.runScene(new GameOverSpaceScene());
       }
       
       player_space.invulnerability = 100;
