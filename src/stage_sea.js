@@ -1,5 +1,5 @@
 ﻿
-/* 空ステージ */
+/* 海ステージ */
 //stage_sea.js
 
 var size_sea;			//画面のサイズ
@@ -29,7 +29,7 @@ var State_sea = {
 };
 var nowstate_sea;	//ゲームステート
 
-//空ステージのシーン
+//海ステージのシーン
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
@@ -107,7 +107,7 @@ var gameSea = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSea, 1.5);
-        this.schedule(this.addItemMinusSea, 2);
+        this.schedule(this.addItemMinusSea, 1.5);
         //スポンサー様看板を生成
         this.schedule(this.addSponserBoardSea, 10);
         //ゴールを生成
