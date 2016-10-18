@@ -111,7 +111,7 @@ var gameSpace = cc.Layer.extend({
         //スポンサー様看板を生成
         this.schedule(this.addSponserBoardSpace, 10);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 35);
+        this.scheduleOnce(this.addGoal, 15);
     },
     update:function(dt){
     
@@ -318,7 +318,7 @@ var ItemMinusSpace = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(3, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
