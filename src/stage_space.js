@@ -29,7 +29,7 @@ var State_space = {
 };
 var nowstate_space;	//ゲームステート
 
-//空ステージのシーン
+//宇宙ステージのシーン
 var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
@@ -99,7 +99,7 @@ var gameSpace = cc.Layer.extend({
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(0, 0, 0, 255));
+        score_spaceText.setColor(cc.color(255, 255, 255, 255));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -507,7 +507,7 @@ function damageSpace() {
         cc.audioEngine.stopMusic();
         //gameover.score_space = score_space;
         //ゲームオーバー画面へ移動
-        cc.director.runScene(new GameOverSpaceScene());
+        cc.director.runScene(new GameClearScene());
       }
       
       player_space.invulnerability = 100;
