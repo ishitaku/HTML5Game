@@ -10,7 +10,7 @@ var stageClearSky = cc.Layer.extend({
         this.addChild(backgroundLayer);
 
         var gameover_logo = cc.Sprite.create(res.stageclear_logo_png);
-        gameover_logo.setScale(0.5);　
+        gameover_logo.setScale(0.5);
         gameover_logo.setPosition(size.width / 2, size.height * 0.7);　
         this.addChild(gameover_logo);
 
