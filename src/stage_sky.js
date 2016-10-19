@@ -33,7 +33,7 @@ var nowstate_sky;	//ゲームステート
 var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        //ライフを3に設定
+        //ライフを設定
         life_sky = 10;
         //スコアを0に初期化
         score_sky = 0;
