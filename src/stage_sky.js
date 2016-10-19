@@ -290,27 +290,22 @@ var ItemPlusSky = cc.Sprite.extend({
     var by = player_skyBoundingBox.y;
     var bw = player_skyBoundingBox.width;
     var bh = player_skyBoundingBox.height;
-    console.log(by, bh);
-    player_skyBoundingBox.x = bx + bw * 0.2;
-    player_skyBoundingBox.y = by+  bh * 0.2;
-    player_skyBoundingBox.width = bw * 0.8;
-    player_skyBoundingBox.height = bh * 0.8;
-    /*
+    console.log(bx, bw);
     var width_half = (bw - bx)/2;
     var height_half = (bh - by)/2;
     
     var centerx = bw - width_half;
     var centery = bh - height_half;
-    var rx = centerx - width_half * 0.5;
-    var rw = centerx + width_half * 0.5;
-    var ry = centery - height_half * 0.5;
-    var rh = centery + height_half * 0.5;
-    
+    var rx = centerx - width_half * 0.75;
+    var rw = centerx + width_half * 0.75;
+    var ry = centery - height_half * 0.75;
+    var rh = centery + height_half * 0.75;
+    console.log(rx, rw);
     player_skyBoundingBox.x = rx;
     player_skyBoundingBox.y = ry;
     player_skyBoundingBox.width = rw;
     player_skyBoundingBox.height = rh;
-    */
+    
     var itemBoundingBox = this.getBoundingBox();
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
