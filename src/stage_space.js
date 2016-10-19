@@ -37,6 +37,12 @@ var stageSpaceScene = cc.Scene.extend({
         life_space = 3;
         //スコアを0に初期化
         score_space = 0;
+        //ライフ回復までのスコアを0に初期化
+        life_Score_space = 0;
+        //ゴールのフラグ
+        goalStop_space = false;
+        //ステートをゲームに初期化
+        nowstate_space = State_space.GAME;
         //レイヤーを生成
         gameLayer_space = new gameSpace();
         //レイヤーを初期化
@@ -58,10 +64,6 @@ var gameSpace = cc.Layer.extend({
         this._super();
         //画面のサイズを取得
         size_space = cc.director.getWinSize();
-        //ゴールのフラグ
-        goalStop_space = false;
-        //ステートをゲームに初期化
-        nowstate_space = State_space.GAME;
         
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
@@ -106,12 +108,12 @@ var gameSpace = cc.Layer.extend({
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItemPlusSpace, 1);
-        this.schedule(this.addItemMinusSpace, 1);
+        this.schedule(this.addItemPlusSpace, 1.5);
+        this.schedule(this.addItemMinusSpace, 2);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSpace, 10);
+        this.schedule(this.addSponserBoardSpace, 5);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 15);
+        this.scheduleOnce(this.addGoal, 38);
     },
     update:function(dt){
     
@@ -246,6 +248,8 @@ var PlayerSpace = cc.Sprite.extend({
     if (this.invulnerability > 0) {
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
+    } else {
+      this.setOpacity(255);
     }
     
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
@@ -279,6 +283,11 @@ var ItemPlusSpace = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+	
+	//あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+	
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) ) {
       gameLayer_space.removeObject(this);//アイテムを削除する
@@ -326,6 +335,11 @@ var ItemMinusSpace = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+    
+    //あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+    
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する

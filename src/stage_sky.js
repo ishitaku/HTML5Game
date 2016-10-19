@@ -37,6 +37,12 @@ var stageSkyScene = cc.Scene.extend({
         life_sky = 3;
         //スコアを0に初期化
         score_sky = 0;
+        //ライフ回復までのスコアを0に初期化
+        life_Score_sky = 0;
+        //ゴールのフラグ
+        goalStop_sky = false;
+        //ステートをゲームに初期化
+        nowstate_sky = State_sky.GAME;
         //レイヤーを生成
         gameLayer_sky = new gameSky();
         //レイヤーを初期化
@@ -58,10 +64,7 @@ var gameSky = cc.Layer.extend({
         this._super();
         //画面のサイズを取得
         size_sky = cc.director.getWinSize();
-        //ゴールのフラグ
-        goalStop_sky = false;
-        //ステートをゲームに初期化
-        nowstate_sky = State_sky.GAME;
+        
         
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
@@ -109,9 +112,9 @@ var gameSky = cc.Layer.extend({
         this.schedule(this.addItemPlusSky, 1.5);
         this.schedule(this.addItemMinusSky, 2);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSky, 7);
+        this.schedule(this.addSponserBoardSky, 5);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 12);
+        this.scheduleOnce(this.addGoal, 18);
     },
     update:function(dt){
     
@@ -246,6 +249,8 @@ var PlayerSky = cc.Sprite.extend({
     if (this.invulnerability > 0) {
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
+    } else {
+      this.setOpacity(255);
     }
     
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
@@ -278,7 +283,33 @@ var ItemPlusSky = cc.Sprite.extend({
   update: function(dt) {
     //アイテムとの衝突を判定する処理
     var player_skyBoundingBox = player_sky.getBoundingBox();
+    
+    /*
+    //あたり判定を変更
+    var bx = player_skyBoundingBox.x;
+    var by = player_skyBoundingBox.y;
+    var bw = player_skyBoundingBox.width;
+    var bh = player_skyBoundingBox.height;
+    
+    var width_half = bw/2;
+    var height_half = bh/2;
+    
+    var centerx = bx + width_half;
+    var centery = by + height_half;
+    var rw = bw * 0.6;
+    var rx = centerx - rw * 0.5;
+    var rh = bh * 0.6;
+    var ry = centery - rh * 0.5;
+    
+    player_skyBoundingBox.x = rx;
+    player_skyBoundingBox.y = ry;
+    player_skyBoundingBox.width = rw;
+    player_skyBoundingBox.height = rh;
+    */
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
     var itemBoundingBox = this.getBoundingBox();
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+	
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
       gameLayer_sky.removeObject(this);//アイテムを削除する
@@ -318,7 +349,7 @@ var ItemMinusSky = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -326,6 +357,10 @@ var ItemMinusSky = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_skyBoundingBox = player_sky.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+    //あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+    
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する
@@ -519,3 +554,5 @@ function restartGameSky() {
   player_sky.ySpeed = 0;
   player_sky.setPosition(player_sky.getPosition().x, size_sky.height * 0.5);
 }
+
+

@@ -37,6 +37,12 @@ var stageSeaScene = cc.Scene.extend({
         life_sea = 3;
         //スコアを0に初期化
         score_sea = 0;
+        //ライフ回復までのスコアを0に初期化
+        life_Score_sea = 0;
+        //ゴールのフラグ
+        goalStop_sea = false;
+        //ステートをゲームに初期化
+        nowstate_sea = State_sea.GAME;
         //レイヤーを生成
         gameLayer_sea = new gameSea();
         //レイヤーを初期化
@@ -58,10 +64,7 @@ var gameSea = cc.Layer.extend({
         this._super();
         //画面のサイズを取得
         size_sea = cc.director.getWinSize();
-        //ゴールのフラグ
-        goalStop_sea = false;
-        //ステートをゲームに初期化
-        nowstate_sea = State_sea.GAME;
+        
         
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
@@ -107,11 +110,11 @@ var gameSea = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSea, 1.5);
-        this.schedule(this.addItemMinusSea, 1.5);
+        this.schedule(this.addItemMinusSea, 2);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSea, 10);
+        this.schedule(this.addSponserBoardSea, 5);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 25);
+        this.scheduleOnce(this.addGoal, 28);
     },
     update:function(dt){
     
@@ -246,6 +249,8 @@ var PlayerSea = cc.Sprite.extend({
     if (this.invulnerability > 0) {
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
+    } else {
+      this.setOpacity(255);
     }
     
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
@@ -279,6 +284,10 @@ var ItemPlusSea = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+	
+	//あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
       gameLayer_sea.removeObject(this);//アイテムを削除する
@@ -318,7 +327,7 @@ var ItemMinusSea = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -326,6 +335,10 @@ var ItemMinusSea = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+    
+    //あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する
