@@ -283,15 +283,16 @@ var ItemPlusSky = cc.Sprite.extend({
   update: function(dt) {
     //アイテムとの衝突を判定する処理
     var player_skyBoundingBox = player_sky.getBoundingBox();
-    console.log();
+    //console.log();
     
     //あたり判定を変更
     var bx = player_skyBoundingBox.x;
     var by = player_skyBoundingBox.y;
     var bw = player_skyBoundingBox.width;
     var bh = player_skyBoundingBox.height;
-    console.log(bx, bw);
-    
+    //console.log(bx, bw);
+    player_skyBoundingBox.width = bw * 0.7;
+    player_skyBoundingBox.height = bh * 0.7;
     /*
     var width_half = (bw - bx)/2;
     var height_half = (bh - by)/2;
