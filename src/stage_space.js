@@ -248,6 +248,8 @@ var PlayerSpace = cc.Sprite.extend({
     if (this.invulnerability > 0) {
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
+    } else {
+      this.setOpacity(255);
     }
     
     this.setPosition(this.getPosition().x, this.getPosition().y + this.ySpeed);
