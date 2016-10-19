@@ -443,7 +443,7 @@ var Shrimp = cc.Sprite.extend({
 
     //エビちゃんが画面外にでたら、リスタートさせる
      if (this.getPosition().y < 0 || this.getPosition().y > 568) {
-       life--;
+       //life--;
        lifeText.setString("LIFE : " + life);
        if(life < 1){
          //audioEngine.stopMusic();
