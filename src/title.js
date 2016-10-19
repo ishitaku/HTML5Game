@@ -36,7 +36,7 @@ var gamestart = cc.Layer.extend({
         },
         onTouchMoved: function(touch, event) {},
         onTouchEnded: function(touch, event) {
-          var effectVolume = cc.audioEngine.getEffectsVolume();
+          seInit();
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
           cc.director.runScene(new stageSkyScene());
@@ -60,5 +60,13 @@ var GameStartScene = cc.Scene.extend({
     }
 });
 
+function seInit() {
+      var volume = cc.audioEngine.getEffectsVolume()
+      cc.audioEngine.setEffectsVolume(0);
+      //効果音を再生する
+      cc.audioEngine.playEffect(res.damage_se_mp3);
+      cc.audioEngine.setEffectsVolume(volume);
+      
+}
 
 
