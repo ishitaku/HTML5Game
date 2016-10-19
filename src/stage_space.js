@@ -11,7 +11,7 @@ var scrollSpeed_space = 2;		//スクロール速度
 var player_space;					//プレイヤー
 var gameGravity_space = -0.05;	//重力
 var gameThrust_space = 0.15;		//上昇力
-var life_space = 3;		//ライフ
+var life_space = 10;		//ライフ
 var score_space = 0;		//スコア
 var life_Score_space = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
@@ -34,7 +34,7 @@ var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを3に設定
-        life_space = 3;
+        life_space = 10;
         //スコアを0に初期化
         score_space = 0;
         //ライフ回復までのスコアを0に初期化
@@ -302,10 +302,10 @@ var ItemPlusSpace = cc.Sprite.extend({
       life_Score_space += 10;
       if(life_Score_space >= LIFE_UP_SCORE_SKY) {
         life_Score_space -= LIFE_UP_SCORE_SKY;
-        if(life_space < 10) {
+        //if(life_space < 10) {
           life_space++;
           life_spaceText.setString("LIFE : " + life_space);
-        }
+        //}
       }
     }
 	//画面の外にでたアイテムを消去する処理

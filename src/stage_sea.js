@@ -33,8 +33,8 @@ var nowstate_sea;	//ゲームステート
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        //ライフを3に設定
-        life_sea = 3;
+        //ライフを設定
+        life_sea = 10;
         //スコアを0に初期化
         score_sea = 0;
         //ライフ回復までのスコアを0に初期化
@@ -302,10 +302,10 @@ var ItemPlusSea = cc.Sprite.extend({
       life_Score_sea += 10;
       if(life_Score_sea >= LIFE_UP_SCORE_SKY) {
         life_Score_sea -= LIFE_UP_SCORE_SKY;
-        if(life_sea < 10) {
+        //if(life_sea < 10) {
           life_sea++;
           life_seaText.setString("LIFE : " + life_sea);
-        }
+        //}
       }
     }
 	//画面の外にでたアイテムを消去する処理
