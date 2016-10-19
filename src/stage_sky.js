@@ -283,14 +283,14 @@ var ItemPlusSky = cc.Sprite.extend({
   update: function(dt) {
     //アイテムとの衝突を判定する処理
     var player_skyBoundingBox = player_sky.getBoundingBox();
-    //console.log();
     
+    /*
     //あたり判定を変更
     var bx = player_skyBoundingBox.x;
     var by = player_skyBoundingBox.y;
     var bw = player_skyBoundingBox.width;
     var bh = player_skyBoundingBox.height;
-    //console.log(bx, bw);
+    
     var width_half = bw/2;
     var height_half = bh/2;
     
@@ -301,13 +301,14 @@ var ItemPlusSky = cc.Sprite.extend({
     var rh = bh * 0.6;
     var ry = centery - rh * 0.5;
     
-    //console.log(rx, rw);
     player_skyBoundingBox.x = rx;
     player_skyBoundingBox.y = ry;
     player_skyBoundingBox.width = rw;
     player_skyBoundingBox.height = rh;
-    
+    */
+    setCollisionScale(player_skyBoundingBox, 0.8);
     var itemBoundingBox = this.getBoundingBox();
+	//setCollisionScale();
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
       gameLayer_sky.removeObject(this);//アイテムを削除する
@@ -548,3 +549,30 @@ function restartGameSky() {
   player_sky.ySpeed = 0;
   player_sky.setPosition(player_sky.getPosition().x, size_sky.height * 0.5);
 }
+
+//あたり判定の範囲の変更 
+function setCollisionScale(rect, scale) {
+//あたり判定を変更
+    var bx = rect.x;
+    var by = rect.y;
+    var bw = rect.width;
+    var bh = rect.height;
+    
+    var width_half = bw/2;
+    var height_half = bh/2;
+    
+    var centerx = bx + width_half;
+    var centery = by + height_half;
+    var rw = bw * scale;
+    var rx = centerx - rw * 0.5;
+    var rh = bh * scale;
+    var ry = centery - rh * 0.5;
+    
+    rect.x = rx;
+    rect.y = ry;
+    rect.width = rw;
+    rect.height = rh;
+    
+    return rect;
+}
+
