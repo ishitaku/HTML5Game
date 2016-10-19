@@ -36,6 +36,9 @@ var gamestart = cc.Layer.extend({
         },
         onTouchMoved: function(touch, event) {},
         onTouchEnded: function(touch, event) {
+          var effectVolume = cc.audioEngine.getEffectsVolume();
+          //無音を再生する
+          cc.audioEngine.playEffect(res.silent_se_mp3);
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
           cc.director.runScene(new stageSkyScene());
@@ -58,4 +61,6 @@ var GameStartScene = cc.Scene.extend({
     	}
     }
 });
+
+
 
