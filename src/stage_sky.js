@@ -327,8 +327,8 @@ var ItemMinusSky = cc.Sprite.extend({
   },
   update: function(dt) {
     //アイテムとの衝突を判定する処理
-    var player_skyBoundingBox = player_sky.getBoundingBox();
-    var itemBoundingBox = this.getBoundingBox();
+    var player_skyBoundingBox = player_sky.getBoundingBox() * 0.7;
+    var itemBoundingBox = this.getBoundingBox() * 0.7;
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する
