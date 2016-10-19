@@ -110,11 +110,11 @@ var gameSea = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSea, 1.5);
-        this.schedule(this.addItemMinusSea, 1.5);
+        this.schedule(this.addItemMinusSea, 2);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSea, 10);
+        this.schedule(this.addSponserBoardSea, 5);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 25);
+        this.scheduleOnce(this.addGoal, 28);
     },
     update:function(dt){
     
@@ -321,7 +321,7 @@ var ItemMinusSea = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },

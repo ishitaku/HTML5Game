@@ -108,12 +108,12 @@ var gameSpace = cc.Layer.extend({
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItemPlusSpace, 1);
-        this.schedule(this.addItemMinusSpace, 1);
+        this.schedule(this.addItemPlusSpace, 1.5);
+        this.schedule(this.addItemMinusSpace, 2);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSpace, 10);
+        this.schedule(this.addSponserBoardSpace, 5);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 15);
+        this.scheduleOnce(this.addGoal, 38);
     },
     update:function(dt){
     
