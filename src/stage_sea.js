@@ -33,8 +33,8 @@ var nowstate_sea;	//ゲームステート
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        //ライフを3に設定
-        life_sea = 3;
+        //ライフを設定
+        life_sea = 10;
         //スコアを0に初期化
         score_sea = 0;
         //ライフ回復までのスコアを0に初期化
@@ -286,7 +286,11 @@ var ItemPlusSea = cc.Sprite.extend({
     var itemBoundingBox = this.getBoundingBox();
 	
 	//あたり判定の範囲を変更
+<<<<<<< HEAD
     player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+=======
+    player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
+>>>>>>> gh-pages
 	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
@@ -302,10 +306,10 @@ var ItemPlusSea = cc.Sprite.extend({
       life_Score_sea += 10;
       if(life_Score_sea >= LIFE_UP_SCORE_SKY) {
         life_Score_sea -= LIFE_UP_SCORE_SKY;
-        if(life_sea < 10) {
+        //if(life_sea < 10) {
           life_sea++;
           life_seaText.setString("LIFE : " + life_sea);
-        }
+        //}
       }
     }
 	//画面の外にでたアイテムを消去する処理
@@ -337,7 +341,11 @@ var ItemMinusSea = cc.Sprite.extend({
     var itemBoundingBox = this.getBoundingBox();
     
     //あたり判定の範囲を変更
+<<<<<<< HEAD
     player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+=======
+    player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
+>>>>>>> gh-pages
 	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {

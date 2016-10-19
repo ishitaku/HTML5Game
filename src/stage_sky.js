@@ -11,7 +11,7 @@ var scrollSpeed_sky = 2;		//スクロール速度
 var player_sky;					//プレイヤー
 var gameGravity_sky = -0.05;	//重力
 var gameThrust_sky = 0.15;		//上昇力
-var life_sky = 3;		//ライフ
+var life_sky = 10;		//ライフ
 var score_sky = 0;		//スコア
 var life_Score_sky = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
@@ -33,8 +33,8 @@ var nowstate_sky;	//ゲームステート
 var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        //ライフを3に設定
-        life_sky = 3;
+        //ライフを設定
+        life_sky = 10;
         //スコアを0に初期化
         score_sky = 0;
         //ライフ回復までのスコアを0に初期化
@@ -324,10 +324,10 @@ var ItemPlusSky = cc.Sprite.extend({
       life_Score_sky += 10;
       if(life_Score_sky >= LIFE_UP_SCORE_SKY) {
         life_Score_sky -= LIFE_UP_SCORE_SKY;
-        if(life_sky < 10) {
+        //if(life_sky < 10) {
           life_sky++;
           life_skyText.setString("LIFE : " + life_sky);
-        }
+        //}
       }
     }
 	//画面の外にでたアイテムを消去する処理
