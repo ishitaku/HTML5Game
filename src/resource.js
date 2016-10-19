@@ -40,7 +40,6 @@
     gameclear_bgm_mp3: "res/title_bgm.mp3",
     plus_se_mp3 : "res/plus_se.mp3",
     damage_se_mp3 : "res/damage_se.mp3",
-    silent_se_mp3 : "res/silent_se.mp3",
 };
 
 var g_resources = [];
