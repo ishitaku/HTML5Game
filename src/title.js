@@ -36,7 +36,7 @@ var gamestart = cc.Layer.extend({
         },
         onTouchMoved: function(touch, event) {},
         onTouchEnded: function(touch, event) {
-        
+          
           // 次のシーンに切り替える
           cc.audioEngine.stopMusic();
           cc.director.runScene(new stageSkyScene());
@@ -59,5 +59,6 @@ var GameStartScene = cc.Scene.extend({
     	}
     }
 });
+
 
 
