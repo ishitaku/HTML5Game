@@ -306,7 +306,7 @@ var ItemPlusSky = cc.Sprite.extend({
     player_skyBoundingBox.width = rw;
     player_skyBoundingBox.height = rh;
     */
-    setCollisionScale(player_skyBoundingBox, 0.8);
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
     var itemBoundingBox = this.getBoundingBox();
 	//setCollisionScale();
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
