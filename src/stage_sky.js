@@ -290,9 +290,11 @@ var ItemPlusSky = cc.Sprite.extend({
     var by = player_skyBoundingBox.y;
     var bw = player_skyBoundingBox.width;
     var bh = player_skyBoundingBox.height;
-    //console.log(bx, bw);
-    player_skyBoundingBox.width = bw * 0.7;
-    player_skyBoundingBox.height = bh * 0.7;
+    console.log(by, bh);
+    player_skyBoundingBox.x = bx + bw * 0.2;
+    player_skyBoundingBox.y = by+  bh * 0.2;
+    player_skyBoundingBox.width = bw * 0.8;
+    player_skyBoundingBox.height = bh * 0.8;
     /*
     var width_half = (bw - bx)/2;
     var height_half = (bh - by)/2;
