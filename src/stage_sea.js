@@ -284,6 +284,10 @@ var ItemPlusSea = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+	
+	//あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
       gameLayer_sea.removeObject(this);//アイテムを削除する
@@ -331,6 +335,10 @@ var ItemMinusSea = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+    
+    //あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する

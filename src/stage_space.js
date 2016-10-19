@@ -283,6 +283,11 @@ var ItemPlusSpace = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+	
+	//あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+	
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) ) {
       gameLayer_space.removeObject(this);//アイテムを削除する
@@ -330,6 +335,11 @@ var ItemMinusSpace = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
+    
+    //あたり判定の範囲を変更
+    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+    
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) ) {
       //アイテムを削除する
