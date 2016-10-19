@@ -286,7 +286,7 @@ var ItemPlusSea = cc.Sprite.extend({
     var itemBoundingBox = this.getBoundingBox();
 	
 	//あたり判定の範囲を変更
-    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+    player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
 	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
@@ -337,7 +337,7 @@ var ItemMinusSea = cc.Sprite.extend({
     var itemBoundingBox = this.getBoundingBox();
     
     //あたり判定の範囲を変更
-    player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
+    player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
 	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
