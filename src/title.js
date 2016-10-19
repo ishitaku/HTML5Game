@@ -67,7 +67,7 @@ function audioInit() {
       cc.audioEngine.setEffectsVolume(0);
       //効果音を再生する
       cc.audioEngine.playEffect(res.damage_se_mp3);
-      cc.audioEngine.stopEffect(res.damage_se_mp3);
+      cc.audioEngine.stopEffect();
       cc.audioEngine.setEffectsVolume(effectVolume);
 }
 
