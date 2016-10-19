@@ -37,6 +37,12 @@ var stageSeaScene = cc.Scene.extend({
         life_sea = 3;
         //スコアを0に初期化
         score_sea = 0;
+        //ライフ回復までのスコアを0に初期化
+        life_Score_sea = 0;
+        //ゴールのフラグ
+        goalStop_sea = false;
+        //ステートをゲームに初期化
+        nowstate_sea = State_sea.GAME;
         //レイヤーを生成
         gameLayer_sea = new gameSea();
         //レイヤーを初期化
@@ -58,10 +64,7 @@ var gameSea = cc.Layer.extend({
         this._super();
         //画面のサイズを取得
         size_sea = cc.director.getWinSize();
-        //ゴールのフラグ
-        goalStop_sea = false;
-        //ステートをゲームに初期化
-        nowstate_sea = State_sea.GAME;
+        
         
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({

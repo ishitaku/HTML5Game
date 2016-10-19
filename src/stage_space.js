@@ -37,6 +37,12 @@ var stageSpaceScene = cc.Scene.extend({
         life_space = 3;
         //スコアを0に初期化
         score_space = 0;
+        //ライフ回復までのスコアを0に初期化
+        life_Score_space = 0;
+        //ゴールのフラグ
+        goalStop_space = false;
+        //ステートをゲームに初期化
+        nowstate_space = State_space.GAME;
         //レイヤーを生成
         gameLayer_space = new gameSpace();
         //レイヤーを初期化
@@ -58,10 +64,6 @@ var gameSpace = cc.Layer.extend({
         this._super();
         //画面のサイズを取得
         size_space = cc.director.getWinSize();
-        //ゴールのフラグ
-        goalStop_space = false;
-        //ステートをゲームに初期化
-        nowstate_space = State_space.GAME;
         
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({

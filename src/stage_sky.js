@@ -37,6 +37,12 @@ var stageSkyScene = cc.Scene.extend({
         life_sky = 3;
         //スコアを0に初期化
         score_sky = 0;
+        //ライフ回復までのスコアを0に初期化
+        life_Score_sky = 0;
+        //ゴールのフラグ
+        goalStop_sky = false;
+        //ステートをゲームに初期化
+        nowstate_sky = State_sky.GAME;
         //レイヤーを生成
         gameLayer_sky = new gameSky();
         //レイヤーを初期化
@@ -58,10 +64,7 @@ var gameSky = cc.Layer.extend({
         this._super();
         //画面のサイズを取得
         size_sky = cc.director.getWinSize();
-        //ゴールのフラグ
-        goalStop_sky = false;
-        //ステートをゲームに初期化
-        nowstate_sky = State_sky.GAME;
+        
         
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({

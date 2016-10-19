@@ -6,7 +6,7 @@ _p.gl;
 _p.WebGLRenderingContext;
 _p.DeviceOrientationEvent;
 _p.DeviceMotionEvent;
-_p.AudioContext;
+_p.CContext;
 if (!_p.AudioContext) {
     _p.webkitAudioContext;
 }
