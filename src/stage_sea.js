@@ -40,7 +40,7 @@ var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_sea = LEFE_SEA;
+        life_sea = LIFE_SEA;
         //スコアを0に初期化
         score_sea = 0;
         //ライフ回復までのスコアを0に初期化
