@@ -11,7 +11,7 @@ var scrollSpeed_sky = 2;		//スクロール速度
 var player_sky;					//プレイヤー
 var gameGravity_sky = -0.05;	//重力
 var gameThrust_sky = 0.15;		//上昇力
-var life_sky = 10;		//ライフ
+var life_sky = 5;		//ライフ
 var score_sky = 0;		//スコア
 var life_Score_sky = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
@@ -34,7 +34,7 @@ var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_sky = 10;
+        life_sky = 5;
         //スコアを0に初期化
         score_sky = 0;
         //ライフ回復までのスコアを0に初期化
