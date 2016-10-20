@@ -30,7 +30,7 @@ var State_space = {
 var nowstate_space;	//ゲームステート
 
 var LIFE_SPACE = 5;	//ライフ
-var MINUS_SPEED_SEC_SPACE = 3;
+var MINUS_SPEED_SEC_SPACE = 3.5;
 var MINUS_TIME_DUR_SPACE = 1;
 var SPONSER_DUR_SPACE = 7;
 var GOAL_TIME_SPACE = 80;
