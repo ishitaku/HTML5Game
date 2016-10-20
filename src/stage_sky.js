@@ -32,7 +32,7 @@ var nowstate_sky;	//ゲームステート
 var MINUS_SPEED_SEC_SKY = 3;
 var MINUS_TIME_DUR_SKY = 1;
 var SPONSER_DUR_SKY = 7;
-var GOAL_TIME_SKY = 40;
+var GOAL_TIME_SKY = 80;
 
 //空ステージのシーン
 var stageSkyScene = cc.Scene.extend({
