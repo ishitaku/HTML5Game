@@ -14,7 +14,7 @@ var gameThrust_sea = 0.15;		//上昇力
 var life_sea = 5;		//ライフ
 var score_sea = 0;		//スコア
 var life_Score_sea = 0;	//ライフが回復するスコア
-var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
+var LIFE_UP_SCORE_SEA = 100;	//回復までのスコア
 var goalStop_sea = false;		//ゴールまでついたか
 var itemPlusArray_sea;			//プラスアイテム配列
 var itemMinusArray_sea;			//マイナスアイテム配列
@@ -28,6 +28,11 @@ var State_sea = {
  GOAL: 1
 };
 var nowstate_sea;	//ゲームステート
+
+var MINUS_SPEED_SEC_SEA = 3;
+var MINUS_TIME_DUR_SEA = 1;
+var SPONSER_DUR_SEA = 7;
+var GOAL_TIME_SEA = 40;
 
 //海ステージのシーン
 var stageSeaScene = cc.Scene.extend({
@@ -110,11 +115,11 @@ var gameSea = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSea, 2);
-        this.schedule(this.addItemMinusSea, 3);
+        this.schedule(this.addItemMinusSea, MINUS_TIME_DUR_SEA);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSea, 7);
+        this.schedule(this.addSponserBoardSea, SPONSER_DUR_SEA);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 40);
+        this.scheduleOnce(this.addGoal, GOAL_TIME_SEA);
     },
     update:function(dt){
     
@@ -300,8 +305,8 @@ var ItemPlusSea = cc.Sprite.extend({
       score_sea += 10;
       score_seaText.setString("SCORE : " + score_sea);
       life_Score_sea += 10;
-      if(life_Score_sea >= LIFE_UP_SCORE_SKY) {
-        life_Score_sea -= LIFE_UP_SCORE_SKY;
+      if(life_Score_sea >= LIFE_UP_SCORE_SEA) {
+        life_Score_sea -= LIFE_UP_SCORE_SEA;
         //if(life_sea < 10) {
           life_sea++;
           life_seaText.setString("LIFE : " + life_sea);
@@ -327,7 +332,7 @@ var ItemMinusSea = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(MINUS_SPEED_SEC_SEA, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },

@@ -29,6 +29,11 @@ var State_sky = {
 };
 var nowstate_sky;	//ゲームステート
 
+var MINUS_SPEED_SEC_SKY = 3;
+var MINUS_TIME_DUR_SKY = 1;
+var SPONSER_DUR_SKY = 7;
+var GOAL_TIME_SKY = 40;
+
 //空ステージのシーン
 var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
@@ -110,11 +115,11 @@ var gameSky = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSky, 2);
-        this.schedule(this.addItemMinusSky, 3);
+        this.schedule(this.addItemMinusSky, MINUS_TIME_DUR_SKY);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSky, 7);
+        this.schedule(this.addSponserBoardSky, SPONSER_DUR_SKY);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 40);
+        this.scheduleOnce(this.addGoal, GOAL_TIME_SKY);
     },
     update:function(dt){
     
@@ -327,7 +332,7 @@ var ItemMinusSky = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(MINUS_SPEED_SEC_SKY, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },

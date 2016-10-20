@@ -14,7 +14,7 @@ var gameThrust_space = 0.15;		//上昇力
 var life_space = 5;		//ライフ
 var score_space = 0;		//スコア
 var life_Score_space = 0;	//ライフが回復するスコア
-var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
+var LIFE_UP_SCORE_SPACE = 100;	//回復までのスコア
 var goalStop_space = false;		//ゴールまでついたか
 var itemPlusArray_space;			//プラスアイテム配列
 var itemMinusArray_space;			//マイナスアイテム配列
@@ -28,6 +28,11 @@ var State_space = {
  GOAL: 1
 };
 var nowstate_space;	//ゲームステート
+
+var MINUS_SPEED_SEC_SPACE = 3;
+var MINUS_TIME_DUR_SPACE = 1;
+var SPONSER_DUR_SPACE = 7;
+var GOAL_TIME_SPACE = 40;
 
 //宇宙ステージのシーン
 var stageSpaceScene = cc.Scene.extend({
@@ -110,11 +115,11 @@ var gameSpace = cc.Layer.extend({
 
         //アイテム生成
         this.schedule(this.addItemPlusSpace, 2);
-        this.schedule(this.addItemMinusSpace, 3);
+        this.schedule(this.addItemMinusSpace, MINUS_TIME_DUR_SPACE);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSpace, 7);
+        this.schedule(this.addSponserBoardSpace, SPONSER_DUR_SPACE);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 40);
+        this.scheduleOnce(this.addGoal, GOAL_TIME_SPACE);
     },
     update:function(dt){
     
@@ -300,8 +305,8 @@ var ItemPlusSpace = cc.Sprite.extend({
       score_space += 10;
       score_spaceText.setString("SCORE : " + score_space);
       life_Score_space += 10;
-      if(life_Score_space >= LIFE_UP_SCORE_SKY) {
-        life_Score_space -= LIFE_UP_SCORE_SKY;
+      if(life_Score_space >= LIFE_UP_SCORE_SPACE) {
+        life_Score_space -= LIFE_UP_SCORE_SPACE;
         //if(life_space < 10) {
           life_space++;
           life_spaceText.setString("LIFE : " + life_space);
@@ -327,7 +332,7 @@ var ItemMinusSpace = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(MINUS_SPEED_SEC_SPACE, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
