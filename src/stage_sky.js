@@ -7,7 +7,7 @@ var gameLayer_sky;		//レイヤー
 var background_sky0;	//背景1
 var background_sky1;	//背景2
 var background_sky2;	//背景3
-var scrollSpeed_sky = 2;		//スクロール速度
+var scrollSpeed_sky = 3;		//スクロール速度
 var player_sky;					//プレイヤー
 var gameGravity_sky = -0.05;	//重力
 var gameThrust_sky = 0.15;		//上昇力
@@ -29,10 +29,10 @@ var State_sky = {
 };
 var nowstate_sky;	//ゲームステート
 
-var MINUS_SPEED_SEC_SKY = 3;
-var MINUS_TIME_DUR_SKY = 1;
-var SPONSER_DUR_SKY = 7;
-var GOAL_TIME_SKY = 80;
+var MINUS_SPEED_SEC_SKY = 4;	//敵の移動時間
+var MINUS_TIME_DUR_SKY = 2;		//敵の出現間隔
+var SPONSER_DUR_SKY = 7;		//スポンサー様看板の出現間隔
+var GOAL_TIME_SKY = 60;			//ゴールまでの時間
 
 //空ステージのシーン
 var stageSkyScene = cc.Scene.extend({
