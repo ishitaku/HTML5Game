@@ -469,7 +469,7 @@ var GoalFlagSpace = cc.Sprite.extend({
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_spaceBoundingBox, flagBoundingBox) ) {
         cc.audioEngine.stopMusic();
-        cc.director.runScene(new StageClearSpaceScene());
+        cc.director.runScene(new GameClearScene());
       }
    }
    
@@ -526,7 +526,7 @@ function damageSpace() {
         cc.audioEngine.stopMusic();
         //gameover.score_space = score_space;
         //ゲームオーバー画面へ移動
-        cc.director.runScene(new GameClearScene());
+        cc.director.runScene(new GameOverSpaceScene());
       }
       
       player_space.invulnerability = 100;

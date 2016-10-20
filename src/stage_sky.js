@@ -31,7 +31,7 @@ var nowstate_sky;	//ゲームステート
 
 var LIFE_SKY = 5;	//ライフ
 var MINUS_SPEED_SEC_SKY = 4;	//敵の移動時間
-var MINUS_TIME_DUR_SKY = 3;		//敵の出現間隔
+var MINUS_TIME_DUR_SKY = 1;		//敵の出現間隔
 var SPONSER_DUR_SKY = 7;		//スポンサー様看板の出現間隔
 var GOAL_TIME_SKY = 40;			//ゴールまでの時間
 
