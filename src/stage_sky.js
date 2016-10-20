@@ -340,7 +340,7 @@ var ItemMinusSky = cc.Sprite.extend({
 	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) && player.invulnerability == 0) {
+    if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) && player_sky.invulnerability == 0) {
       //アイテムを削除する
       gameLayer_sky.removeObject(this);
       //ダメージ
