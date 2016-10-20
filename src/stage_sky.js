@@ -7,7 +7,7 @@ var gameLayer_sky;		//レイヤー
 var background_sky0;	//背景1
 var background_sky1;	//背景2
 var background_sky2;	//背景3
-var scrollSpeed_sky = 3;		//スクロール速度
+var scrollSpeed_sky = 2.5;		//スクロール速度
 var player_sky;					//プレイヤー
 var gameGravity_sky = -0.05;	//重力
 var gameThrust_sky = 0.15;		//上昇力

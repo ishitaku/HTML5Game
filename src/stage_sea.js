@@ -7,7 +7,7 @@ var gameLayer_sea;		//レイヤー
 var background_sea0;	//背景1
 var background_sea1;	//背景2
 var background_sea2;	//背景3
-var scrollSpeed_sea = 2;		//スクロール速度
+var scrollSpeed_sea = 2.5;		//スクロール速度
 var player_sea;					//プレイヤー
 var gameGravity_sea = -0.05;	//重力
 var gameThrust_sea = 0.15;		//上昇力

@@ -7,7 +7,7 @@ var gameLayer_space;		//レイヤー
 var background_space0;	//背景1
 var background_space1;	//背景2
 var background_space2;	//背景3
-var scrollSpeed_space = 2;		//スクロール速度
+var scrollSpeed_space = 2.5;		//スクロール速度
 var player_space;					//プレイヤー
 var gameGravity_space = -0.05;	//重力
 var gameThrust_space = 0.15;		//上昇力
