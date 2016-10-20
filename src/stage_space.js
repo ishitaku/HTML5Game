@@ -392,7 +392,7 @@ var GroundSpace = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_space.removeObject(this)
       }
    }
@@ -415,7 +415,7 @@ var SponserBoardSpace = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_space.removeObject(this)
       }
    }
@@ -438,7 +438,7 @@ var SponserLogoSpace = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_space.removeObject(this)
       }
    }

@@ -393,7 +393,7 @@ var GroundSky = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_sky.removeObject(this)
       }
    }
@@ -416,7 +416,7 @@ var SponserBoardSky = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_sky.removeObject(this)
       }
    }
@@ -439,7 +439,7 @@ var SponserLogoSky = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_sky.removeObject(this)
       }
    }

@@ -392,7 +392,7 @@ var GroundSea = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_sea.removeObject(this)
       }
    }
@@ -415,7 +415,7 @@ var SponserBoardSea = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_sea.removeObject(this)
       }
    }
@@ -438,7 +438,7 @@ var SponserLogoSea = cc.Sprite.extend({
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
-      if (this.getPosition().x < 50) {
+      if (this.getPosition().x < -50) {
       gameLayer_sea.removeObject(this)
       }
    }
