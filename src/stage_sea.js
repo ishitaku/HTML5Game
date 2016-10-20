@@ -30,7 +30,7 @@ var State_sea = {
 var nowstate_sea;	//ゲームステート
 
 var LIFE_SEA = 5;	//ライフ
-var MINUS_SPEED_SEC_SEA = 4;
+var MINUS_SPEED_SEC_SEA = 3.5;
 var MINUS_TIME_DUR_SEA = 2;
 var SPONSER_DUR_SEA = 7;
 var GOAL_TIME_SEA = 60;
