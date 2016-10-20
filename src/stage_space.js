@@ -11,7 +11,7 @@ var scrollSpeed_space = 2;		//スクロール速度
 var player_space;					//プレイヤー
 var gameGravity_space = -0.05;	//重力
 var gameThrust_space = 0.15;		//上昇力
-var life_space = 10;		//ライフ
+var life_space = 5;		//ライフ
 var score_space = 0;		//スコア
 var life_Score_space = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
@@ -33,8 +33,8 @@ var nowstate_space;	//ゲームステート
 var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
-        //ライフを3に設定
-        life_space = 10;
+        //ライフを設定
+        life_space = 5;
         //スコアを0に初期化
         score_space = 0;
         //ライフ回復までのスコアを0に初期化
@@ -65,6 +65,7 @@ var gameSpace = cc.Layer.extend({
         //画面のサイズを取得
         size_space = cc.director.getWinSize();
         
+        
        // タップイベントリスナーを登録する
                 cc.eventManager.addListener({
                     event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -94,26 +95,26 @@ var gameSpace = cc.Layer.extend({
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_spaceText);
         life_spaceText.setPosition(100,850);
-        life_spaceText.setColor(cc.color(255, 255, 255, 255));
+        life_spaceText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(life_spaceText, 10);
 
         //スコア表示
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(255, 255, 255, 255));
+        score_spaceText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItemPlusSpace, 1.5);
-        this.schedule(this.addItemMinusSpace, 2);
+        this.schedule(this.addItemPlusSpace, 2);
+        this.schedule(this.addItemMinusSpace, 3);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSpace, 5);
+        this.schedule(this.addSponserBoardSpace, 7);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 38);
+        this.scheduleOnce(this.addGoal, 40);
     },
     update:function(dt){
     
@@ -249,6 +250,7 @@ var PlayerSpace = cc.Sprite.extend({
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
     } else {
+      this.invulnerability = 0;
       this.setOpacity(255);
     }
     
@@ -282,11 +284,9 @@ var ItemPlusSpace = cc.Sprite.extend({
   update: function(dt) {
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
-    var itemBoundingBox = this.getBoundingBox();
-	
-	//あたり判定の範囲を変更
+    
     player_spaceBoundingBox = setCollisionScale(player_spaceBoundingBox, 0.8);
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+    var itemBoundingBox = this.getBoundingBox();
 	
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) ) {
@@ -327,7 +327,7 @@ var ItemMinusSpace = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -335,13 +335,12 @@ var ItemMinusSpace = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
-    
     //あたり判定の範囲を変更
     player_spaceBoundingBox = setCollisionScale(player_spaceBoundingBox, 0.8);
 	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) ) {
+    if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) && player_space.invulnerability == 0) {
       //アイテムを削除する
       gameLayer_space.removeObject(this);
       //ダメージ
@@ -464,7 +463,7 @@ var GoalFlagSpace = cc.Sprite.extend({
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_spaceBoundingBox, flagBoundingBox) ) {
         cc.audioEngine.stopMusic();
-        cc.director.runScene(new GameClearScene());
+        cc.director.runScene(new StageClearSpaceScene());
       }
    }
    
@@ -533,3 +532,5 @@ function restartGameSpace() {
   player_space.ySpeed = 0;
   player_space.setPosition(player_space.getPosition().x, size_space.height * 0.5);
 }
+
+

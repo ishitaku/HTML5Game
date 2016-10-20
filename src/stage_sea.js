@@ -11,7 +11,7 @@ var scrollSpeed_sea = 2;		//スクロール速度
 var player_sea;					//プレイヤー
 var gameGravity_sea = -0.05;	//重力
 var gameThrust_sea = 0.15;		//上昇力
-var life_sea = 3;		//ライフ
+var life_sea = 5;		//ライフ
 var score_sea = 0;		//スコア
 var life_Score_sea = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
@@ -34,7 +34,7 @@ var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_sea = 10;
+        life_sea = 5;
         //スコアを0に初期化
         score_sea = 0;
         //ライフ回復までのスコアを0に初期化
@@ -109,12 +109,12 @@ var gameSea = cc.Layer.extend({
         this.scheduleUpdate();
 
         //アイテム生成
-        this.schedule(this.addItemPlusSea, 1.5);
-        this.schedule(this.addItemMinusSea, 2);
+        this.schedule(this.addItemPlusSea, 2);
+        this.schedule(this.addItemMinusSea, 3);
         //スポンサー様看板を生成
-        this.schedule(this.addSponserBoardSea, 5);
+        this.schedule(this.addSponserBoardSea, 7);
         //ゴールを生成
-        this.scheduleOnce(this.addGoal, 28);
+        this.scheduleOnce(this.addGoal, 40);
     },
     update:function(dt){
     
@@ -250,6 +250,7 @@ var PlayerSea = cc.Sprite.extend({
       this.invulnerability--;
       this.setOpacity(255 - this.getOpacity());
     } else {
+      this.invulnerability = 0;
       this.setOpacity(255);
     }
     
@@ -283,11 +284,10 @@ var ItemPlusSea = cc.Sprite.extend({
   update: function(dt) {
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
+    
+    player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
     var itemBoundingBox = this.getBoundingBox();
 	
-	//あたり判定の範囲を変更
-    player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
 	//rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
       gameLayer_sea.removeObject(this);//アイテムを削除する
@@ -327,7 +327,7 @@ var ItemMinusSea = cc.Sprite.extend({
     this._super();
     //初期位置を設定
     this.setPosition(1200, Math.random() * 900);
-    var moveAction = cc.MoveTo.create(4, new cc.Point(-100, Math.random() * 900));
+    var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
     this.scheduleUpdate();
   },
@@ -335,12 +335,12 @@ var ItemMinusSea = cc.Sprite.extend({
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
-    
     //あたり判定の範囲を変更
     player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
 	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+    
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
-    if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) ) {
+    if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) && player_sea.invulnerability == 0) {
       //アイテムを削除する
       gameLayer_sea.removeObject(this);
       //ダメージ
@@ -532,3 +532,5 @@ function restartGameSea() {
   player_sea.ySpeed = 0;
   player_sea.setPosition(player_sea.getPosition().x, size_sea.height * 0.5);
 }
+
+
