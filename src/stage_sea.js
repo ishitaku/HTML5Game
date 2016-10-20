@@ -315,7 +315,7 @@ var ItemPlusSea = cc.Sprite.extend({
       }
     }
 	//画面の外にでたアイテムを消去する処理
-    if (this.getPosition().x < 50) {
+    if (this.getPosition().x < -50) {
       gameLayer_sea.removeObject(this)
     }
   }
@@ -352,7 +352,7 @@ var ItemMinusSea = cc.Sprite.extend({
       //ダメージ
       damageSea();
     }
-    if (this.getPosition().x < 50) {
+    if (this.getPosition().x < -50) {
       gameLayer_sea.removeObject(this)
     }
   }

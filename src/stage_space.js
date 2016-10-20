@@ -315,7 +315,7 @@ var ItemPlusSpace = cc.Sprite.extend({
       }
     }
 	//画面の外にでたアイテムを消去する処理
-    if (this.getPosition().x < 50) {
+    if (this.getPosition().x < -50) {
       gameLayer_space.removeObject(this)
     }
   }
@@ -352,7 +352,7 @@ var ItemMinusSpace = cc.Sprite.extend({
       //ダメージ
       damageSpace();
     }
-    if (this.getPosition().x < 50) {
+    if (this.getPosition().x < -50) {
       gameLayer_space.removeObject(this)
     }
   }
