@@ -11,7 +11,7 @@ var scrollSpeed_sky = 3;		//スクロール速度
 var player_sky;					//プレイヤー
 var gameGravity_sky = -0.05;	//重力
 var gameThrust_sky = 0.15;		//上昇力
-var life_sky = 5;		//ライフ
+var life_sky;		//ライフ
 var score_sky = 0;		//スコア
 var life_Score_sky = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
@@ -29,6 +29,7 @@ var State_sky = {
 };
 var nowstate_sky;	//ゲームステート
 
+var LIFE_SKY = 5;	//ライフ
 var MINUS_SPEED_SEC_SKY = 5;	//敵の移動時間
 var MINUS_TIME_DUR_SKY = 3;		//敵の出現間隔
 var SPONSER_DUR_SKY = 7;		//スポンサー様看板の出現間隔
@@ -39,7 +40,7 @@ var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_sky = 5;
+        life_sky = LIFE_SKY;
         //スコアを0に初期化
         score_sky = 0;
         //ライフ回復までのスコアを0に初期化

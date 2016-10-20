@@ -11,7 +11,7 @@ var scrollSpeed_sea = 2;		//スクロール速度
 var player_sea;					//プレイヤー
 var gameGravity_sea = -0.05;	//重力
 var gameThrust_sea = 0.15;		//上昇力
-var life_sea = 5;		//ライフ
+var life_sea;		//ライフ
 var score_sea = 0;		//スコア
 var life_Score_sea = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SEA = 100;	//回復までのスコア
@@ -29,6 +29,7 @@ var State_sea = {
 };
 var nowstate_sea;	//ゲームステート
 
+var LIFE_SEA = 5;	//ライフ
 var MINUS_SPEED_SEC_SEA = 4;
 var MINUS_TIME_DUR_SEA = 2;
 var SPONSER_DUR_SEA = 7;
@@ -39,7 +40,7 @@ var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_sea = 5;
+        life_sea = LEFE_SEA;
         //スコアを0に初期化
         score_sea = 0;
         //ライフ回復までのスコアを0に初期化

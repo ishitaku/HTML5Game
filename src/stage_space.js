@@ -11,7 +11,7 @@ var scrollSpeed_space = 2;		//スクロール速度
 var player_space;					//プレイヤー
 var gameGravity_space = -0.05;	//重力
 var gameThrust_space = 0.15;		//上昇力
-var life_space = 5;		//ライフ
+var life_space;		//ライフ
 var score_space = 0;		//スコア
 var life_Score_space = 0;	//ライフが回復するスコア
 var LIFE_UP_SCORE_SPACE = 100;	//回復までのスコア
@@ -29,6 +29,7 @@ var State_space = {
 };
 var nowstate_space;	//ゲームステート
 
+var LIFE_SPACE = 5;	//ライフ
 var MINUS_SPEED_SEC_SPACE = 3;
 var MINUS_TIME_DUR_SPACE = 1;
 var SPONSER_DUR_SPACE = 7;
@@ -39,7 +40,7 @@ var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_space = 5;
+        life_space = LIFE_SPACE;
         //スコアを0に初期化
         score_space = 0;
         //ライフ回復までのスコアを0に初期化
