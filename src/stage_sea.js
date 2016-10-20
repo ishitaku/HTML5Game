@@ -29,10 +29,10 @@ var State_sea = {
 };
 var nowstate_sea;	//ゲームステート
 
-var MINUS_SPEED_SEC_SEA = 3;
-var MINUS_TIME_DUR_SEA = 1;
+var MINUS_SPEED_SEC_SEA = 4;
+var MINUS_TIME_DUR_SEA = 2;
 var SPONSER_DUR_SEA = 7;
-var GOAL_TIME_SEA = 40;
+var GOAL_TIME_SEA = 60;
 
 //海ステージのシーン
 var stageSeaScene = cc.Scene.extend({

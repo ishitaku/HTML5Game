@@ -32,7 +32,7 @@ var nowstate_space;	//ゲームステート
 var MINUS_SPEED_SEC_SPACE = 3;
 var MINUS_TIME_DUR_SPACE = 1;
 var SPONSER_DUR_SPACE = 7;
-var GOAL_TIME_SPACE = 40;
+var GOAL_TIME_SPACE = 80;
 
 //宇宙ステージのシーン
 var stageSpaceScene = cc.Scene.extend({
