@@ -92,7 +92,7 @@ var gameSky = cc.Layer.extend({
         
         //プレイヤーを生成
         player_sky = new PlayerSky();
-        this.addChild(player_sky, 7);
+        this.addChild(player_sky);
         
         
         // 残機表示
@@ -156,11 +156,11 @@ var gameSky = cc.Layer.extend({
     //スポンサー様看板を追加
     addSponserBoardSky: function(event) {
       var ground = new GroundSky();
-      this.addChild(ground, 3);
+      this.addChild(ground);
       var sponserboard = new SponserBoardSky();
-      this.addChild(sponserboard, 4);
+      this.addChild(sponserboard);
       var sponserlogo = new SponserLogoSky();
-      this.addChild(sponserlogo, 5);
+      this.addChild(sponserlogo);
     },
     //ゴールを追加
     addGoal: function() {
