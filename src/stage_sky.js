@@ -92,8 +92,9 @@ var gameSky = cc.Layer.extend({
         
         //プレイヤーを生成
         player_sky = new PlayerSky();
-        this.addChild(player_sky, 5);
-
+        this.addChild(player_sky);
+        this.reorderChild(player_sky5);
+        
         // 残機表示
         life_skyText = cc.LabelTTF.create("LIFE : " +life_sky ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_skyText);
