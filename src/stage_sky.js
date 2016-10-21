@@ -157,10 +157,13 @@ var gameSky = cc.Layer.extend({
     addSponserBoardSky: function(event) {
       var ground = new GroundSky();
       this.addChild(ground);
+      this.reorderChild(ground, 2);
       var sponserboard = new SponserBoardSky();
       this.addChild(sponserboard);
+      this.reorderChild(sponserboard, 3);
       var sponserlogo = new SponserLogoSky();
       this.addChild(sponserlogo);
+      this.reorderChild(sponserlogo, 4);
     },
     //ゴールを追加
     addGoal: function() {
