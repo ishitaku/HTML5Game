@@ -8,7 +8,7 @@ function setGameData(gamelife, gamescore, gamelifeupscore) {
 game_life = gamelife;
 game_socre = gamescore;
 game_lifeup_score = gamelifeupscore;
-console.log(gamescore);
+//console.log(gamescore);
 }
 
 
