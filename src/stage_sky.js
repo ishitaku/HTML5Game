@@ -9,8 +9,8 @@ var background_sky1;	//背景2
 var background_sky2;	//背景3
 var scrollSpeed_sky = 2.5;		//スクロール速度
 var player_sky;					//プレイヤー
-var gameGravity_sky = -0.05;	//重力
-var gameThrust_sky = 0.1;		//上昇力
+var gameGravity_sky = -0.06;	//重力
+var gameThrust_sky = 0.12;		//上昇力
 var life_sky;		//ライフ
 var score_sky = 0;		//スコア
 var life_Score_sky = 0;	//ライフが回復するスコア
@@ -41,11 +41,11 @@ var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_sky = LIFE_SKY;
+        life_sky = game_life;
         //スコアを0に初期化
-        score_sky = 0;
-        //ライフ回復までのスコアを0に初期化
-        life_Score_sky = 0;
+        score_sky = game_score;
+        //ライフ回復までのスコアを初期化
+        life_Score_sky = game_lifeup_score;;
         //ゴールのフラグ
         goalStop_sky = false;
         //ステートをゲームに初期化
@@ -469,7 +469,10 @@ var GoalFlagSky = cc.Sprite.extend({
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_skyBoundingBox, flagBoundingBox) ) {
+        
         cc.audioEngine.stopMusic();
+        setGameData(life_sky, score_sky, life_Score_sky);
+        //クリア画面へ移動
         cc.director.runScene(new StageClearSkyScene());
       }
    }
@@ -525,9 +528,10 @@ function damageSky() {
       //ライフが0なら
       if(life_sky < 1){
         cc.audioEngine.stopMusic();
-        //gameover.score_sky = score_sky;
+        setGameData(life_sky, score_sky, life_Score_sky);
         //ゲームオーバー画面へ移動
         cc.director.runScene(new GameOverSkyScene());
+        
       }
       
       player_sky.invulnerability = 100;
@@ -539,5 +543,6 @@ function restartGameSky() {
   player_sky.ySpeed = 0;
   player_sky.setPosition(player_sky.getPosition().x, size_sky.height * 0.5);
 }
+
 
 

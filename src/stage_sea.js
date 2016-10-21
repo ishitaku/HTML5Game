@@ -1,5 +1,5 @@
 ﻿
-/* 海ステージ */
+/* 空ステージ */
 //stage_sea.js
 
 var size_sea;			//画面のサイズ
@@ -30,21 +30,22 @@ var State_sea = {
 var nowstate_sea;	//ゲームステート
 
 var LIFE_SEA = 5;	//ライフ
-var MINUS_SPEED_SEC_SEA = 3.5;
-var MINUS_TIME_DUR_SEA = 1.5;
-var SPONSER_DUR_SEA = 10;
-var GOAL_TIME_SEA = 65;
+var MINUS_SPEED_SEC_SEA = 4;	//敵の移動時間
+var MINUS_TIME_DUR_SEA = 2;		//敵の出現間隔
+var SPONSER_DUR_SEA = 10;		//スポンサー様看板の出現間隔
+var GOAL_TIME_SEA = 35;			//ゴールまでの時間
 
-//海ステージのシーン
+
+//空ステージのシーン
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_sea = LIFE_SEA;
+        life_sea = game_life;
         //スコアを0に初期化
-        score_sea = 0;
-        //ライフ回復までのスコアを0に初期化
-        life_Score_sea = 0;
+        score_sea = game_score;
+        //ライフ回復までのスコアを初期化
+        life_Score_sea = game_lifeup_score;;
         //ゴールのフラグ
         goalStop_sea = false;
         //ステートをゲームに初期化
@@ -468,7 +469,10 @@ var GoalFlagSea = cc.Sprite.extend({
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_seaBoundingBox, flagBoundingBox) ) {
+        
         cc.audioEngine.stopMusic();
+        setGameData(life_sea, score_sea, life_Score_sea);
+        //クリア画面へ移動
         cc.director.runScene(new StageClearSeaScene());
       }
    }
@@ -524,9 +528,10 @@ function damageSea() {
       //ライフが0なら
       if(life_sea < 1){
         cc.audioEngine.stopMusic();
-        //gameover.score_sea = score_sea;
+        setGameData(life_sea, score_sea, life_Score_sea);
         //ゲームオーバー画面へ移動
         cc.director.runScene(new GameOverSeaScene());
+        
       }
       
       player_sea.invulnerability = 100;
@@ -538,5 +543,6 @@ function restartGameSea() {
   player_sea.ySpeed = 0;
   player_sea.setPosition(player_sea.getPosition().x, size_sea.height * 0.5);
 }
+
 
 

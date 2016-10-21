@@ -1,3 +1,17 @@
+
+var game_life = 5;			//ライフの持ち越し
+var game_score = 0;			//スコアの持ち越し
+var game_lifeup_score = 0;	//ライフ回復までのスコア
+
+//ゲームデータの保持
+function setGameData(gamelife, gamescore, gamelifeupscore) {
+game_life = gamelife;
+game_socre = gamescore;
+game_lifeup_score = gamelifeupscore;
+
+}
+
+
 //あたり判定の範囲の変更
 function setCollisionScale(rect, scale) {
 //あたり判定を変更

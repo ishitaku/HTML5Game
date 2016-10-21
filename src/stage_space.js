@@ -1,5 +1,5 @@
 ﻿
-/* 宇宙ステージ */
+/* 空ステージ */
 //stage_space.js
 
 var size_space;			//画面のサイズ
@@ -30,21 +30,22 @@ var State_space = {
 var nowstate_space;	//ゲームステート
 
 var LIFE_SPACE = 5;	//ライフ
-var MINUS_SPEED_SEC_SPACE = 3.5;
-var MINUS_TIME_DUR_SPACE = 1;
-var SPONSER_DUR_SPACE = 10;
-var GOAL_TIME_SPACE = 95;
+var MINUS_SPEED_SEC_SPACE = 4;	//敵の移動時間
+var MINUS_TIME_DUR_SPACE = 2;		//敵の出現間隔
+var SPONSER_DUR_SPACE = 10;		//スポンサー様看板の出現間隔
+var GOAL_TIME_SPACE = 35;			//ゴールまでの時間
 
-//宇宙ステージのシーン
+
+//空ステージのシーン
 var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
         //ライフを設定
-        life_space = LIFE_SPACE;
+        life_space = game_life;
         //スコアを0に初期化
-        score_space = 0;
-        //ライフ回復までのスコアを0に初期化
-        life_Score_space = 0;
+        score_space = game_score;
+        //ライフ回復までのスコアを初期化
+        life_Score_space = game_lifeup_score;;
         //ゴールのフラグ
         goalStop_space = false;
         //ステートをゲームに初期化
@@ -101,14 +102,14 @@ var gameSpace = cc.Layer.extend({
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_spaceText);
         life_spaceText.setPosition(100,850);
-        life_spaceText.setColor(cc.color(255, 255, 255, 255));
+        life_spaceText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(life_spaceText, 10);
 
         //スコア表示
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(255, 255, 255, 255));
+        score_spaceText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -468,7 +469,10 @@ var GoalFlagSpace = cc.Sprite.extend({
       var flagBoundingBox = this.getBoundingBox();
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_spaceBoundingBox, flagBoundingBox) ) {
+        
         cc.audioEngine.stopMusic();
+        setGameData(life_space, score_space, life_Score_space);
+        //クリア画面へ移動
         cc.director.runScene(new GameClearScene());
       }
    }
@@ -524,9 +528,10 @@ function damageSpace() {
       //ライフが0なら
       if(life_space < 1){
         cc.audioEngine.stopMusic();
-        //gameover.score_space = score_space;
+        setGameData(life_space, score_space, life_Score_space);
         //ゲームオーバー画面へ移動
         cc.director.runScene(new GameOverSpaceScene());
+        
       }
       
       player_space.invulnerability = 100;
@@ -538,5 +543,6 @@ function restartGameSpace() {
   player_space.ySpeed = 0;
   player_space.setPosition(player_space.getPosition().x, size_space.height * 0.5);
 }
+
 
 
