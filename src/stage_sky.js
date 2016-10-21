@@ -22,7 +22,7 @@ itemPlusArray_sky = new Array(res.item_plus00_png, res.item_plus01_png);		//プ�
 itemMinusArray_sky = new Array(res.item_minus00_png, res.item_minus01_png);		//マイナスアイテムを初期化
 var animflg_sky;		//アニメーションのコマ
 var playerArray_sky;	//プレイヤーのアニメーション配列
-playerArray_sky = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png);
+playerArray_sky = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png, res.player_sky04_png);
 var State_sky = {
  GAME : 0,
  GOAL: 1
@@ -244,7 +244,7 @@ var PlayerSky = cc.Sprite.extend({
     //ジャンプ中なら
     if(this.engineOn){
       animflg_sky++;	//アニメーションを更新
-      if(animflg_sky >= 15) {
+      if(animflg_sky >= 20) {
       animflg_sky = 0;
       }
       

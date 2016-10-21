@@ -22,7 +22,7 @@ itemPlusArray_sea = new Array(res.item_plus00_png, res.item_plus01_png);		//プ�
 itemMinusArray_sea = new Array(res.item_minus00_png, res.item_minus01_png);		//マイナスアイテムを初期化
 var animflg_sea;		//アニメーションのコマ
 var playerArray_sea;	//プレイヤーのアニメーション配列
-playerArray_sea = new Array(res.player_sea01_png, res.player_sea02_png, res.player_sea03_png);
+playerArray_sea = new Array(res.player_sea01_png, res.player_sea02_png, res.player_sea03_png, res.player_sea04_png);
 var State_sea = {
  GAME : 0,
  GOAL: 1
@@ -243,7 +243,7 @@ var PlayerSea = cc.Sprite.extend({
     //ジャンプ中なら
     if(this.engineOn){
       animflg_sea++;	//アニメーションを更新
-      if(animflg_sea >= 15) {
+      if(animflg_sea >= 20) {
       animflg_sea = 0;
       }
       

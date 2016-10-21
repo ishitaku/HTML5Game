@@ -22,7 +22,7 @@ itemPlusArray_space = new Array(res.item_plus00_png, res.item_plus01_png);		//�
 itemMinusArray_space = new Array(res.item_minus00_png, res.item_minus01_png);		//マイナスアイテムを初期化
 var animflg_space;		//アニメーションのコマ
 var playerArray_space;	//プレイヤーのアニメーション配列
-playerArray_space = new Array(res.player_space01_png, res.player_space02_png, res.player_space03_png);
+playerArray_space = new Array(res.player_space01_png, res.player_space02_png, res.player_space03_png, res.player_space04_png);
 var State_space = {
  GAME : 0,
  GOAL: 1
@@ -243,7 +243,7 @@ var PlayerSpace = cc.Sprite.extend({
     //ジャンプ中なら
     if(this.engineOn){
       animflg_space++;	//アニメーションを更新
-      if(animflg_space >= 15) {
+      if(animflg_space >= 20) {
       animflg_space = 0;
       }
       
