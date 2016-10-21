@@ -10,7 +10,7 @@ var background_space2;	//背景3
 var scrollSpeed_space = 2.5;		//スクロール速度
 var player_space;					//プレイヤー
 var gameGravity_space = -0.05;	//重力
-var gameThrust_space = 0.1;		//上昇力
+var gameThrust_space = 0.15;		//上昇力
 var life_space;		//ライフ
 var score_space = 0;		//スコア
 var life_Score_space = 0;	//ライフが回復するスコア
