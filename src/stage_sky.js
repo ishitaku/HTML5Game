@@ -10,7 +10,7 @@ var background_sky2;	//背景3
 var scrollSpeed_sky = 2.5;		//スクロール速度
 var player_sky;					//プレイヤー
 var gameGravity_sky = -0.03;	//重力
-var gameThrust_sky = 0.1;		//上昇力
+var gameThrust_sky = 0.15;		//上昇力
 var life_sky;		//ライフ
 var score_sky = 0;		//スコア
 var life_Score_sky = 0;	//ライフが回復するスコア
