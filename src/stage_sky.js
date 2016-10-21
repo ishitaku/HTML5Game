@@ -154,7 +154,6 @@ var gameSky = cc.Layer.extend({
     //マイナスアイテムを追加
     addItemMinusSky: function(event){
       var itemMinus = new ItemMinusSky();
-      itemMinus.setScale(0.2);
       this.addChild(itemMinus);
     },
     //スポンサー様看板を追加
@@ -336,6 +335,7 @@ var ItemMinusSky = cc.Sprite.extend({
     this.setPosition(1200, Math.random() * 900);
     var moveAction = cc.MoveTo.create(MINUS_SPEED_SEC_SKY, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
