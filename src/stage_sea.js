@@ -10,7 +10,7 @@ var background_sea2;	//背景3
 var scrollSpeed_sea = 2.5;		//スクロール速度
 var player_sea;					//プレイヤー
 var gameGravity_sea = -0.05;	//重力
-var gameThrust_sea = 0.15;		//上昇力
+var gameThrust_sea = 0.1;		//上昇力
 var life_sea;		//ライフ
 var score_sea = 0;		//スコア
 var life_Score_sea = 0;	//ライフが回復するスコア
