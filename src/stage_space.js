@@ -528,7 +528,7 @@ function damageSpace() {
       //ライフが0なら
       if(life_space < 1){
         cc.audioEngine.stopMusic();
-        setGameData(life_space, score_space, life_Score_space);
+        setGameData(0, score_space, life_Score_space);
         //ゲームオーバー画面へ移動
         cc.director.runScene(new GameOverSpaceScene());
         

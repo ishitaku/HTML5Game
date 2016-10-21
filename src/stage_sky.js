@@ -528,7 +528,7 @@ function damageSky() {
       //ライフが0なら
       if(life_sky < 1){
         cc.audioEngine.stopMusic();
-        setGameData(life_sky, score_sky, life_Score_sky);
+        setGameData(5, score_sky, life_Score_sky);
         //ゲームオーバー画面へ移動
         cc.director.runScene(new GameOverSkyScene());
         

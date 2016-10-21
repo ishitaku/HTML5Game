@@ -528,7 +528,7 @@ function damageSea() {
       //ライフが0なら
       if(life_sea < 1){
         cc.audioEngine.stopMusic();
-        setGameData(life_sea, score_sea, life_Score_sea);
+        setGameData(5, score_sea, life_Score_sea);
         //ゲームオーバー画面へ移動
         cc.director.runScene(new GameOverSeaScene());
         
