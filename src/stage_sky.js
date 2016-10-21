@@ -95,7 +95,6 @@ var gameSky = cc.Layer.extend({
         
         //プレイヤーを生成
         player_sky = new PlayerSky();
-        player_sky.setScale(0.1);
         this.addChild(player_sky);
 
         // 残機表示
@@ -148,7 +147,6 @@ var gameSky = cc.Layer.extend({
     //プラスアイテムを追加
     addItemPlusSky: function(event){
       var itemPlus = new ItemPlusSky();
-      itemPlus.setScale(0.2);
       this.addChild(itemPlus);
     },
     //マイナスアイテムを追加
@@ -159,29 +157,22 @@ var gameSky = cc.Layer.extend({
     //スポンサー様看板を追加
     addSponserBoardSky: function(event) {
       var ground = new GroundSky();
-      ground.setScale(0.5);
       this.addChild(ground);
       var sponserboard = new SponserBoardSky();
-      sponserboard.setScale(0.15);
       this.addChild(sponserboard);
       var sponserlogo = new SponserLogoSky();
-      sponserlogo.setScale(0.2);
-      //sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
       this.addChild(sponserlogo);
     },
     //ゴールを追加
     addGoal: function() {
       //ゴール足場
       var goalground = new GoalGroundSky();
-      goalground.setScale(0.7);
       this.addChild(goalground);
-      var goalflag = new GoalFlagSky();
       //ゴール旗
-      goalflag.setScale(0.2);
+      var goalflag = new GoalFlagSky();
       this.addChild(goalflag);
       //ゴール仲間
       var goalchara = new GoalCharaSky();
-      goalchara.setScale(0.1);
       this.addChild(goalchara);
       //スポンサー様看板の停止
       this.unschedule(this.addSponserBoardSky);
@@ -238,6 +229,7 @@ var PlayerSky = cc.Sprite.extend({
   },
   onEnter: function() {
     this.setPosition(60, size_sky.height * 0.5);
+    this.setScale(0.1);
   },
   updateY: function() {
     //ジャンプ中なら
@@ -285,6 +277,7 @@ var ItemPlusSky = cc.Sprite.extend({
     this.setPosition(1200, Math.random() * 900);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -387,6 +380,7 @@ var GroundSky = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
+    this.setScale(0.5);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -410,6 +404,7 @@ var SponserBoardSky = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
+    this.setScale(0.15);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -433,6 +428,7 @@ var SponserLogoSky = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -455,6 +451,7 @@ var GoalFlagSky = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -488,6 +485,7 @@ var GoalCharaSky = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
+    this.setScale(0.1);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -506,6 +504,7 @@ var GoalGroundSky = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
+    this.setScale(0.7);
     this.scheduleUpdate();
   },
   update: function(dt) {

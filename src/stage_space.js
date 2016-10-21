@@ -95,7 +95,6 @@ var gameSpace = cc.Layer.extend({
         
         //プレイヤーを生成
         player_space = new PlayerSpace();
-        player_space.setScale(0.1);
         this.addChild(player_space);
 
         // 残機表示
@@ -148,7 +147,6 @@ var gameSpace = cc.Layer.extend({
     //プラスアイテムを追加
     addItemPlusSpace: function(event){
       var itemPlus = new ItemPlusSpace();
-      itemPlus.setScale(0.2);
       this.addChild(itemPlus);
     },
     //マイナスアイテムを追加
@@ -239,6 +237,7 @@ var PlayerSpace = cc.Sprite.extend({
   },
   onEnter: function() {
     this.setPosition(60, size_space.height * 0.5);
+    this.setScale(0.1);
   },
   updateY: function() {
     //ジャンプ中なら
@@ -286,6 +285,7 @@ var ItemPlusSpace = cc.Sprite.extend({
     this.setPosition(1200, Math.random() * 900);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
