@@ -342,8 +342,8 @@ var ItemMinusSea = cc.Sprite.extend({
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //あたり判定の範囲を変更
-    player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.8);
+    //player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.5);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) && player_sea.invulnerability == 0) {
