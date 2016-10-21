@@ -92,8 +92,8 @@ var gameSky = cc.Layer.extend({
         
         //プレイヤーを生成
         player_sky = new PlayerSky();
-        this.addChild(player_sky);
-        this.reorderChild(player_sky, 5);
+        this.addChild(player_sky, 7);
+        
         
         // 残機表示
         life_skyText = cc.LabelTTF.create("LIFE : " +life_sky ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
@@ -156,14 +156,11 @@ var gameSky = cc.Layer.extend({
     //スポンサー様看板を追加
     addSponserBoardSky: function(event) {
       var ground = new GroundSky();
-      this.addChild(ground);
-      this.reorderChild(ground, 2);
+      this.addChild(ground, 3);
       var sponserboard = new SponserBoardSky();
-      this.addChild(sponserboard);
-      this.reorderChild(sponserboard, 3);
+      this.addChild(sponserboard, 4);
       var sponserlogo = new SponserLogoSky();
-      this.addChild(sponserlogo);
-      this.reorderChild(sponserlogo, 4);
+      this.addChild(sponserlogo, 5);
     },
     //ゴールを追加
     addGoal: function() {
