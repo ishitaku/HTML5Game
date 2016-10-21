@@ -23,10 +23,9 @@ var GRAVITY_SEA = -0.05;
 var GAME_THRUST_SEA = 0.1;
 
 //宇宙ステージデータ
-
 var LIFE_SPACE = 5;	//ライフ
-var MINUS_SPEED_SEC_SKY = 3.5;	//敵の移動時間
-var MINUS_TIME_DUR_SKY = 1;		//敵の出現間隔
+var MINUS_SPEED_SEC_SPACE = 3.5;	//敵の移動時間
+var MINUS_TIME_DUR_SPACE = 1;		//敵の出現間隔
 var SPONSER_DUR_SPACE = 10;		//スポンサー様看板の出現間隔
 var GOAL_TIME_SPACE = 95;			//ゴールまでの時間
 var GRAVITY_SPACE = -0.05;
