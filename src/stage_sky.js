@@ -118,6 +118,7 @@ var gameSky = cc.Layer.extend({
         this.schedule(this.addSponserBoardSky, SPONSER_DUR_SKY);
         //ゴールを生成
         this.scheduleOnce(this.addGoal, GOAL_TIME_SKY);
+        console.log(GOAL_TIME_SKY);
     },
     update:function(dt){
     
