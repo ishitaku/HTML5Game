@@ -6,7 +6,7 @@ var game_lifeup_score = 0;	//ライフ回復までのスコア
 //ゲームデータの保持
 function setGameData(gamelife, gamescore, gamelifeupscore) {
 game_life = gamelife;
-game_socre = gamescore;
+game_score = gamescore;
 game_lifeup_score = gamelifeupscore;
 //console.log(gamescore);
 }
