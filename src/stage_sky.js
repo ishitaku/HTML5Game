@@ -9,12 +9,11 @@ var background_sky1;	//背景2
 var background_sky2;	//背景3
 var scrollSpeed_sky = 2.5;		//スクロール速度
 var player_sky;					//プレイヤー
-var gameGravity_sky = -0.06;	//重力
-var gameThrust_sky = 0.12;		//上昇力
+var gameGravity_sky;	//重力
+var gameThrust_sky;		//上昇力
 var life_sky;		//ライフ
 var score_sky = 0;		//スコア
 var life_Score_sky = 0;	//ライフが回復するスコア
-var LIFE_UP_SCORE_SKY = 100;	//回復までのスコア
 var goalStop_sky = false;		//ゴールまでついたか
 var itemPlusArray_sky;			//プラスアイテム配列
 var itemMinusArray_sky;			//マイナスアイテム配列
@@ -29,17 +28,15 @@ var State_sky = {
 };
 var nowstate_sky;	//ゲームステート
 
-var LIFE_SKY = 5;	//ライフ
-var MINUS_SPEED_SEC_SKY = 4;	//敵の移動時間
-var MINUS_TIME_DUR_SKY = 2;		//敵の出現間隔
-var SPONSER_DUR_SKY = 10;		//スポンサー様看板の出現間隔
-var GOAL_TIME_SKY = 35;			//ゴールまでの時間
-
 
 //空ステージのシーン
 var stageSkyScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
+        //重力
+        gameGravity_sky = GRAVITY_SKY;
+        //上昇力
+        gameThrust_sky = GAME_THRUST_SKY;
         //ライフを設定
         life_sky = game_life;
         //スコアを0に初期化
@@ -299,8 +296,8 @@ var ItemPlusSky = cc.Sprite.extend({
       score_sky += 10;
       score_skyText.setString("SCORE : " + score_sky);
       life_Score_sky += 10;
-      if(life_Score_sky >= LIFE_UP_SCORE_SKY) {
-        life_Score_sky -= LIFE_UP_SCORE_SKY;
+      if(life_Score_sky >= LIFE_UP_SCORE) {
+        life_Score_sky -= LIFE_UP_SCORE;
         //if(life_sky < 10) {
           life_sky++;
           life_skyText.setString("LIFE : " + life_sky);

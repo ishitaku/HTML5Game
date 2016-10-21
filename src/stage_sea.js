@@ -1,5 +1,5 @@
 ﻿
-/* 空ステージ */
+/* 海ステージ */
 //stage_sea.js
 
 var size_sea;			//画面のサイズ
@@ -29,14 +29,7 @@ var State_sea = {
 };
 var nowstate_sea;	//ゲームステート
 
-var LIFE_SEA = 5;	//ライフ
-var MINUS_SPEED_SEC_SEA = 4;	//敵の移動時間
-var MINUS_TIME_DUR_SEA = 2;		//敵の出現間隔
-var SPONSER_DUR_SEA = 10;		//スポンサー様看板の出現間隔
-var GOAL_TIME_SEA = 35;			//ゴールまでの時間
-
-
-//空ステージのシーン
+//海ステージのシーン
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
@@ -95,7 +88,6 @@ var gameSea = cc.Layer.extend({
         
         //プレイヤーを生成
         player_sea = new PlayerSea();
-        player_sea.setScale(0.1);
         this.addChild(player_sea);
 
         // 残機表示
@@ -148,41 +140,32 @@ var gameSea = cc.Layer.extend({
     //プラスアイテムを追加
     addItemPlusSea: function(event){
       var itemPlus = new ItemPlusSea();
-      itemPlus.setScale(0.2);
       this.addChild(itemPlus);
     },
     //マイナスアイテムを追加
     addItemMinusSea: function(event){
       var itemMinus = new ItemMinusSea();
-      itemMinus.setScale(0.2);
       this.addChild(itemMinus);
     },
     //スポンサー様看板を追加
     addSponserBoardSea: function(event) {
       var ground = new GroundSea();
-      ground.setScale(0.5);
       this.addChild(ground);
       var sponserboard = new SponserBoardSea();
-      sponserboard.setScale(0.15);
       this.addChild(sponserboard);
       var sponserlogo = new SponserLogoSea();
-      sponserlogo.setScale(0.2);
-      //sponserlogo.setPosition(sponserboard.getPosition().x, sponserlogo.getPosition().y);
       this.addChild(sponserlogo);
     },
     //ゴールを追加
     addGoal: function() {
       //ゴール足場
       var goalground = new GoalGroundSea();
-      goalground.setScale(0.7);
       this.addChild(goalground);
-      var goalflag = new GoalFlagSea();
       //ゴール旗
-      goalflag.setScale(0.2);
+      var goalflag = new GoalFlagSea();
       this.addChild(goalflag);
       //ゴール仲間
       var goalchara = new GoalCharaSea();
-      goalchara.setScale(0.1);
       this.addChild(goalchara);
       //スポンサー様看板の停止
       this.unschedule(this.addSponserBoardSea);
@@ -239,6 +222,7 @@ var PlayerSea = cc.Sprite.extend({
   },
   onEnter: function() {
     this.setPosition(60, size_sea.height * 0.5);
+    this.setScale(0.1);
   },
   updateY: function() {
     //ジャンプ中なら
@@ -286,6 +270,7 @@ var ItemPlusSea = cc.Sprite.extend({
     this.setPosition(1200, Math.random() * 900);
     var moveAction = cc.MoveTo.create(5, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -336,6 +321,7 @@ var ItemMinusSea = cc.Sprite.extend({
     this.setPosition(1200, Math.random() * 900);
     var moveAction = cc.MoveTo.create(MINUS_SPEED_SEC_SEA, new cc.Point(-100, Math.random() * 900));
     this.runAction(moveAction);
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -387,6 +373,7 @@ var GroundSea = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
+    this.setScale(0.5);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -410,6 +397,7 @@ var SponserBoardSea = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
+    this.setScale(0.15);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -433,6 +421,7 @@ var SponserLogoSea = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -455,6 +444,7 @@ var GoalFlagSea = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
+    this.setScale(0.2);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -488,6 +478,7 @@ var GoalCharaSea = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
+    this.setScale(0.1);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -506,6 +497,7 @@ var GoalGroundSea = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
+    this.setScale(0.7);
     this.scheduleUpdate();
   },
   update: function(dt) {
