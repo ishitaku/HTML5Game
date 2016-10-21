@@ -45,7 +45,7 @@ var stageSpaceScene = cc.Scene.extend({
         //スコアを0に初期化
         score_space = game_score;
         //ライフ回復までのスコアを初期化
-        life_Score_space = game_lifeup_score;;
+        life_Score_space = game_lifeup_score;
         //ゴールのフラグ
         goalStop_space = false;
         //ステートをゲームに初期化

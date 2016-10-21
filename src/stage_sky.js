@@ -45,7 +45,7 @@ var stageSkyScene = cc.Scene.extend({
         //スコアを0に初期化
         score_sky = game_score;
         //ライフ回復までのスコアを初期化
-        life_Score_sky = game_lifeup_score;;
+        life_Score_sky = game_lifeup_score;
         //ゴールのフラグ
         goalStop_sky = false;
         //ステートをゲームに初期化

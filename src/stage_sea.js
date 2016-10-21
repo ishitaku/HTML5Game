@@ -45,7 +45,7 @@ var stageSeaScene = cc.Scene.extend({
         //スコアを0に初期化
         score_sea = game_score;
         //ライフ回復までのスコアを初期化
-        life_Score_sea = game_lifeup_score;;
+        life_Score_sea = game_lifeup_score;
         //ゴールのフラグ
         goalStop_sea = false;
         //ステートをゲームに初期化
