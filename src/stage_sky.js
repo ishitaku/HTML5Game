@@ -15,6 +15,8 @@ var life_sky;		//ライフ
 var score_sky = 0;		//スコア
 var life_Score_sky = 0;	//ライフが回復するスコア
 var goalStop_sky = false;		//ゴールまでついたか
+var gameover_sky = false;	//ゲームオーバーか
+var gameclear_sky = false;	//ゲームクリアか
 var itemPlusArray_sky;			//プラスアイテム配列
 var itemMinusArray_sky;			//マイナスアイテム配列
 itemPlusArray_sky = new Array(res.item_plus00_png, res.item_plus01_png);		//プラスアイテムを初期化
@@ -24,10 +26,15 @@ var playerArray_sky;	//プレイヤーのアニメーション配列
 playerArray_sky = new Array(res.player_sky01_png, res.player_sky02_png, res.player_sky03_png, res.player_sky04_png);
 var State_sky = {
  GAME : 0,
- GOAL: 1
+ GOAL: 1,
+ GAMEOVER : 2,
+ GAMECLEAR : 3
 };
 var nowstate_sky;	//ゲームステート
-
+var gameover_wait_sky = 0;		//経過時間
+var GAMEOVER_WAIT_TIME_SKY = 2;	//ゲームオーバーまでの時間
+var gameclear_wait_sky = 0;		//経過時間
+var GAMECLEAR_WAIT_TIME_SKY = 2;	//ゲームクリアまでの時間
 
 //空ステージのシーン
 var stageSkyScene = cc.Scene.extend({
@@ -45,8 +52,14 @@ var stageSkyScene = cc.Scene.extend({
         life_Score_sky = game_lifeup_score;
         //ゴールのフラグ
         goalStop_sky = false;
+        //ゲームオーバーのフラグ
+        gameover_sky = false;
+        //ゲームクリアのフラグ
+        gameclear_sky = false;
         //ステートをゲームに初期化
         nowstate_sky = State_sky.GAME;
+        //ゲームオーバーの経過時間を0
+        gameover_wait_sky = 0;
         //レイヤーを生成
         gameLayer_sky = new gameSky();
         //レイヤーを初期化
@@ -71,14 +84,13 @@ var gameSky = cc.Layer.extend({
         
         
        // タップイベントリスナーを登録する
-                cc.eventManager.addListener({
-                    event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                    swallowTouches: true,
-                    onTouchBegan: this.onTouchBegan,
-                    onTouchMoved: this.onTouchMoved,
-                    onTouchEnded: this.onTouchEnded
-                }, this);
-	
+       cc.eventManager.addListener({
+         event: cc.EventListener.TOUCH_ONE_BY_ONE,
+         swallowTouches: true,
+         onTouchBegan: this.onTouchBegan,
+         onTouchMoved: this.onTouchMoved,
+         onTouchEnded: this.onTouchEnded
+       }, this);
 
         //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_sky
         background_sky0 = new ScrollingSkyBG();
@@ -99,14 +111,14 @@ var gameSky = cc.Layer.extend({
         life_skyText = cc.LabelTTF.create("LIFE : " +life_sky ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_skyText);
         life_skyText.setPosition(100,850);
-        life_skyText.setColor(cc.color(0, 0, 0, 255));
+        life_skyText.setColor(textcolor_sky);
         this.reorderChild(life_skyText, 10);
 
         //スコア表示
         score_skyText = cc.LabelTTF.create("SCORE : " +score_sky ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_skyText);
         score_skyText.setPosition(450,850);
-        score_skyText.setColor(cc.color(0, 0, 0, 255));
+        score_skyText.setColor(cc.color(textcolor_sky));
         this.reorderChild(score_skyText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -121,27 +133,74 @@ var gameSky = cc.Layer.extend({
         this.scheduleOnce(this.addGoal, GOAL_TIME_SKY);
         
     },
+    //更新処理
     update:function(dt){
-    
         switch(nowstate_sky) {
         case State_sky.GAME:
-        backgroundSkyUpdate();
-        //ゴールにたどり着いたら
-        if(goalStop_sky) {
-        //ステートをゴールに
-          nowstate_sky = State_sky.GOAL;
-          //プラスアイテムとマイナスアイテムの生成を停止
-          this.unschedule(this.addItemPlusSky);
-          this.unschedule(this.addItemMinusSky);
-        }
-        break;
-        case State_sky.GOAL:
-        break;
-        default:
-        break;
+          player_sky.updateY();
+          backgroundSkyUpdate();
+          //ゴールにたどり着いたら
+          if(goalStop_sky) {
+            //ステートをゴールに
+            nowstate_sky = State_sky.GOAL;
+            //プラスアイテムとマイナスアイテムの生成を停止
+            this.unschedule(this.addItemPlusSky);
+            this.unschedule(this.addItemMinusSky);
+          }
+          //ゲームオーバーなら
+          if(gameover_sky) {
+            nowstate_sky = State_sky.GAMEOVER;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSky);
+            this.unschedule(this.addItemMinusSky);
+            this.unschedule(this.addSponserBoardSky);
+            this.unschedule(this.addGoal);
+          }
+          //ゲームクリアなら
+          if(gameclear_sky) {
+            nowstate_sky = State_sky.GAMECLEAR;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSky);
+            this.unschedule(this.addItemMinusSky);
+            this.unschedule(this.addSponserBoardSky);
+            this.unschedule(this.addGoal);
+          }
+          break;
+          //ゴールまでたどり着いたら
+          case State_sky.GOAL:
+            player_sky.updateY();
+            if(gameclear_sky) {
+              nowstate_sky = State_sky.GAMECLEAR;
+              //各要素の生成を停止
+              this.unschedule(this.addItemPlusSky);
+              this.unschedule(this.addItemMinusSky);
+              this.unschedule(this.addSponserBoardSky);
+              this.unschedule(this.addGoal);
+            }
+            break;
+          //ゲームオーバー
+          case State_sky.GAMEOVER:
+            gameover_wait_sky += dt;
+            //一定時間経過したら
+            if(gameover_wait_sky > GAMEOVER_WAIT_TIME_SKY) {
+              //ゲームオーバー画面へ移動
+              cc.director.runScene(new GameOverSkyScene());
+            }
+            break;
+          //ゲームクリア
+          case State_sky.GAMECLEAR:
+            gameclear_wait_sky += dt;
+            //一定時間経過したら
+            if(gameclear_wait_sky > GAMECLEAR_WAIT_TIME_SKY) {
+              //ステージクリア画面へ移動
+              cc.director.runScene(new StageClearSkyScene());
+            }
+            break;
+          
+          default:
+          break;
         }
         
-        player_sky.updateY();
     },
     //プラスアイテムを追加
     addItemPlusSky: function(event){
@@ -293,6 +352,10 @@ var ItemPlusSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+    if(gameover_sky || gameclear_sky) {
+      this.stopAllActions();
+      return;
+    }
     //アイテムとの衝突を判定する処理
     var player_skyBoundingBox = player_sky.getBoundingBox();
     
@@ -332,6 +395,7 @@ var ItemMinusSky = cc.Sprite.extend({
     //ランダムで画像を選択
     var num = Math.floor(Math.random() * itemMinusArray_sky.length);
     this.initWithFile(itemMinusArray_sky[num]);
+    
   },
   onEnter: function() {
     this._super();
@@ -343,6 +407,10 @@ var ItemMinusSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+    if(gameover_sky || gameclear_sky) {
+      this.stopAllActions();
+      return;
+    }
     //アイテムとの衝突を判定する処理
     var player_skyBoundingBox = player_sky.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
@@ -352,7 +420,7 @@ var ItemMinusSky = cc.Sprite.extend({
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) && player_sky.invulnerability == 0) {
       //アイテムを削除する
-      gameLayer_sky.removeObject(this);
+      //gameLayer_sky.removeObject(this);
       //ダメージ
       damageSky();
     }
@@ -394,6 +462,9 @@ var GroundSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sky || gameclear_sky) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -418,6 +489,9 @@ var SponserBoardSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sky || gameclear_sky) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -442,6 +516,9 @@ var SponserLogoSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sky || gameclear_sky) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -465,6 +542,9 @@ var GoalFlagSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sky || gameclear_sky) {
+      return;
+    }
       if(!goalStop_sky) {
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       }
@@ -483,7 +563,8 @@ var GoalFlagSky = cc.Sprite.extend({
         cc.audioEngine.stopMusic();
         setGameData(life_sky, score_sky, life_Score_sky);
         //クリア画面へ移動
-        cc.director.runScene(new StageClearSkyScene());
+        //cc.director.runScene(new StageClearSkyScene());
+        gameclear_sky = true;
       }
    }
    
@@ -502,6 +583,9 @@ var GoalCharaSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sky || gameclear_sky) {
+      return;
+    }
       if(!goalStop_sky) {
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       }
@@ -521,6 +605,9 @@ var GoalGroundSky = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sky || gameclear_sky) {
+      return;
+    }
       if(!goalStop_sky) {
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       }
@@ -542,16 +629,19 @@ function damageSky() {
         cc.audioEngine.stopMusic();
         setGameData(5, score_sky, life_Score_sky);
         //ゲームオーバー画面へ移動
-        cc.director.runScene(new GameOverSkyScene());
-        
+        //cc.director.runScene(new GameOverSkyScene());
+        gameover_sky = true;
+      } else {
+        player_sky.invulnerability = 100;
       }
-      
-      player_sky.invulnerability = 100;
 }
 
 //プレイヤー元の位置に戻す
 function restartGameSky() {
   damageSky();
+  if(gameover_sky) {
+    return;
+  }
   player_sky.ySpeed = 0;
   player_sky.setPosition(player_sky.getPosition().x, size_sky.height * 0.5);
 }

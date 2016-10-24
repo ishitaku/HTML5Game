@@ -13,6 +13,7 @@ var SPONSER_DUR_SKY = 10;		//スポンサー様看板の出現間隔
 var GOAL_TIME_SKY = 35;			//ゴールまでの時間
 var GRAVITY_SKY = -0.06;		//重力
 var GAME_THRUST_SKY = 0.12;		//上昇力
+var textcolor_sky = cc.color(0, 0, 0, 255);
 
 //海ステージデータ
 var LIFE_SEA = 5;	//ライフ
@@ -22,6 +23,7 @@ var SPONSER_DUR_SEA = 10;		//スポンサー様看板の出現間隔
 var GOAL_TIME_SEA = 65;			//ゴールまでの時間
 var GRAVITY_SEA = -0.05;
 var GAME_THRUST_SEA = 0.1;
+var textcolor_sea = cc.color(0, 0, 0, 255);
 
 //宇宙ステージデータ
 var LIFE_SPACE = 5;	//ライフ
@@ -31,6 +33,7 @@ var SPONSER_DUR_SPACE = 10;		//スポンサー様看板の出現間隔
 var GOAL_TIME_SPACE = 95;			//ゴールまでの時間
 var GRAVITY_SPACE = -0.05;
 var GAME_THRUST_SPACE = 0.15;
+var textcolor_space = cc.color(255, 255, 255, 255);
 
 //ゲームデータの保持
 function setGameData(gamelife, gamescore, gamelifeupscore) {

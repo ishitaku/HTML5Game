@@ -1,5 +1,5 @@
 ﻿
-/* 宇宙ステージ */
+/* 空ステージ */
 //stage_space.js
 
 var size_space;			//画面のサイズ
@@ -15,6 +15,8 @@ var life_space;		//ライフ
 var score_space = 0;		//スコア
 var life_Score_space = 0;	//ライフが回復するスコア
 var goalStop_space = false;		//ゴールまでついたか
+var gameover_space = false;	//ゲームオーバーか
+var gameclear_space = false;	//ゲームクリアか
 var itemPlusArray_space;			//プラスアイテム配列
 var itemMinusArray_space;			//マイナスアイテム配列
 itemPlusArray_space = new Array(res.item_plus00_png, res.item_plus01_png);		//プラスアイテムを初期化
@@ -24,12 +26,17 @@ var playerArray_space;	//プレイヤーのアニメーション配列
 playerArray_space = new Array(res.player_space01_png, res.player_space02_png, res.player_space03_png, res.player_space04_png);
 var State_space = {
  GAME : 0,
- GOAL: 1
+ GOAL: 1,
+ GAMEOVER : 2,
+ GAMECLEAR : 3
 };
 var nowstate_space;	//ゲームステート
+var gameover_wait_space = 0;		//経過時間
+var GAMEOVER_WAIT_TIME_SPACE = 2;	//ゲームオーバーまでの時間
+var gameclear_wait_space = 0;		//経過時間
+var GAMECLEAR_WAIT_TIME_SPACE = 2;	//ゲームクリアまでの時間
 
-
-//宇宙ステージのシーン
+//空ステージのシーン
 var stageSpaceScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
@@ -45,8 +52,14 @@ var stageSpaceScene = cc.Scene.extend({
         life_Score_space = game_lifeup_score;
         //ゴールのフラグ
         goalStop_space = false;
+        //ゲームオーバーのフラグ
+        gameover_space = false;
+        //ゲームクリアのフラグ
+        gameclear_space = false;
         //ステートをゲームに初期化
         nowstate_space = State_space.GAME;
+        //ゲームオーバーの経過時間を0
+        gameover_wait_space = 0;
         //レイヤーを生成
         gameLayer_space = new gameSpace();
         //レイヤーを初期化
@@ -71,14 +84,13 @@ var gameSpace = cc.Layer.extend({
         
         
        // タップイベントリスナーを登録する
-                cc.eventManager.addListener({
-                    event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                    swallowTouches: true,
-                    onTouchBegan: this.onTouchBegan,
-                    onTouchMoved: this.onTouchMoved,
-                    onTouchEnded: this.onTouchEnded
-                }, this);
-	
+       cc.eventManager.addListener({
+         event: cc.EventListener.TOUCH_ONE_BY_ONE,
+         swallowTouches: true,
+         onTouchBegan: this.onTouchBegan,
+         onTouchMoved: this.onTouchMoved,
+         onTouchEnded: this.onTouchEnded
+       }, this);
 
         //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_space
         background_space0 = new ScrollingSpaceBG();
@@ -99,14 +111,14 @@ var gameSpace = cc.Layer.extend({
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_spaceText);
         life_spaceText.setPosition(100,850);
-        life_spaceText.setColor(cc.color(255, 255, 255, 255));
+        life_spaceText.setColor(textcolor_space);
         this.reorderChild(life_spaceText, 10);
 
         //スコア表示
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(255, 255, 255, 255));
+        score_spaceText.setColor(cc.color(textcolor_space));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -121,27 +133,74 @@ var gameSpace = cc.Layer.extend({
         this.scheduleOnce(this.addGoal, GOAL_TIME_SPACE);
         
     },
+    //更新処理
     update:function(dt){
-    
         switch(nowstate_space) {
         case State_space.GAME:
-        backgroundSpaceUpdate();
-        //ゴールにたどり着いたら
-        if(goalStop_space) {
-        //ステートをゴールに
-          nowstate_space = State_space.GOAL;
-          //プラスアイテムとマイナスアイテムの生成を停止
-          this.unschedule(this.addItemPlusSpace);
-          this.unschedule(this.addItemMinusSpace);
-        }
-        break;
-        case State_space.GOAL:
-        break;
-        default:
-        break;
+          player_space.updateY();
+          backgroundSpaceUpdate();
+          //ゴールにたどり着いたら
+          if(goalStop_space) {
+            //ステートをゴールに
+            nowstate_space = State_space.GOAL;
+            //プラスアイテムとマイナスアイテムの生成を停止
+            this.unschedule(this.addItemPlusSpace);
+            this.unschedule(this.addItemMinusSpace);
+          }
+          //ゲームオーバーなら
+          if(gameover_space) {
+            nowstate_space = State_space.GAMEOVER;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSpace);
+            this.unschedule(this.addItemMinusSpace);
+            this.unschedule(this.addSponserBoardSpace);
+            this.unschedule(this.addGoal);
+          }
+          //ゲームクリアなら
+          if(gameclear_space) {
+            nowstate_space = State_space.GAMECLEAR;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSpace);
+            this.unschedule(this.addItemMinusSpace);
+            this.unschedule(this.addSponserBoardSpace);
+            this.unschedule(this.addGoal);
+          }
+          break;
+          //ゴールまでたどり着いたら
+          case State_space.GOAL:
+            player_space.updateY();
+            if(gameclear_space) {
+              nowstate_space = State_space.GAMECLEAR;
+              //各要素の生成を停止
+              this.unschedule(this.addItemPlusSpace);
+              this.unschedule(this.addItemMinusSpace);
+              this.unschedule(this.addSponserBoardSpace);
+              this.unschedule(this.addGoal);
+            }
+            break;
+          //ゲームオーバー
+          case State_space.GAMEOVER:
+            gameover_wait_space += dt;
+            //一定時間経過したら
+            if(gameover_wait_space > GAMEOVER_WAIT_TIME_SPACE) {
+              //ゲームオーバー画面へ移動
+              cc.director.runScene(new GameOverSpaceScene());
+            }
+            break;
+          //ゲームクリア
+          case State_space.GAMECLEAR:
+            gameclear_wait_space += dt;
+            //一定時間経過したら
+            if(gameclear_wait_space > GAMECLEAR_WAIT_TIME_SPACE) {
+              //ステージクリア画面へ移動
+              cc.director.runScene(new GameClearScene());
+            }
+            break;
+          
+          default:
+          break;
         }
         
-        player_space.updateY();
     },
     //プラスアイテムを追加
     addItemPlusSpace: function(event){
@@ -293,6 +352,10 @@ var ItemPlusSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+    if(gameover_space || gameclear_space) {
+      this.stopAllActions();
+      return;
+    }
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     
@@ -332,6 +395,7 @@ var ItemMinusSpace = cc.Sprite.extend({
     //ランダムで画像を選択
     var num = Math.floor(Math.random() * itemMinusArray_space.length);
     this.initWithFile(itemMinusArray_space[num]);
+    
   },
   onEnter: function() {
     this._super();
@@ -343,6 +407,10 @@ var ItemMinusSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+    if(gameover_space || gameclear_space) {
+      this.stopAllActions();
+      return;
+    }
     //アイテムとの衝突を判定する処理
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
@@ -352,7 +420,7 @@ var ItemMinusSpace = cc.Sprite.extend({
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) && player_space.invulnerability == 0) {
       //アイテムを削除する
-      gameLayer_space.removeObject(this);
+      //gameLayer_space.removeObject(this);
       //ダメージ
       damageSpace();
     }
@@ -394,6 +462,9 @@ var GroundSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_space || gameclear_space) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -418,6 +489,9 @@ var SponserBoardSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_space || gameclear_space) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -442,6 +516,9 @@ var SponserLogoSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_space || gameclear_space) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -465,6 +542,9 @@ var GoalFlagSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_space || gameclear_space) {
+      return;
+    }
       if(!goalStop_space) {
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       }
@@ -483,7 +563,8 @@ var GoalFlagSpace = cc.Sprite.extend({
         cc.audioEngine.stopMusic();
         setGameData(life_space, score_space, life_Score_space);
         //クリア画面へ移動
-        cc.director.runScene(new GameClearScene());
+        //cc.director.runScene(new StageClearSpaceScene());
+        gameclear_space = true;
       }
    }
    
@@ -502,6 +583,9 @@ var GoalCharaSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_space || gameclear_space) {
+      return;
+    }
       if(!goalStop_space) {
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       }
@@ -521,6 +605,9 @@ var GoalGroundSpace = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_space || gameclear_space) {
+      return;
+    }
       if(!goalStop_space) {
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       }
@@ -542,16 +629,19 @@ function damageSpace() {
         cc.audioEngine.stopMusic();
         setGameData(5, score_space, life_Score_space);
         //ゲームオーバー画面へ移動
-        cc.director.runScene(new GameOverSpaceScene());
-        
+        //cc.director.runScene(new GameOverSpaceScene());
+        gameover_space = true;
+      } else {
+        player_space.invulnerability = 100;
       }
-      
-      player_space.invulnerability = 100;
 }
 
 //プレイヤー元の位置に戻す
 function restartGameSpace() {
   damageSpace();
+  if(gameover_space) {
+    return;
+  }
   player_space.ySpeed = 0;
   player_space.setPosition(player_space.getPosition().x, size_space.height * 0.5);
 }

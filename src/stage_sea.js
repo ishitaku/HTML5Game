@@ -15,6 +15,8 @@ var life_sea;		//ライフ
 var score_sea = 0;		//スコア
 var life_Score_sea = 0;	//ライフが回復するスコア
 var goalStop_sea = false;		//ゴールまでついたか
+var gameover_sea = false;	//ゲームオーバーか
+var gameclear_sea = false;	//ゲームクリアか
 var itemPlusArray_sea;			//プラスアイテム配列
 var itemMinusArray_sea;			//マイナスアイテム配列
 itemPlusArray_sea = new Array(res.item_plus00_png, res.item_plus01_png);		//プラスアイテムを初期化
@@ -24,10 +26,15 @@ var playerArray_sea;	//プレイヤーのアニメーション配列
 playerArray_sea = new Array(res.player_sea01_png, res.player_sea02_png, res.player_sea03_png, res.player_sea04_png);
 var State_sea = {
  GAME : 0,
- GOAL: 1
+ GOAL: 1,
+ GAMEOVER : 2,
+ GAMECLEAR : 3
 };
 var nowstate_sea;	//ゲームステート
-
+var gameover_wait_sea = 0;		//経過時間
+var GAMEOVER_WAIT_TIME_SEA = 2;	//ゲームオーバーまでの時間
+var gameclear_wait_sea = 0;		//経過時間
+var GAMECLEAR_WAIT_TIME_SEA = 2;	//ゲームクリアまでの時間
 
 //海ステージのシーン
 var stageSeaScene = cc.Scene.extend({
@@ -45,8 +52,14 @@ var stageSeaScene = cc.Scene.extend({
         life_Score_sea = game_lifeup_score;
         //ゴールのフラグ
         goalStop_sea = false;
+        //ゲームオーバーのフラグ
+        gameover_sea = false;
+        //ゲームクリアのフラグ
+        gameclear_sea = false;
         //ステートをゲームに初期化
         nowstate_sea = State_sea.GAME;
+        //ゲームオーバーの経過時間を0
+        gameover_wait_sea = 0;
         //レイヤーを生成
         gameLayer_sea = new gameSea();
         //レイヤーを初期化
@@ -71,14 +84,13 @@ var gameSea = cc.Layer.extend({
         
         
        // タップイベントリスナーを登録する
-                cc.eventManager.addListener({
-                    event: cc.EventListener.TOUCH_ONE_BY_ONE,
-                    swallowTouches: true,
-                    onTouchBegan: this.onTouchBegan,
-                    onTouchMoved: this.onTouchMoved,
-                    onTouchEnded: this.onTouchEnded
-                }, this);
-	
+       cc.eventManager.addListener({
+         event: cc.EventListener.TOUCH_ONE_BY_ONE,
+         swallowTouches: true,
+         onTouchBegan: this.onTouchBegan,
+         onTouchMoved: this.onTouchMoved,
+         onTouchEnded: this.onTouchEnded
+       }, this);
 
         //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_sea
         background_sea0 = new ScrollingSeaBG();
@@ -99,14 +111,14 @@ var gameSea = cc.Layer.extend({
         life_seaText = cc.LabelTTF.create("LIFE : " +life_sea ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_seaText);
         life_seaText.setPosition(100,850);
-        life_seaText.setColor(cc.color(0, 0, 0, 255));
+        life_seaText.setColor(textcolor_sea);
         this.reorderChild(life_seaText, 10);
 
         //スコア表示
         score_seaText = cc.LabelTTF.create("SCORE : " +score_sea ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_seaText);
         score_seaText.setPosition(450,850);
-        score_seaText.setColor(cc.color(0, 0, 0, 255));
+        score_seaText.setColor(cc.color(textcolor_sea));
         this.reorderChild(score_seaText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -121,27 +133,74 @@ var gameSea = cc.Layer.extend({
         this.scheduleOnce(this.addGoal, GOAL_TIME_SEA);
         
     },
+    //更新処理
     update:function(dt){
-    
         switch(nowstate_sea) {
         case State_sea.GAME:
-        backgroundSeaUpdate();
-        //ゴールにたどり着いたら
-        if(goalStop_sea) {
-        //ステートをゴールに
-          nowstate_sea = State_sea.GOAL;
-          //プラスアイテムとマイナスアイテムの生成を停止
-          this.unschedule(this.addItemPlusSea);
-          this.unschedule(this.addItemMinusSea);
-        }
-        break;
-        case State_sea.GOAL:
-        break;
-        default:
-        break;
+          player_sea.updateY();
+          backgroundSeaUpdate();
+          //ゴールにたどり着いたら
+          if(goalStop_sea) {
+            //ステートをゴールに
+            nowstate_sea = State_sea.GOAL;
+            //プラスアイテムとマイナスアイテムの生成を停止
+            this.unschedule(this.addItemPlusSea);
+            this.unschedule(this.addItemMinusSea);
+          }
+          //ゲームオーバーなら
+          if(gameover_sea) {
+            nowstate_sea = State_sea.GAMEOVER;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSea);
+            this.unschedule(this.addItemMinusSea);
+            this.unschedule(this.addSponserBoardSea);
+            this.unschedule(this.addGoal);
+          }
+          //ゲームクリアなら
+          if(gameclear_sea) {
+            nowstate_sea = State_sea.GAMECLEAR;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSea);
+            this.unschedule(this.addItemMinusSea);
+            this.unschedule(this.addSponserBoardSea);
+            this.unschedule(this.addGoal);
+          }
+          break;
+          //ゴールまでたどり着いたら
+          case State_sea.GOAL:
+            player_sea.updateY();
+            if(gameclear_sea) {
+              nowstate_sea = State_sea.GAMECLEAR;
+              //各要素の生成を停止
+              this.unschedule(this.addItemPlusSea);
+              this.unschedule(this.addItemMinusSea);
+              this.unschedule(this.addSponserBoardSea);
+              this.unschedule(this.addGoal);
+            }
+            break;
+          //ゲームオーバー
+          case State_sea.GAMEOVER:
+            gameover_wait_sea += dt;
+            //一定時間経過したら
+            if(gameover_wait_sea > GAMEOVER_WAIT_TIME_SEA) {
+              //ゲームオーバー画面へ移動
+              cc.director.runScene(new GameOverSeaScene());
+            }
+            break;
+          //ゲームクリア
+          case State_sea.GAMECLEAR:
+            gameclear_wait_sea += dt;
+            //一定時間経過したら
+            if(gameclear_wait_sea > GAMECLEAR_WAIT_TIME_SEA) {
+              //ステージクリア画面へ移動
+              cc.director.runScene(new StageClearSeaScene());
+            }
+            break;
+          
+          default:
+          break;
         }
         
-        player_sea.updateY();
     },
     //プラスアイテムを追加
     addItemPlusSea: function(event){
@@ -293,6 +352,10 @@ var ItemPlusSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+    if(gameover_sea || gameclear_sea) {
+      this.stopAllActions();
+      return;
+    }
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
     
@@ -332,6 +395,7 @@ var ItemMinusSea = cc.Sprite.extend({
     //ランダムで画像を選択
     var num = Math.floor(Math.random() * itemMinusArray_sea.length);
     this.initWithFile(itemMinusArray_sea[num]);
+    
   },
   onEnter: function() {
     this._super();
@@ -343,6 +407,10 @@ var ItemMinusSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+    if(gameover_sea || gameclear_sea) {
+      this.stopAllActions();
+      return;
+    }
     //アイテムとの衝突を判定する処理
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
@@ -352,7 +420,7 @@ var ItemMinusSea = cc.Sprite.extend({
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) && player_sea.invulnerability == 0) {
       //アイテムを削除する
-      gameLayer_sea.removeObject(this);
+      //gameLayer_sea.removeObject(this);
       //ダメージ
       damageSea();
     }
@@ -394,6 +462,9 @@ var GroundSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sea || gameclear_sea) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -418,6 +489,9 @@ var SponserBoardSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sea || gameclear_sea) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -442,6 +516,9 @@ var SponserLogoSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sea || gameclear_sea) {
+      return;
+    }
       //座標を更新する
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       //画面の外にでたアイテムを消去する処理
@@ -465,6 +542,9 @@ var GoalFlagSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sea || gameclear_sea) {
+      return;
+    }
       if(!goalStop_sea) {
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       }
@@ -483,7 +563,8 @@ var GoalFlagSea = cc.Sprite.extend({
         cc.audioEngine.stopMusic();
         setGameData(life_sea, score_sea, life_Score_sea);
         //クリア画面へ移動
-        cc.director.runScene(new StageClearSeaScene());
+        //cc.director.runScene(new StageClearSeaScene());
+        gameclear_sea = true;
       }
    }
    
@@ -502,6 +583,9 @@ var GoalCharaSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sea || gameclear_sea) {
+      return;
+    }
       if(!goalStop_sea) {
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       }
@@ -521,6 +605,9 @@ var GoalGroundSea = cc.Sprite.extend({
     this.scheduleUpdate();
   },
   update: function(dt) {
+      if(gameover_sea || gameclear_sea) {
+      return;
+    }
       if(!goalStop_sea) {
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       }
@@ -542,16 +629,19 @@ function damageSea() {
         cc.audioEngine.stopMusic();
         setGameData(5, score_sea, life_Score_sea);
         //ゲームオーバー画面へ移動
-        cc.director.runScene(new GameOverSeaScene());
-        
+        //cc.director.runScene(new GameOverSeaScene());
+        gameover_sea = true;
+      } else {
+        player_sea.invulnerability = 100;
       }
-      
-      player_sea.invulnerability = 100;
 }
 
 //プレイヤー元の位置に戻す
 function restartGameSea() {
   damageSea();
+  if(gameover_sea) {
+    return;
+  }
   player_sea.ySpeed = 0;
   player_sea.setPosition(player_sea.getPosition().x, size_sea.height * 0.5);
 }
