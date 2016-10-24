@@ -93,7 +93,7 @@ var gameSea = cc.Layer.extend({
         //プレイヤーを生成
         player_sea = new PlayerSea();
         this.addChild(player_sea);
-        
+        this.reorderChild(player_sea, 9);
         
         // 残機表示
         life_seaText = cc.LabelTTF.create("LIFE : " +life_sea ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);

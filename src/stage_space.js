@@ -93,7 +93,7 @@ var gameSpace = cc.Layer.extend({
         //プレイヤーを生成
         player_space = new PlayerSpace();
         this.addChild(player_space);
-        
+        this.reorderChild(player_space, 9);
         
         // 残機表示
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
