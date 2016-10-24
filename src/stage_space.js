@@ -99,14 +99,14 @@ var gameSpace = cc.Layer.extend({
         life_spaceText = cc.LabelTTF.create("LIFE : " +life_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(life_spaceText);
         life_spaceText.setPosition(100,850);
-        life_spaceText.setColor(cc.color(0, 0, 0, 255));
+        life_spaceText.setColor(cc.color(255, 255, 255, 255));
         this.reorderChild(life_spaceText, 10);
 
         //スコア表示
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(0, 0, 0, 255));
+        score_spaceText.setColor(cc.color(255, 255, 255, 255));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -469,7 +469,7 @@ var GoalFlagSpace = cc.Sprite.extend({
         cc.audioEngine.stopMusic();
         setGameData(life_space, score_space, life_Score_space);
         //クリア画面へ移動
-        cc.director.runScene(new StageClearSpaceScene());
+        cc.director.runScene(new GameClearScene());
       }
    }
    
