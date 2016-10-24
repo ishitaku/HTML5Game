@@ -106,7 +106,7 @@ var gameSpace = cc.Layer.extend({
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(0, 0, 0, 255));
+        score_spaceText.setColor(cc.color(255, 255, 255, 255));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
