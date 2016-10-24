@@ -65,3 +65,12 @@ function setCollisionScale(rect, scale) {
     
     return rect;
 }
+
+//あたり判定の位置を変更
+function setCollisionPosition(rect, px, py) {
+    rect.x = px;
+    rect.y = py;
+    
+    return rect;
+}
+

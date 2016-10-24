@@ -463,6 +463,9 @@ var GoalFlagSpace = cc.Sprite.extend({
       }
       var player_spaceBoundingBox = player_space.getBoundingBox();
       var flagBoundingBox = this.getBoundingBox();
+      flagBoundingBox = setCollisionScale(flagBoundingBox, 0.3);
+      flagBoundingBox = setCollisionPosition(flagBoundingBox, flagBoundingBox.x, flagBoundingBox.y - 100);
+      
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_spaceBoundingBox, flagBoundingBox) ) {
         
