@@ -106,7 +106,7 @@ var gameSpace = cc.Layer.extend({
         score_spaceText = cc.LabelTTF.create("SCORE : " +score_space ,"Arial","50",cc.TEXT_ALIGNMENT_CENTER);
         this.addChild(score_spaceText);
         score_spaceText.setPosition(450,850);
-        score_spaceText.setColor(cc.color(255, 255, 255, 255));
+        score_spaceText.setColor(cc.color(0, 0, 0, 255));
         this.reorderChild(score_spaceText, 10);
 
         //scheduleUpdate関数は、描画の都度、update関数を呼び出す
@@ -267,7 +267,20 @@ var ItemPlusSpace = cc.Sprite.extend({
   ctor: function() {
     this._super();
     //ランダムで画像を選択
-    var num = Math.floor(Math.random() * itemPlusArray_space.length);
+    //var num = Math.floor(Math.random() * itemPlusArray_space.length);
+    //this.initWithFile(itemPlusArray_space[num]);
+    this.point = 10;
+    //ランダムで画像を選択
+    var num = Math.floor(Math.random() * 10);
+    switch(num) {
+    case 0:
+    this.point = 50;
+    break;
+    default:
+    this.point = 10;
+    num = Math.floor(Math.random() * (itemPlusArray_space.length - 1) + 1);
+    break;
+    }
     this.initWithFile(itemPlusArray_space[num]);
   },
   onEnter: function() {
@@ -295,15 +308,14 @@ var ItemPlusSpace = cc.Sprite.extend({
       cc.audioEngine.playEffect(res.plus_se_mp3);
       
       //スコア追加処理
-      score_space += 10;
+      //score_space += 10;
+      score_space += this.point;
       score_spaceText.setString("SCORE : " + score_space);
-      life_Score_space += 10;
+      life_Score_space += this.point;
       if(life_Score_space >= LIFE_UP_SCORE) {
         life_Score_space -= LIFE_UP_SCORE;
-        //if(life_space < 10) {
-          life_space++;
-          life_spaceText.setString("LIFE : " + life_space);
-        //}
+        life_space++;
+        life_spaceText.setString("LIFE : " + life_space);
       }
     }
 	//画面の外にでたアイテムを消去する処理
@@ -335,8 +347,7 @@ var ItemMinusSpace = cc.Sprite.extend({
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //あたり判定の範囲を変更
-    //player_spaceBoundingBox = setCollisionScale(player_spaceBoundingBox, 0.8);
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.5);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.4);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) && player_space.invulnerability == 0) {

@@ -267,7 +267,20 @@ var ItemPlusSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     //ランダムで画像を選択
-    var num = Math.floor(Math.random() * itemPlusArray_sky.length);
+    //var num = Math.floor(Math.random() * itemPlusArray_sky.length);
+    //this.initWithFile(itemPlusArray_sky[num]);
+    this.point = 10;
+    //ランダムで画像を選択
+    var num = Math.floor(Math.random() * 10);
+    switch(num) {
+    case 0:
+    this.point = 50;
+    break;
+    default:
+    this.point = 10;
+    num = Math.floor(Math.random() * (itemPlusArray_sky.length - 1) + 1);
+    break;
+    }
     this.initWithFile(itemPlusArray_sky[num]);
   },
   onEnter: function() {
@@ -295,15 +308,14 @@ var ItemPlusSky = cc.Sprite.extend({
       cc.audioEngine.playEffect(res.plus_se_mp3);
       
       //スコア追加処理
-      score_sky += 10;
+      //score_sky += 10;
+      score_sky += this.point;
       score_skyText.setString("SCORE : " + score_sky);
-      life_Score_sky += 10;
+      life_Score_sky += this.point;
       if(life_Score_sky >= LIFE_UP_SCORE) {
         life_Score_sky -= LIFE_UP_SCORE;
-        //if(life_sky < 10) {
-          life_sky++;
-          life_skyText.setString("LIFE : " + life_sky);
-        //}
+        life_sky++;
+        life_skyText.setString("LIFE : " + life_sky);
       }
     }
 	//画面の外にでたアイテムを消去する処理
@@ -335,8 +347,7 @@ var ItemMinusSky = cc.Sprite.extend({
     var player_skyBoundingBox = player_sky.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //あたり判定の範囲を変更
-    //player_skyBoundingBox = setCollisionScale(player_skyBoundingBox, 0.8);
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.5);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.4);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) && player_sky.invulnerability == 0) {

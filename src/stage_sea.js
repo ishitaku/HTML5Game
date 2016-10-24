@@ -267,7 +267,20 @@ var ItemPlusSea = cc.Sprite.extend({
   ctor: function() {
     this._super();
     //ランダムで画像を選択
-    var num = Math.floor(Math.random() * itemPlusArray_sea.length);
+    //var num = Math.floor(Math.random() * itemPlusArray_sea.length);
+    //this.initWithFile(itemPlusArray_sea[num]);
+    this.point = 10;
+    //ランダムで画像を選択
+    var num = Math.floor(Math.random() * 10);
+    switch(num) {
+    case 0:
+    this.point = 50;
+    break;
+    default:
+    this.point = 10;
+    num = Math.floor(Math.random() * (itemPlusArray_sea.length - 1) + 1);
+    break;
+    }
     this.initWithFile(itemPlusArray_sea[num]);
   },
   onEnter: function() {
@@ -295,15 +308,14 @@ var ItemPlusSea = cc.Sprite.extend({
       cc.audioEngine.playEffect(res.plus_se_mp3);
       
       //スコア追加処理
-      score_sea += 10;
+      //score_sea += 10;
+      score_sea += this.point;
       score_seaText.setString("SCORE : " + score_sea);
-      life_Score_sea += 10;
+      life_Score_sea += this.point;
       if(life_Score_sea >= LIFE_UP_SCORE) {
         life_Score_sea -= LIFE_UP_SCORE;
-        //if(life_sea < 10) {
-          life_sea++;
-          life_seaText.setString("LIFE : " + life_sea);
-        //}
+        life_sea++;
+        life_seaText.setString("LIFE : " + life_sea);
       }
     }
 	//画面の外にでたアイテムを消去する処理
@@ -335,8 +347,7 @@ var ItemMinusSea = cc.Sprite.extend({
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //あたり判定の範囲を変更
-    //player_seaBoundingBox = setCollisionScale(player_seaBoundingBox, 0.8);
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.5);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.4);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) && player_sea.invulnerability == 0) {
