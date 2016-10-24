@@ -1,4 +1,4 @@
-﻿//gameover_space.js
+﻿//gameover.js
 var gameOverSpace = cc.Layer.extend({
     ctor: function() {
         this._super();
@@ -14,12 +14,13 @@ var gameOverSpace = cc.Layer.extend({
         gameover_logo.setScale(0.5);　
         gameover_logo.setPosition(size.width / 2, size.height * 0.7);　
         this.addChild(gameover_logo);
-
-        var retry_logo = cc.Sprite.create(res.retry_logo_png);　
-        retry_logo.setPosition(size.width / 2, size.height * 0.3);　
-        retry_logo.setScale(0.7);
-        this.addChild(retry_logo);
         
+        if(game_continue > 0) {
+          var retry_logo = cc.Sprite.create(res.retry_logo_png);　
+          retry_logo.setPosition(size.width / 2, size.height * 0.3);　
+          retry_logo.setScale(0.7);
+          this.addChild(retry_logo);
+        }
         // タップイベントリスナーを登録する
         cc.eventManager.addListener({
           event: cc.EventListener.TOUCH_ONE_BY_ONE,
@@ -38,7 +39,14 @@ var gameOverSpace = cc.Layer.extend({
     onTouchEnded: function(touch, event) {
     // 次のシーンに切り替える
       cc.audioEngine.stopMusic();
-      cc.director.runScene(new stageSpaceScene());
+      if(game_continue > 0) {
+        cc.director.runScene(new stageSpaceScene());
+        game_continue--;
+      } else {
+        cc.director.runScene(new GameStartScene());
+        game_continue = 3;
+        setGameData(5, 0, 0);
+      }
     },
 });
 

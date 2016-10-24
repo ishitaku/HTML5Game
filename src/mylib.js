@@ -3,6 +3,7 @@ var game_life = 5;			//ライフの持ち越し
 var game_score = 0;			//スコアの持ち越し
 var game_lifeup_score = 0;	//ライフ回復までのスコア
 var LIFE_UP_SCORE = 100;	//回復までのスコア値
+var game_continue = 3;		//コンティニュー回数
 
 //空ステージデータ
 var LIFE_SKY = 5;	//ライフ
