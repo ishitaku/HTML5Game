@@ -7,6 +7,7 @@ var gameLayer_sky;		//レイヤー
 var background_sky0;	//背景1
 var background_sky1;	//背景2
 var background_sky2;	//背景3
+var back_dur_sky = 0;		//背景間隔
 var scrollSpeed_sky = 2.5;		//スクロール速度
 var player_sky;					//プレイヤー
 var gameGravity_sky;	//重力
@@ -32,9 +33,9 @@ var State_sky = {
 };
 var nowstate_sky;	//ゲームステート
 var gameover_wait_sky = 0;		//経過時間
-var GAMEOVER_WAIT_TIME_SKY = 2;	//ゲームオーバーまでの時間
+var GAMEOVER_WAIT_TIME_SKY = 1;	//ゲームオーバーまでの時間
 var gameclear_wait_sky = 0;		//経過時間
-var GAMECLEAR_WAIT_TIME_SKY = 2;	//ゲームクリアまでの時間
+var GAMECLEAR_WAIT_TIME_SKY = 1;	//ゲームクリアまでの時間
 
 //空ステージのシーン
 var stageSkyScene = cc.Scene.extend({
@@ -94,12 +95,17 @@ var gameSky = cc.Layer.extend({
 
         //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_sky
         background_sky0 = new ScrollingSkyBG();
+        background_sky0.setPos(0, size_sky.height/2);
+        background_sky0.setScale(0.7);
         this.addChild(background_sky0);
+        back_dur_sky = background_sky0.getContentSize().width * 0.7;
         background_sky1 = new ScrollingSkyBG();
-        background_sky1.setPos(size_sky.width+size_sky.width/2-10, size_sky.height/2);
+        background_sky1.setPos(back_dur_sky, size_sky.height/2);
+        background_sky1.setScale(0.7);
         this.addChild(background_sky1);
         background_sky2 = new ScrollingSkyBG();
-        background_sky2.setPos(size_sky.width*2+size_sky.width/2-20, size_sky.height/2);
+        background_sky2.setPos(background_sky1.getPosition().x + back_dur_sky, size_sky.height/2);
+        background_sky2.setScale(0.7);
         this.addChild(background_sky2);
         
         //プレイヤーを生成
@@ -286,8 +292,8 @@ var PlayerSky = cc.Sprite.extend({
     this.invulnerability = 0; 	//無敵モード時間初期値0
   },
   onEnter: function() {
-    this.setPosition(60, size_sky.height * 0.5);
-    this.setScale(0.1);
+    this.setPosition(100, size_sky.height * 0.5);
+    this.setScale(0.12);
   },
   updateY: function() {
     //ジャンプ中なら
@@ -415,7 +421,7 @@ var ItemMinusSky = cc.Sprite.extend({
     var player_skyBoundingBox = player_sky.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //あたり判定の範囲を変更
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.4);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.3);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_skyBoundingBox, itemBoundingBox) && player_sky.invulnerability == 0) {
@@ -437,13 +443,13 @@ function backgroundSkyUpdate() {
     background_sky2.scroll();
     //画面の端に到達したら反対側の座標にする
     if(background_sky0.getPosition().x < -size_sky.width/2){
-        background_sky0.setPosition(background_sky2.getPosition().x+size_sky.width-10, size_sky.height/2);
+        background_sky0.setPosition(background_sky2.getPosition().x+back_dur_sky, size_sky.height/2);
     }
      if(background_sky1.getPosition().x < -size_sky.width/2){
-        background_sky1.setPosition(background_sky0.getPosition().x+size_sky.width-10, size_sky.height/2);
+        background_sky1.setPosition(background_sky0.getPosition().x+back_dur_sky, size_sky.height/2);
     }
     if(background_sky2.getPosition().x < -size_sky.width/2){
-        background_sky2.setPosition(background_sky1.getPosition().x+size_sky.width-10, size_sky.height/2);
+        background_sky2.setPosition(background_sky1.getPosition().x+back_dur_sky, size_sky.height/2);
     }
 }
 
@@ -485,7 +491,7 @@ var SponserBoardSky = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
-    this.setScale(0.15);
+    this.setScale(0.1);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -506,7 +512,7 @@ var SponserLogoSky = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
-    this.setPosition(1200, 190);
+    this.setPosition(1200, 170);
   },
   onEnter: function() {
     this._super();
@@ -538,24 +544,25 @@ var GoalFlagSky = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setScale(0.2);
+    this.setScale(0.15);
     this.scheduleUpdate();
   },
   update: function(dt) {
       if(gameover_sky || gameclear_sky) {
       return;
-    }
+      }
+      //ゴールについていたら停止
       if(!goalStop_sky) {
         this.setPosition(this.getPosition().x-scrollSpeed_sky,this.getPosition().y);
       }
-      if (player_sky.getPosition().x > this.getPosition().x) {
-        //this.unscheduleUpdate();
+      //ゴールについたか
+      if (player_sky.getPosition().x > this.getPosition().x - 50) {
         goalStop_sky = true;
       }
       var player_skyBoundingBox = player_sky.getBoundingBox();
       var flagBoundingBox = this.getBoundingBox();
       flagBoundingBox = setCollisionScale(flagBoundingBox, 0.3);
-      flagBoundingBox = setCollisionPosition(flagBoundingBox, flagBoundingBox.x, flagBoundingBox.y - 100);
+      flagBoundingBox = setCollisionPosition(flagBoundingBox, flagBoundingBox.x, flagBoundingBox.y - 130);
       
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_skyBoundingBox, flagBoundingBox) ) {

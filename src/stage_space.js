@@ -7,6 +7,7 @@ var gameLayer_space;		//レイヤー
 var background_space0;	//背景1
 var background_space1;	//背景2
 var background_space2;	//背景3
+var back_dur_space = 0;		//背景間隔
 var scrollSpeed_space = 2.5;		//スクロール速度
 var player_space;					//プレイヤー
 var gameGravity_space;	//重力
@@ -32,9 +33,9 @@ var State_space = {
 };
 var nowstate_space;	//ゲームステート
 var gameover_wait_space = 0;		//経過時間
-var GAMEOVER_WAIT_TIME_SPACE = 2;	//ゲームオーバーまでの時間
+var GAMEOVER_WAIT_TIME_SPACE = 1;	//ゲームオーバーまでの時間
 var gameclear_wait_space = 0;		//経過時間
-var GAMECLEAR_WAIT_TIME_SPACE = 2;	//ゲームクリアまでの時間
+var GAMECLEAR_WAIT_TIME_SPACE = 1;	//ゲームクリアまでの時間
 
 //空ステージのシーン
 var stageSpaceScene = cc.Scene.extend({
@@ -94,12 +95,17 @@ var gameSpace = cc.Layer.extend({
 
         //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_space
         background_space0 = new ScrollingSpaceBG();
+        background_space0.setPos(0, size_space.height/2);
+        background_space0.setScale(0.7);
         this.addChild(background_space0);
+        back_dur_space = background_space0.getContentSize().width * 0.7;
         background_space1 = new ScrollingSpaceBG();
-        background_space1.setPos(size_space.width+size_space.width/2-10, size_space.height/2);
+        background_space1.setPos(back_dur_space, size_space.height/2);
+        background_space1.setScale(0.7);
         this.addChild(background_space1);
         background_space2 = new ScrollingSpaceBG();
-        background_space2.setPos(size_space.width*2+size_space.width/2-20, size_space.height/2);
+        background_space2.setPos(background_space1.getPosition().x + back_dur_space, size_space.height/2);
+        background_space2.setScale(0.7);
         this.addChild(background_space2);
         
         //プレイヤーを生成
@@ -193,7 +199,7 @@ var gameSpace = cc.Layer.extend({
             //一定時間経過したら
             if(gameclear_wait_space > GAMECLEAR_WAIT_TIME_SPACE) {
               //ステージクリア画面へ移動
-              cc.director.runScene(new GameClearScene());
+              cc.director.runScene(new StageClearSpaceScene());
             }
             break;
           
@@ -274,7 +280,6 @@ var ScrollingSpaceBG = cc.Sprite.extend({
         this.setPosition(x, y);
     },
 });
-
 //重力（仮）で落下するプレイヤー
 var PlayerSpace = cc.Sprite.extend({
   ctor: function() {
@@ -293,13 +298,14 @@ var PlayerSpace = cc.Sprite.extend({
     //ジャンプ中なら
     if(this.engineOn){
       animflg_space++;	//アニメーションを更新
-      if(animflg_space >= 20) {
+      if(animflg_space >= 10) {
       animflg_space = 0;
       }
       
-      this.initWithFile(playerArray_space[Math.floor(animflg_space/5)]);
+      this.initWithFile(playerArray_space[Math.floor(animflg_space/5)+1]);
       this.ySpeed += gameThrust_space;
-      
+    } else {
+      this.initWithFile(playerArray_space[0]);
     }
     //無敵モード中の視覚効果
     if (this.invulnerability > 0) {
@@ -415,7 +421,7 @@ var ItemMinusSpace = cc.Sprite.extend({
     var player_spaceBoundingBox = player_space.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //あたり判定の範囲を変更
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.4);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.3);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_spaceBoundingBox, itemBoundingBox) && player_space.invulnerability == 0) {
@@ -437,13 +443,13 @@ function backgroundSpaceUpdate() {
     background_space2.scroll();
     //画面の端に到達したら反対側の座標にする
     if(background_space0.getPosition().x < -size_space.width/2){
-        background_space0.setPosition(background_space2.getPosition().x+size_space.width-10, size_space.height/2);
+        background_space0.setPosition(background_space2.getPosition().x+back_dur_space, size_space.height/2);
     }
      if(background_space1.getPosition().x < -size_space.width/2){
-        background_space1.setPosition(background_space0.getPosition().x+size_space.width-10, size_space.height/2);
+        background_space1.setPosition(background_space0.getPosition().x+back_dur_space, size_space.height/2);
     }
     if(background_space2.getPosition().x < -size_space.width/2){
-        background_space2.setPosition(background_space1.getPosition().x+size_space.width-10, size_space.height/2);
+        background_space2.setPosition(background_space1.getPosition().x+back_dur_space, size_space.height/2);
     }
 }
 
@@ -485,7 +491,7 @@ var SponserBoardSpace = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
-    this.setScale(0.15);
+    this.setScale(0.1);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -506,7 +512,7 @@ var SponserLogoSpace = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
-    this.setPosition(1200, 190);
+    this.setPosition(1200, 170);
   },
   onEnter: function() {
     this._super();
@@ -538,24 +544,25 @@ var GoalFlagSpace = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setScale(0.2);
+    this.setScale(0.15);
     this.scheduleUpdate();
   },
   update: function(dt) {
       if(gameover_space || gameclear_space) {
       return;
-    }
+      }
+      //ゴールについていたら停止
       if(!goalStop_space) {
         this.setPosition(this.getPosition().x-scrollSpeed_space,this.getPosition().y);
       }
-      if (player_space.getPosition().x > this.getPosition().x) {
-        //this.unscheduleUpdate();
+      //ゴールについたか
+      if (player_space.getPosition().x > this.getPosition().x - 50) {
         goalStop_space = true;
       }
       var player_spaceBoundingBox = player_space.getBoundingBox();
       var flagBoundingBox = this.getBoundingBox();
       flagBoundingBox = setCollisionScale(flagBoundingBox, 0.3);
-      flagBoundingBox = setCollisionPosition(flagBoundingBox, flagBoundingBox.x, flagBoundingBox.y - 100);
+      flagBoundingBox = setCollisionPosition(flagBoundingBox, flagBoundingBox.x, flagBoundingBox.y - 130);
       
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_spaceBoundingBox, flagBoundingBox) ) {
@@ -563,7 +570,7 @@ var GoalFlagSpace = cc.Sprite.extend({
         cc.audioEngine.stopMusic();
         setGameData(life_space, score_space, life_Score_space);
         //クリア画面へ移動
-        //cc.director.runScene(new StageClearSpaceScene());
+        //cc.director.runScene(new GameClearScene());
         gameclear_space = true;
       }
    }

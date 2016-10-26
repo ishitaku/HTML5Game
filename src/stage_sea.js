@@ -1,5 +1,5 @@
 ﻿
-/* 海ステージ */
+/* 空ステージ */
 //stage_sea.js
 
 var size_sea;			//画面のサイズ
@@ -7,6 +7,7 @@ var gameLayer_sea;		//レイヤー
 var background_sea0;	//背景1
 var background_sea1;	//背景2
 var background_sea2;	//背景3
+var back_dur_sea = 0;		//背景間隔
 var scrollSpeed_sea = 2.5;		//スクロール速度
 var player_sea;					//プレイヤー
 var gameGravity_sea;	//重力
@@ -32,11 +33,11 @@ var State_sea = {
 };
 var nowstate_sea;	//ゲームステート
 var gameover_wait_sea = 0;		//経過時間
-var GAMEOVER_WAIT_TIME_SEA = 2;	//ゲームオーバーまでの時間
+var GAMEOVER_WAIT_TIME_SEA = 1;	//ゲームオーバーまでの時間
 var gameclear_wait_sea = 0;		//経過時間
-var GAMECLEAR_WAIT_TIME_SEA = 2;	//ゲームクリアまでの時間
+var GAMECLEAR_WAIT_TIME_SEA = 1;	//ゲームクリアまでの時間
 
-//海ステージのシーン
+//空ステージのシーン
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
@@ -94,12 +95,17 @@ var gameSea = cc.Layer.extend({
 
         //スクロールする背景スプライトをインスタンススクロール速度:scrollSpeed_sea
         background_sea0 = new ScrollingSeaBG();
+        background_sea0.setPos(0, size_sea.height/2);
+        background_sea0.setScale(0.7);
         this.addChild(background_sea0);
+        back_dur_sea = background_sea0.getContentSize().width * 0.7;
         background_sea1 = new ScrollingSeaBG();
-        background_sea1.setPos(size_sea.width+size_sea.width/2-10, size_sea.height/2);
+        background_sea1.setPos(back_dur_sea, size_sea.height/2);
+        background_sea1.setScale(0.7);
         this.addChild(background_sea1);
         background_sea2 = new ScrollingSeaBG();
-        background_sea2.setPos(size_sea.width*2+size_sea.width/2-20, size_sea.height/2);
+        background_sea2.setPos(background_sea1.getPosition().x + back_dur_sea, size_sea.height/2);
+        background_sea2.setScale(0.7);
         this.addChild(background_sea2);
         
         //プレイヤーを生成
@@ -286,8 +292,8 @@ var PlayerSea = cc.Sprite.extend({
     this.invulnerability = 0; 	//無敵モード時間初期値0
   },
   onEnter: function() {
-    this.setPosition(60, size_sea.height * 0.5);
-    this.setScale(0.1);
+    this.setPosition(100, size_sea.height * 0.5);
+    this.setScale(0.12);
   },
   updateY: function() {
     //ジャンプ中なら
@@ -415,7 +421,7 @@ var ItemMinusSea = cc.Sprite.extend({
     var player_seaBoundingBox = player_sea.getBoundingBox();
     var itemBoundingBox = this.getBoundingBox();
     //あたり判定の範囲を変更
-	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.4);
+	itemBoundingBox = setCollisionScale(itemBoundingBox, 0.3);
     
     //rectIntersectsRectは２つの矩形が交わっているかチェックする
     if (cc.rectIntersectsRect(player_seaBoundingBox, itemBoundingBox) && player_sea.invulnerability == 0) {
@@ -437,13 +443,13 @@ function backgroundSeaUpdate() {
     background_sea2.scroll();
     //画面の端に到達したら反対側の座標にする
     if(background_sea0.getPosition().x < -size_sea.width/2){
-        background_sea0.setPosition(background_sea2.getPosition().x+size_sea.width-10, size_sea.height/2);
+        background_sea0.setPosition(background_sea2.getPosition().x+back_dur_sea, size_sea.height/2);
     }
      if(background_sea1.getPosition().x < -size_sea.width/2){
-        background_sea1.setPosition(background_sea0.getPosition().x+size_sea.width-10, size_sea.height/2);
+        background_sea1.setPosition(background_sea0.getPosition().x+back_dur_sea, size_sea.height/2);
     }
     if(background_sea2.getPosition().x < -size_sea.width/2){
-        background_sea2.setPosition(background_sea1.getPosition().x+size_sea.width-10, size_sea.height/2);
+        background_sea2.setPosition(background_sea1.getPosition().x+back_dur_sea, size_sea.height/2);
     }
 }
 
@@ -485,7 +491,7 @@ var SponserBoardSea = cc.Sprite.extend({
     this._super();
     //var moveAction = cc.MoveTo.create(5, new cc.Point(-100, this.getPosition().y));
     //this.runAction(moveAction);
-    this.setScale(0.15);
+    this.setScale(0.1);
     this.scheduleUpdate();
   },
   update: function(dt) {
@@ -506,7 +512,7 @@ var SponserLogoSea = cc.Sprite.extend({
   ctor: function() {
     this._super();
     this.initWithFile(res.sponser_logo_png);
-    this.setPosition(1200, 190);
+    this.setPosition(1200, 170);
   },
   onEnter: function() {
     this._super();
@@ -538,24 +544,25 @@ var GoalFlagSea = cc.Sprite.extend({
   },
   onEnter: function() {
     this._super();
-    this.setScale(0.2);
+    this.setScale(0.15);
     this.scheduleUpdate();
   },
   update: function(dt) {
       if(gameover_sea || gameclear_sea) {
       return;
-    }
+      }
+      //ゴールについていたら停止
       if(!goalStop_sea) {
         this.setPosition(this.getPosition().x-scrollSpeed_sea,this.getPosition().y);
       }
-      if (player_sea.getPosition().x > this.getPosition().x) {
-        //this.unscheduleUpdate();
+      //ゴールについたか
+      if (player_sea.getPosition().x > this.getPosition().x - 50) {
         goalStop_sea = true;
       }
       var player_seaBoundingBox = player_sea.getBoundingBox();
       var flagBoundingBox = this.getBoundingBox();
       flagBoundingBox = setCollisionScale(flagBoundingBox, 0.3);
-      flagBoundingBox = setCollisionPosition(flagBoundingBox, flagBoundingBox.x, flagBoundingBox.y - 100);
+      flagBoundingBox = setCollisionPosition(flagBoundingBox, flagBoundingBox.x, flagBoundingBox.y - 130);
       
       //rectIntersectsRectは２つの矩形が交わっているかチェックする
       if (cc.rectIntersectsRect(player_seaBoundingBox, flagBoundingBox) ) {
