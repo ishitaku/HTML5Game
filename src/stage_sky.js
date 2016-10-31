@@ -293,7 +293,7 @@ var PlayerSky = cc.Sprite.extend({
   },
   onEnter: function() {
     this.setPosition(100, size_sky.height * 0.5);
-    this.setScale(0.12);
+    //this.setScale(0.12);
   },
   updateY: function() {
     //ジャンプ中なら

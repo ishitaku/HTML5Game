@@ -199,7 +199,7 @@ var gameSpace = cc.Layer.extend({
             //一定時間経過したら
             if(gameclear_wait_space > GAMECLEAR_WAIT_TIME_SPACE) {
               //ステージクリア画面へ移動
-              cc.director.runScene(new StageClearSpaceScene());
+              cc.director.runScene(new GameClearScene());
             }
             break;
           
@@ -292,7 +292,7 @@ var PlayerSpace = cc.Sprite.extend({
   },
   onEnter: function() {
     this.setPosition(60, size_space.height * 0.5);
-    this.setScale(0.1);
+    //this.setScale(0.1);
   },
   updateY: function() {
     //ジャンプ中なら

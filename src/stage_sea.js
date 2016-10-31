@@ -1,5 +1,5 @@
 ﻿
-/* 空ステージ */
+/* 海ステージ */
 //stage_sea.js
 
 var size_sea;			//画面のサイズ
@@ -37,7 +37,7 @@ var GAMEOVER_WAIT_TIME_SEA = 1;	//ゲームオーバーまでの時間
 var gameclear_wait_sea = 0;		//経過時間
 var GAMECLEAR_WAIT_TIME_SEA = 1;	//ゲームクリアまでの時間
 
-//空ステージのシーン
+//海ステージのシーン
 var stageSeaScene = cc.Scene.extend({
     onEnter:function () {
         this._super();
@@ -293,7 +293,7 @@ var PlayerSea = cc.Sprite.extend({
   },
   onEnter: function() {
     this.setPosition(100, size_sea.height * 0.5);
-    this.setScale(0.12);
+    //this.setScale(0.12);
   },
   updateY: function() {
     //ジャンプ中なら

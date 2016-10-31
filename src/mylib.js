@@ -22,7 +22,7 @@ var MINUS_TIME_DUR_SEA = 1.5;		//敵の出現間隔
 var SPONSER_DUR_SEA = 10;		//スポンサー様看板の出現間隔
 var GOAL_TIME_SEA = 65;			//ゴールまでの時間
 var GRAVITY_SEA = -0.05;
-var GAME_THRUST_SEA = 0.1;
+var GAME_THRUST_SEA = 0.12;
 var textcolor_sea = cc.color(0, 0, 0, 255);
 
 //宇宙ステージデータ
