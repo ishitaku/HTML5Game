@@ -183,6 +183,15 @@ var gameSea = cc.Layer.extend({
               this.unschedule(this.addSponserBoardSea);
               this.unschedule(this.addGoal);
             }
+            //ゲームオーバーなら
+          if(gameover_sea) {
+            nowstate_sea = State_sea.GAMEOVER;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSea);
+            this.unschedule(this.addItemMinusSea);
+            this.unschedule(this.addSponserBoardSea);
+            this.unschedule(this.addGoal);
+          }
             break;
           //ゲームオーバー
           case State_sea.GAMEOVER:

@@ -183,6 +183,15 @@ var gameSpace = cc.Layer.extend({
               this.unschedule(this.addSponserBoardSpace);
               this.unschedule(this.addGoal);
             }
+            //ゲームオーバーなら
+          if(gameover_space) {
+            nowstate_space = State_space.GAMEOVER;
+            //各要素の生成を停止
+            this.unschedule(this.addItemPlusSpace);
+            this.unschedule(this.addItemMinusSpace);
+            this.unschedule(this.addSponserBoardSpace);
+            this.unschedule(this.addGoal);
+          }
             break;
           //ゲームオーバー
           case State_space.GAMEOVER:

@@ -183,6 +183,14 @@ var gameSky = cc.Layer.extend({
               this.unschedule(this.addSponserBoardSky);
               this.unschedule(this.addGoal);
             }
+            if(gameover_sky) {
+              nowstate_sky = State_sky.GAMEOVER;
+              //各要素の生成を停止
+              this.unschedule(this.addItemPlusSky);
+              this.unschedule(this.addItemMinusSky);
+              this.unschedule(this.addSponserBoardSky);
+              this.unschedule(this.addGoal);
+          }
             break;
           //ゲームオーバー
           case State_sky.GAMEOVER:

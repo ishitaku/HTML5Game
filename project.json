@@ -3,6 +3,6 @@
     "frameRate"     : 60,
     "showFPS"	    : false,
     "id"            : "gameCanvas",
-    "renderMode"    : 0,
+    "renderMode"    : 1,
     "jsList"        : []
 }

@@ -15,7 +15,7 @@
     player_space01_png : "res/player_space11.png",
     player_space02_png : "res/player_space12.png",
     player_space03_png : "res/player_space13.png",
-    player_space04_png : "res/player04.png",
+    //player_space04_png : "res/player04.png",
     item_plus00_png : "res/item_plus00.png",
     item_plus01_png : "res/item_plus01.png",
     item_minus00_png : "res/item_minus00.png",

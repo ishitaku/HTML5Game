@@ -1,4 +1,6 @@
 ﻿
+var button;
+
 //gameclear.js
 var gameClear = cc.Layer.extend({
     ctor: function() {
@@ -15,8 +17,8 @@ var gameClear = cc.Layer.extend({
         gameclear_logo.setScale(0.5);
         gameclear_logo.setPosition(size.width / 2, size.height * 0.7);　
         this.addChild(gameclear_logo);
-        
-        
+       
+        /*
         //ボタン
         //ボタンの背景
         var bgButton = new cc.Scale9Sprite(res.button_png);
@@ -42,8 +44,24 @@ var gameClear = cc.Layer.extend({
         button.addTargetWithActionForControlEvents(this, this.touchUpInsideAction, cc.CONTROL_EVENT_TOUCH_UP_INSIDE);
         button.addTargetWithActionForControlEvents(this, this.touchUpOutsideAction, cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE);
         button.addTargetWithActionForControlEvents(this, this.touchCancelAction, cc.CONTROL_EVENT_TOUCH_CANCEL);
- 
+        
         this.addChild(button);
+        */
+        
+        
+        button = new FormButton();
+        //button.setScale(2);
+        button.setPosition(size.width / 2, size.height * 0.3);
+        this.addChild(button);
+        
+        // タップイベントリスナーを登録する
+       cc.eventManager.addListener({
+         event: cc.EventListener.TOUCH_ONE_BY_ONE,
+         swallowTouches: true,
+         onTouchBegan: this.onTouchBegan,
+         onTouchMoved: this.onTouchMoved,
+         onTouchEnded: this.onTouchEnded
+       }, this);
         
         return true;
     },
@@ -64,14 +82,34 @@ var gameClear = cc.Layer.extend({
         cc.log("touchDragExitAction");
     },
     touchUpInsideAction:function (sender, controlEvent) {
-        cc.log("touchUpInsideAction");
-        location.href = "https://www.google.co.jp/";
+      cc.log("touchUpInsideAction");
+      location.href = "https://www.google.co.jp/";
     },
     touchUpOutsideAction:function (sender, controlEvent) {
         cc.log("touchUpOutsideAction");
     },
     touchCancelAction:function (sender, controlEvent) {
         cc.log("touchCancelAction");
+    },
+    //タッチ用の関数
+    onTouchBegan: function(touch, event) {
+        return true;
+    },
+      onTouchMoved: function(touch, event) {},
+      onTouchEnded: function(touch, event) {
+      /*
+      var target = event.getCurrentTarget();
+      var location = target.convertToNodeSpace(touch.getLocation());
+      var spriteSize = target.getContentSize();
+      var spriteRect = cc.rect(0, 0, spriteSize.width, spriteSize.height);
+      
+      if (cc.rectContainsPoint(spriteRect, location)) {
+        location.href = "https://www.google.co.jp/";
+      }*/
+      
+      if(button.touchCheck(touch.getLocation())) {
+        location.href = "https://www.google.co.jp/";
+      }
     },
 });
 
@@ -89,5 +127,27 @@ var GameClearScene = cc.Scene.extend({
     	}
     }
 });
+
+//フォームボタン
+var FormButton = cc.Sprite.extend({
+  ctor: function() {
+    this._super();
+    this.initWithFile(res.button_png);
+    
+  },
+  getRect: function() {
+    
+    var pointx = this.getPositionX();
+    var pointy = this.getPositionY();
+    var w = this.getContentSize().width;
+    var h = this.getContentSize().height;
+    return new cc.Rect(pointx-(w/2), pointy-(h/2), w, h);
+  },
+  touchCheck: function(point) {
+    return cc.rectContainsPoint(this.getRect(), point);
+  }
+  
+});
+
 
 

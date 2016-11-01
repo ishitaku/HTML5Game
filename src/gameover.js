@@ -1,5 +1,4 @@
 ﻿//gameover.js
-score;
 var gameover = cc.Layer.extend({
     ctor: function() {
         this._super();
