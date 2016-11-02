@@ -57,6 +57,7 @@ var GameStartScene = cc.Scene.extend({
     	if (!audioEngine.isMusicPlaying()) {
     	  audioEngine.playMusic(res.title_bgm_mp3, true);
     	}
+    	
     }
 });
 

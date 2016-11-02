@@ -73,6 +73,7 @@ var stageSkyScene = cc.Scene.extend({
         if (!audioEngine.isMusicPlaying()) {
           audioEngine.playMusic(res.stagesky_bgm_mp3, true);
         }
+        
     }
 });
 
